@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "waw:blocks/trees/ash/log_side"
+  }
+}

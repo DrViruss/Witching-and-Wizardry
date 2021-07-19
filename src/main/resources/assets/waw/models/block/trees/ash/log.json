@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "waw:blocks/trees/ash/log_end",
+    "side": "waw:blocks/trees/ash/log_side"
+  }
+}

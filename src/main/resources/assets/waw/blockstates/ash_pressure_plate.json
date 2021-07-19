@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "waw:block/trees/ash/pressure_plate/main"
+    },
+    "powered=true": {
+      "model": "waw:block/trees/ash/pressure_plate/down"
+    }
+  }
+}

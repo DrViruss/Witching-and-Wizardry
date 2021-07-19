@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "waw:blocks/trees/ash/planks",
+    "top": "waw:blocks/trees/ash/planks",
+    "side": "waw:blocks/trees/ash/planks"
+  }
+}

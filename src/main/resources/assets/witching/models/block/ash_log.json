@@ -1,7 +1,0 @@
-{
-    "parent": "block/cube_column",
-    "textures": {
-        "end": "witching:blocks/ash_log_end",
-        "side": "witching:blocks/ash_log_side"
-    }
-}

@@ -1,0 +1,6 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "waw:blocks/trees/ash/sapling"
+  }
+}
