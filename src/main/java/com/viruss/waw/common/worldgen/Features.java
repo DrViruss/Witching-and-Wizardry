@@ -1,3 +1,4 @@
+
 package com.viruss.waw.common.worldgen;
 
 import com.google.common.collect.Lists;
@@ -58,11 +59,11 @@ public class Features {
         public static void registerOreFeature(String name_id, Block ore, int maxSize, int maxHeight, int veinsPerChunk)
         {
             list.add(registerWorldFeature(name_id,
-                Feature.ORE.configured(
-                    new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, ore.defaultBlockState(), maxSize))
-                    .range(maxHeight)
-                    .squared()
-                    .chance(veinsPerChunk)
+                    Feature.ORE.configured(
+                            new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, ore.defaultBlockState(), maxSize))
+                            .range(maxHeight)
+                            .squared()
+                            .chance(veinsPerChunk)
             ));
         }
     }
@@ -71,18 +72,18 @@ public class Features {
         public static final List<ConfiguredFeature<?, ?>> list = new ArrayList<>();
 
         public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> ASH = registerWorldFeature("ash_tree", Feature.TREE.configured(
-            (new BaseTreeFeatureConfig.Builder
-                (
-                    new SimpleBlockStateProvider(RegistryHandler.ASH.getLog().getPrimary().defaultBlockState()),
-                    new SimpleBlockStateProvider(RegistryHandler.ASH.getLeaves().getPrimary().defaultBlockState()),
-                    new FancyFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(4), 4),
-                    new FancyTrunkPlacer(5, 2, 0),
-                    new TwoLayerFeature(0, 0, 0, OptionalInt.of(4))
-                )
+        (new BaseTreeFeatureConfig.Builder
+            (
+                new SimpleBlockStateProvider(RegistryHandler.ASH.getLog().getPrimaryRO().get().defaultBlockState()),
+                new SimpleBlockStateProvider(RegistryHandler.ASH.getLeaves().getPrimaryRO().get().defaultBlockState()),
+                new FancyFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(4), 4),
+                new FancyTrunkPlacer(5, 2, 0),
+                new TwoLayerFeature(0, 0, 0, OptionalInt.of(4))
             )
-            .ignoreVines()
-            .heightmap(Heightmap.Type.MOTION_BLOCKING)
-            .build()
+        )
+        .ignoreVines()
+        .heightmap(Heightmap.Type.MOTION_BLOCKING)
+        .build()
         ));
 
 //OakTree
@@ -91,25 +92,25 @@ public class Features {
         {
             int limit_upper=1,lower =0;
             return registerWorldFeature(name, Feature.TREE.configured(new BaseTreeFeatureConfig.Builder(
-                new SimpleBlockStateProvider(log.defaultBlockState()),
-                new SimpleBlockStateProvider(leaves.defaultBlockState()),
-                new BlobFoliagePlacer(FeatureSpread.of(leavesRad,0), FeatureSpread.fixed(leavesOff), leavesH),
-                new StraightTrunkPlacer(logH, logRH, logR2H),
-                new TwoLayerFeature(limit_upper, lower, limit_upper)
+                    new SimpleBlockStateProvider(log.defaultBlockState()),
+                    new SimpleBlockStateProvider(leaves.defaultBlockState()),
+                    new BlobFoliagePlacer(FeatureSpread.of(leavesRad,0), FeatureSpread.fixed(leavesOff), leavesH),
+                    new StraightTrunkPlacer(logH, logRH, logR2H),
+                    new TwoLayerFeature(limit_upper, lower, limit_upper)
             )
-            .heightmap(Heightmap.Type.WORLD_SURFACE)
-            .maxWaterDepth(1)
-            .ignoreVines()
-            .build()) );
+                    .heightmap(Heightmap.Type.WORLD_SURFACE)
+                    .maxWaterDepth(1)
+                    .ignoreVines()
+                    .build()) );
         }
 
         public static void addWorldGenFeature(ConfiguredFeature<BaseTreeFeatureConfig, ?> feature,int chance, int countRandom)
         {
             ConfiguredFeature<?,?> configuredFeature = registerWorldFeature(feature.feature().getRegistryName().getPath()+"_wgen",feature
-                .chance(chance)
-                .countRandom(countRandom)
-                .squared()
-                .decorated(Placement.COUNT_NOISE.configured(new NoiseDependant(12,3,6)))
+                    .chance(chance)
+                    .countRandom(countRandom)
+                    .squared()
+                    .decorated(Placement.COUNT_NOISE.configured(new NoiseDependant(12,3,6)))
             );
             list.add(configuredFeature);
         }

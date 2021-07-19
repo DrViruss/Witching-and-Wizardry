@@ -22,7 +22,7 @@ public class Block extends net.minecraft.block.Block
         @Nullable
         private Function<Properties,? extends net.minecraft.block.Block> block;
         @Nullable
-        private Supplier<? extends net.minecraft.block.Block> block_supplier;
+        private Supplier<net.minecraft.block.Block> block_supplier;
 
         private boolean needItem;
         @Nullable
@@ -37,7 +37,7 @@ public class Block extends net.minecraft.block.Block
             return this;
         }
 
-        public <R extends net.minecraft.block.Block> Block.Builder setBlockSup(Supplier<R>  blockConstructor) {
+        public <R extends net.minecraft.block.Block> Block.Builder setBlockSup(Supplier<net.minecraft.block.Block>  blockConstructor) {
             this.block_supplier = blockConstructor;
             return this;
         }
@@ -66,11 +66,11 @@ public class Block extends net.minecraft.block.Block
             return needItem;
         }
 
-        public Supplier<? extends net.minecraft.block.Block> build() {
+        public Supplier<net.minecraft.block.Block> build() {
             if(block == null && block_supplier ==null)
-                return () -> new net.minecraft.block.Block(properties);
+                return ()-> new net.minecraft.block.Block(properties);
             if(block!= null)
-                return () -> block.apply(properties);
+                return ()-> block.apply(properties);
             return block_supplier;
         }
 

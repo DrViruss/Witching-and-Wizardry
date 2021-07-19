@@ -20,10 +20,9 @@ public class EventHandler {
     public static void commonSetupEvent(final FMLCommonSetupEvent event) {
         Features.setup();
 
-
         ComposterBlock.COMPOSTABLES.put(RegistryHandler.ASH.getLeaves().getSecondary(),0.3f);
         ComposterBlock.COMPOSTABLES.put(RegistryHandler.ASH.getSapling().getSecondary(),0.3f);
-        ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(Objects.requireNonNull(RegistryHandler.ASH.getSapling().getPrimary().getRegistryName()), RegistryHandler.ASH::getPotted_sapling);
+        ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(Objects.requireNonNull(RegistryHandler.ASH.getSapling().getPrimaryRO().getId()), RegistryHandler.ASH::getPotted_sapling);
 
     }
 }

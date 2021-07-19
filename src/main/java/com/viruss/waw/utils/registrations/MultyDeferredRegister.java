@@ -1,11 +1,7 @@
 package com.viruss.waw.utils.registrations;
 
 import com.viruss.waw.WitchingAndWizardry;
-import com.viruss.waw.common.objects.blocks.WoodenObject;
-import com.viruss.waw.common.objects.blocks.bases.*;
 import net.minecraft.block.Block;
-import net.minecraft.block.WoodType;
-import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -21,12 +17,13 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class MultyDeferredRegister{
-    private Map<IForgeRegistry<?>, DeferredRegister<? extends IForgeRegistryEntry<?>>> registerMap;
-
-    public MultyDeferredRegister(IForgeRegistry<?>[] type) {
+    private final Map<IForgeRegistry<?>, DeferredRegister<? extends IForgeRegistryEntry<?>>> registerMap;
+    private final String id;
+    public MultyDeferredRegister(String mod_id,IForgeRegistry<?>[] type) {
         this.registerMap = new HashMap<>(type.length);
+        id = mod_id;
         for (int i = 0; i < type.length; i++)
-            registerMap.put(type[i], DeferredRegister.create(type[i], WitchingAndWizardry.MOD_ID));
+            registerMap.put(type[i], DeferredRegister.create(type[i], id));
     }
 
     public void register(IEventBus bus) {

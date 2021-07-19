@@ -3,10 +3,6 @@ package com.viruss.waw;
 import com.viruss.waw.client.RendererManager;
 import com.viruss.waw.utils.EventHandler;
 import com.viruss.waw.utils.RegistryHandler;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ComposterBlock;
-import net.minecraft.block.FlowerPotBlock;
-import net.minecraft.client.renderer.Atlases;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -46,9 +42,11 @@ public class WitchingAndWizardry
         }
     };
 
+
+
+
     public static final RendererManager CLIENT_RENDERER = new RendererManager();
         /*~~~~~~Events~~~~~~*/
-
     private void doClientStuff(final FMLClientSetupEvent event) {
         CLIENT_RENDERER.init();
 }

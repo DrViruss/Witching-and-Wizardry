@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "waw:ash_log",
+    "waw:ash_wood",
+    "waw:ash_stripped_log",
+    "waw:ash_stripped_wood"
+  ]
+}

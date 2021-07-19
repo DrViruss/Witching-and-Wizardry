@@ -14,6 +14,8 @@
   "block.waw.ash_trapdoor": "Ash Trapdoor",
   "block.waw.ash_stripped_log": "Stripped Ash Log",
   "block.waw.ash_door": "Ash Door",
-  "block.waw.ash_wood_block": "Ash Wood",
-  "item.waw.ash_boat": "Ash Boat"
+  "block.waw.ash_wood": "Ash Wood",
+  "block.waw.ash_stripped_wood": "Stripped Ash Wood",
+  "item.waw.ash_boat": "Ash Boat",
+  "item.waw.chalk_white": "White Chalk"
 }
