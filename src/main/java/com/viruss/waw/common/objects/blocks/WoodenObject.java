@@ -8,7 +8,6 @@ import com.viruss.waw.utils.registrations.DoubleRegisteredObject;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
-import net.minecraft.block.trees.OakTree;
 import net.minecraft.block.trees.Tree;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
@@ -81,9 +80,9 @@ public class WoodenObject {
             this.potted_sapling = RegistryHandler.MDR.register(name + "_potted", () -> new FlowerPotBlock(null, this.sapling::getPrimary, AbstractBlock.Properties.copy(Blocks.FLOWER_POT)), ForgeRegistries.BLOCKS);
         }
 
-        initRenders();
+        initAdditional();
     }
-    private void initRenders()
+    private void initAdditional()
     {
         WitchingAndWizardry.CLIENT_RENDERER.addEntityRender(boat.getType(),AbstractBoatRenderer::new);
         WitchingAndWizardry.CLIENT_RENDERER.addBlockRenderer(door, RenderType.translucent());

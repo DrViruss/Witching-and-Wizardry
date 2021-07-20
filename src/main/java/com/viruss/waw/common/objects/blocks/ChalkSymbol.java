@@ -1,41 +1,34 @@
 package com.viruss.waw.common.objects.blocks;
 
-import com.viruss.waw.WitchingAndWizardry;
 import com.viruss.waw.common.objects.items.Chalk;
-import com.viruss.waw.utils.RegistryHandler;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathNodeType;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 
 public class ChalkSymbol extends Block {
+    public static final DirectionProperty FACING = HorizontalBlock.FACING;
     public static final IntegerProperty SIGN = IntegerProperty.create("sign", 0, 2);
-    private static final VoxelShape SHAPE = Block.box(0, 0, 0, 15, 0.04, 15);
+
+    private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 0.02, 16);
     private final Chalk.Type type;
     public ChalkSymbol(Chalk.Type type) {
-        super(AbstractBlock.Properties.of(Material.CLOTH_DECORATION).strength(0.3f).sound(SoundType.SAND).noDrops().noCollission());
-        this.type = type;
+        super(AbstractBlock.Properties.of(Material.CLOTH_DECORATION).strength(0.3f).sound(SoundType.BASALT).noDrops().noCollission());
+    this.type = type;
     }
 
     public int getColor() {
@@ -60,7 +53,10 @@ public class ChalkSymbol extends Block {
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.defaultBlockState().setValue(SIGN, RANDOM.nextInt(SIGN.getPossibleValues().size()));
+        return this.defaultBlockState()
+                .setValue(FACING,context.getHorizontalDirection().getOpposite())
+                .setValue(SIGN, RANDOM.nextInt(SIGN.getPossibleValues().size()))
+        ;
     }
 
     @Override
@@ -73,14 +69,6 @@ public class ChalkSymbol extends Block {
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         if(fromPos.above().getY() == pos.getY()|| fromPos.above().getY() == pos.getY())
             worldIn.removeBlock(pos, false);
-    }
-
-
-    @Override /*???????*/
-    public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
-        if(ForgeRegistries.ITEMS.containsKey(new ResourceLocation(WitchingAndWizardry.MOD_ID,"chalk_"+type.getName())))
-            return new ItemStack(RegistryHandler.CHALKS.getChalk(type).getChalk());
-        return ItemStack.EMPTY;
     }
 
     @Nullable

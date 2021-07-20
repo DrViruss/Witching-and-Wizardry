@@ -16,7 +16,8 @@ public class RegistryHandler {
             ForgeRegistries.BLOCKS,
             ForgeRegistries.ITEMS,
             ForgeRegistries.ENTITIES,
-            ForgeRegistries.TILE_ENTITIES
+            ForgeRegistries.TILE_ENTITIES,
+            ForgeRegistries.SOUND_EVENTS
     });
 
     public static void init(IEventBus bus)
@@ -27,7 +28,8 @@ public class RegistryHandler {
     public static final WoodenObject ASH = new WoodenObject("ash",WitchingAndWizardry.ITEM_GROUP,true,true);
 //    public static final DoubleRegisteredObject<Block,Item> MORTAR_AND_PESTLE = MDR.register("mortar_n_pestle",new com.viruss.waw.utils.registrations.Block.Builder().setBlockSup(MortarAndPestle::new).needItem(WitchingAndWizardry.ITEM_GROUP));
     public static final ChalkSet CHALKS = new ChalkSet(new Chalk.Type[]{
-     Chalk.Type.DEFAULT
+         Chalk.Type.WHITE,
+         Chalk.Type.RED
     });
 
     private static Item registerItem(String name, Item item)
