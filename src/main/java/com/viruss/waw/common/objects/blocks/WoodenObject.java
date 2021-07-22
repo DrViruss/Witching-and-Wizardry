@@ -3,6 +3,7 @@ package com.viruss.waw.common.objects.blocks;
 import com.viruss.waw.WitchingAndWizardry;
 import com.viruss.waw.client.renders.AbstractBoatRenderer;
 import com.viruss.waw.common.worldgen.Features;
+import com.viruss.waw.utils.EventHandler;
 import com.viruss.waw.utils.RegistryHandler;
 import com.viruss.waw.utils.registrations.DoubleRegisteredObject;
 import net.minecraft.block.*;
@@ -10,7 +11,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.block.trees.Tree;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -28,6 +28,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class WoodenObject {
     private final WoodType woodType;
@@ -50,7 +51,7 @@ public class WoodenObject {
     private final SignObject sign;
     private final BoatObject boat;
 
-    public WoodenObject(String name, ItemGroup group,boolean isNatural,boolean isStrippable) {
+    public WoodenObject(String name, ItemGroup group,Supplier<ConfiguredFeature<BaseTreeFeatureConfig, ?>> treeFeature,boolean isStrippable) {
         com.viruss.waw.utils.registrations.Block.Builder builder = new com.viruss.waw.utils.registrations.Block.Builder().needItem(group);
         this.woodType = WoodType.register(WoodType.create(WitchingAndWizardry.MOD_ID+":"+name));
         if (isStrippable) {
@@ -74,10 +75,10 @@ public class WoodenObject {
         this.pressure_plate = RegistryHandler.MDR.register(name+"_pressure_plate",builder.setBlockSup(()-> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, AbstractBlock.Properties.of(Material.WOOD, planks.getPrimary().defaultMaterialColor()).noCollission().strength(0.5F).sound(SoundType.WOOD))));
         this.sign = new SignObject(name,this.woodType,group);
         this.boat = new BoatObject(name+"_boat",group);
-        if(isNatural) {
+        if(treeFeature!= null) {
             this.leaves = RegistryHandler.MDR.register(name + "_leaves", builder.setBlockSup(AbstractLeaves::new));
-            this.sapling = RegistryHandler.MDR.register(name + "_sapling", builder.setBlockSup(() -> new AbstractSapling(new AbstractTree(Features.Trees.ASH))));
-            this.potted_sapling = RegistryHandler.MDR.register(name + "_potted", () -> new FlowerPotBlock(null, this.sapling::getPrimary, AbstractBlock.Properties.copy(Blocks.FLOWER_POT)), ForgeRegistries.BLOCKS);
+            this.sapling = RegistryHandler.MDR.register(name + "_sapling", builder.setBlockSup(() -> new AbstractSapling(new AbstractTree(treeFeature.get()))));
+            this.potted_sapling = RegistryHandler.MDR.register(name + "_potted", () -> new FlowerPotBlock(()-> (FlowerPotBlock) Blocks.FLOWER_POT, this.sapling::getPrimary, AbstractBlock.Properties.copy(Blocks.FLOWER_POT)), ForgeRegistries.BLOCKS);
         }
 
         initAdditional();
@@ -87,11 +88,12 @@ public class WoodenObject {
         WitchingAndWizardry.CLIENT_RENDERER.addEntityRender(boat.getType(),AbstractBoatRenderer::new);
         WitchingAndWizardry.CLIENT_RENDERER.addBlockRenderer(door, RenderType.translucent());
         WitchingAndWizardry.CLIENT_RENDERER.addBlockRenderer(trapdoor, RenderType.translucent());
-        WitchingAndWizardry.CLIENT_RENDERER.addTileEntityRenderer(sign.getTile(), SignTileEntityRenderer::new);
         if(sapling!=null) {
             WitchingAndWizardry.CLIENT_RENDERER.addBlockRenderer(sapling, RenderType.cutout());
             WitchingAndWizardry.CLIENT_RENDERER.addBlockRenderer(potted_sapling, RenderType.cutout());
         }
+
+        EventHandler.addWood(this);
     }
 
     public WoodType getWoodType() {

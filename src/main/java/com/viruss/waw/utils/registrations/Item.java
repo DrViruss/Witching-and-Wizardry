@@ -23,10 +23,11 @@ public class Item extends net.minecraft.item.Item
 
     public static class Builder //TODO: Make this thing more useful
     {
-        @Nullable
-        private ItemGroup itemGroup;
+        private ItemGroup itemGroup = ItemGroup.TAB_MISC;
         @Nullable
         private Block block;
+
+        private net.minecraft.item.Item.Properties properties = new Properties();
 
         public Item.Builder itemGroup(ItemGroup itemGroup)
         {
@@ -39,14 +40,15 @@ public class Item extends net.minecraft.item.Item
             return this;
         }
 
+        public Item.Builder setProperties(Properties properties) {
+            this.properties = properties;
+            return this;
+        }
+
         public net.minecraft.item.Item build()
         {
             if(block == null)
-            {
-                if (itemGroup == null)
-                    return new net.minecraft.item.Item(new Properties().tab(ItemGroup.TAB_MISC));
-                return new net.minecraft.item.Item(new Properties().tab(itemGroup));
-            }
+                return new net.minecraft.item.Item(properties.tab(itemGroup));
             return new BlockItem(this.block,new Properties().tab(itemGroup));
         }
     }

@@ -2,6 +2,7 @@ package com.viruss.waw.utils.registrations;
 
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 
 import javax.annotation.Nullable;
@@ -18,9 +19,8 @@ public class Block extends net.minecraft.block.Block
     public static class Builder
     {
         private net.minecraft.block.Block.Properties properties = AbstractBlock.Properties.of(Material.AIR);
+        private Item.Properties itemProps = null;
 
-        @Nullable
-        private Function<Properties,? extends net.minecraft.block.Block> block;
         @Nullable
         private Supplier<net.minecraft.block.Block> block_supplier;
 
@@ -32,8 +32,9 @@ public class Block extends net.minecraft.block.Block
             this.properties = properties;
             return this;
         }
-        public <R extends net.minecraft.block.Block> Block.Builder setBlock(Function<Properties,R>  blockConstructor) {
-            this.block = blockConstructor;
+
+        public Block.Builder setItemProps(Item.Properties itemProps) {
+            this.itemProps = itemProps;
             return this;
         }
 
@@ -57,25 +58,15 @@ public class Block extends net.minecraft.block.Block
             return group;
         }
 
-        @Nullable
-        public Function<Properties,? extends net.minecraft.block.Block> getBlock() {
-            return block;
-        }
 
         public boolean isNeedItem() {
             return needItem;
         }
 
         public Supplier<net.minecraft.block.Block> build() {
-            if(block == null && block_supplier ==null)
+            if(block_supplier ==null)
                 return ()-> new net.minecraft.block.Block(properties);
-            if(block!= null)
-                return ()-> block.apply(properties);
             return block_supplier;
-        }
-
-        private static <T extends AbstractBlock.Properties, R extends net.minecraft.block.Block> Supplier<R> bind(Function<T,R> fn, T val) {
-            return () -> fn.apply(val);
         }
     }
 }

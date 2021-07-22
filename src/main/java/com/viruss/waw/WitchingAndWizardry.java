@@ -5,6 +5,8 @@ import com.viruss.waw.utils.EventHandler;
 import com.viruss.waw.utils.RegistryHandler;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.InterModComms;
@@ -44,7 +46,7 @@ public class WitchingAndWizardry
 
 
 
-
+    @OnlyIn(Dist.CLIENT) /* ~??~ */
     public static final RendererManager CLIENT_RENDERER = new RendererManager();
         /*~~~~~~Events~~~~~~*/
     private void doClientStuff(final FMLClientSetupEvent event) {

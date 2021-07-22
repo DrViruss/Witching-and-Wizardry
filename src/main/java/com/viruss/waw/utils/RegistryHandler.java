@@ -2,11 +2,17 @@ package com.viruss.waw.utils;
 
 import com.viruss.waw.WitchingAndWizardry;
 import com.viruss.waw.common.objects.blocks.ChalkSet;
+import com.viruss.waw.common.objects.blocks.MortarAndPestle;
+import com.viruss.waw.common.objects.blocks.SignObject;
 import com.viruss.waw.common.objects.blocks.WoodenObject;
 import com.viruss.waw.common.objects.items.Chalk;
+import com.viruss.waw.common.worldgen.Features;
 import com.viruss.waw.utils.registrations.MultyDeferredRegister;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -25,8 +31,10 @@ public class RegistryHandler {
         MDR.register(bus);
     }
 
-    public static final WoodenObject ASH = new WoodenObject("ash",WitchingAndWizardry.ITEM_GROUP,true,true);
-//    public static final DoubleRegisteredObject<Block,Item> MORTAR_AND_PESTLE = MDR.register("mortar_n_pestle",new com.viruss.waw.utils.registrations.Block.Builder().setBlockSup(MortarAndPestle::new).needItem(WitchingAndWizardry.ITEM_GROUP));
+    public static final WoodenObject ASH = new WoodenObject("ash",WitchingAndWizardry.ITEM_GROUP,()-> Features.Trees.ASH,true);
+    public static final MortarAndPestle MORTAR_AND_PESTLE = new MortarAndPestle();
+    public static final TileEntityType<SignObject.AbstractSignTileEntity> SIGN_TE = registerSign(ASH);
+
     public static final ChalkSet CHALKS = new ChalkSet(new Chalk.Type[]{
          Chalk.Type.WHITE,
          Chalk.Type.RED
@@ -41,5 +49,22 @@ public class RegistryHandler {
     {
         MDR.register(name,()->block,ForgeRegistries.BLOCKS);
         return block;
+    }
+    private static TileEntityType<SignObject.AbstractSignTileEntity> registerSign(WoodenObject... woods)
+    {
+        Block[] blocks = new Block[(woods.length)*2];
+        for (int i =0; i<woods.length;i++)
+        {
+            SignObject sign =woods[i].getSign();
+            blocks[i] = sign.getSign();
+            blocks[i+1] = sign.getWallSign();
+        }
+        System.out.println("woodsSize="+woods.length+" \t blocksSize="+blocks.length);
+
+        TileEntityType<SignObject.AbstractSignTileEntity> te = TileEntityType.Builder.of(SignObject.AbstractSignTileEntity::new,blocks).build(null);
+        MDR.register("sign_te",()->te,ForgeRegistries.TILE_ENTITIES);
+        WitchingAndWizardry.CLIENT_RENDERER.addTileEntityRenderer(te, SignTileEntityRenderer::new);
+
+        return te;
     }
 }

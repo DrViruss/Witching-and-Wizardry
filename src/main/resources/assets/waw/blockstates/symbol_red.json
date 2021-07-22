@@ -44,6 +44,261 @@
     "facing=east,sign=2": {
       "model": "waw:block/symbols/2",
       "y": 270
+    },
+    "facing=north,sign=3": {
+      "model": "waw:block/symbols/3",
+      "y": 180
+    },
+    "facing=south,sign=3": {
+      "model": "waw:block/symbols/3"
+    },
+    "facing=west,sign=3": {
+      "model": "waw:block/symbols/3",
+      "y": 90
+    },
+    "facing=east,sign=3": {
+      "model": "waw:block/symbols/3",
+      "y": 270
+    },
+    "facing=north,sign=4": {
+      "model": "waw:block/symbols/4",
+      "y": 180
+    },
+    "facing=south,sign=4": {
+      "model": "waw:block/symbols/4"
+    },
+    "facing=west,sign=4": {
+      "model": "waw:block/symbols/4",
+      "y": 90
+    },
+    "facing=east,sign=4": {
+      "model": "waw:block/symbols/4",
+      "y": 270
+    },
+    "facing=north,sign=5": {
+      "model": "waw:block/symbols/5",
+      "y": 180
+    },
+    "facing=south,sign=5": {
+      "model": "waw:block/symbols/5"
+    },
+    "facing=west,sign=5": {
+      "model": "waw:block/symbols/5",
+      "y": 90
+    },
+    "facing=east,sign=5": {
+      "model": "waw:block/symbols/5",
+      "y": 270
+    },
+    "facing=north,sign=6": {
+      "model": "waw:block/symbols/6",
+      "y": 180
+    },
+    "facing=south,sign=6": {
+      "model": "waw:block/symbols/6"
+    },
+    "facing=west,sign=6": {
+      "model": "waw:block/symbols/6",
+      "y": 90
+    },
+    "facing=east,sign=6": {
+      "model": "waw:block/symbols/6",
+      "y": 270
+    },
+    "facing=north,sign=7": {
+      "model": "waw:block/symbols/7",
+      "y": 180
+    },
+    "facing=south,sign=7": {
+      "model": "waw:block/symbols/7"
+    },
+    "facing=west,sign=7": {
+      "model": "waw:block/symbols/7",
+      "y": 90
+    },
+    "facing=east,sign=7": {
+      "model": "waw:block/symbols/7",
+      "y": 270
+    },
+    "facing=north,sign=8": {
+      "model": "waw:block/symbols/8",
+      "y": 180
+    },
+    "facing=south,sign=8": {
+      "model": "waw:block/symbols/8"
+    },
+    "facing=west,sign=8": {
+      "model": "waw:block/symbols/8",
+      "y": 90
+    },
+    "facing=east,sign=8": {
+      "model": "waw:block/symbols/8",
+      "y": 270
+    },
+    "facing=north,sign=9": {
+      "model": "waw:block/symbols/9",
+      "y": 180
+    },
+    "facing=south,sign=9": {
+      "model": "waw:block/symbols/9"
+    },
+    "facing=west,sign=9": {
+      "model": "waw:block/symbols/9",
+      "y": 90
+    },
+    "facing=east,sign=9": {
+      "model": "waw:block/symbols/9",
+      "y": 270
+    },
+    "facing=north,sign=10": {
+      "model": "waw:block/symbols/10",
+      "y": 180
+    },
+    "facing=south,sign=10": {
+      "model": "waw:block/symbols/10"
+    },
+    "facing=west,sign=10": {
+      "model": "waw:block/symbols/10",
+      "y": 90
+    },
+    "facing=east,sign=10": {
+      "model": "waw:block/symbols/10",
+      "y": 270
+    },
+    "facing=north,sign=11": {
+      "model": "waw:block/symbols/11",
+      "y": 180
+    },
+    "facing=south,sign=11": {
+      "model": "waw:block/symbols/11"
+    },
+    "facing=west,sign=11": {
+      "model": "waw:block/symbols/11",
+      "y": 90
+    },
+    "facing=east,sign=11": {
+      "model": "waw:block/symbols/11",
+      "y": 270
+    },
+    "facing=north,sign=12": {
+      "model": "waw:block/symbols/12",
+      "y": 180
+    },
+    "facing=south,sign=12": {
+      "model": "waw:block/symbols/12"
+    },
+    "facing=west,sign=12": {
+      "model": "waw:block/symbols/12",
+      "y": 90
+    },
+    "facing=east,sign=12": {
+      "model": "waw:block/symbols/12",
+      "y": 270
+    },
+    "facing=north,sign=13": {
+      "model": "waw:block/symbols/13",
+      "y": 180
+    },
+    "facing=south,sign=13": {
+      "model": "waw:block/symbols/13"
+    },
+    "facing=west,sign=13": {
+      "model": "waw:block/symbols/13",
+      "y": 90
+    },
+    "facing=east,sign=13": {
+      "model": "waw:block/symbols/13",
+      "y": 270
+    },
+    "facing=north,sign=14": {
+      "model": "waw:block/symbols/14",
+      "y": 180
+    },
+    "facing=south,sign=14": {
+      "model": "waw:block/symbols/14"
+    },
+    "facing=west,sign=14": {
+      "model": "waw:block/symbols/14",
+      "y": 90
+    },
+    "facing=east,sign=14": {
+      "model": "waw:block/symbols/14",
+      "y": 270
+    },
+    "facing=north,sign=15": {
+      "model": "waw:block/symbols/15",
+      "y": 180
+    },
+    "facing=south,sign=15": {
+      "model": "waw:block/symbols/15"
+    },
+    "facing=west,sign=15": {
+      "model": "waw:block/symbols/15",
+      "y": 90
+    },
+    "facing=east,sign=15": {
+      "model": "waw:block/symbols/15",
+      "y": 270
+    },
+    "facing=north,sign=16": {
+      "model": "waw:block/symbols/16",
+      "y": 180
+    },
+    "facing=south,sign=16": {
+      "model": "waw:block/symbols/16"
+    },
+    "facing=west,sign=16": {
+      "model": "waw:block/symbols/16",
+      "y": 90
+    },
+    "facing=east,sign=16": {
+      "model": "waw:block/symbols/16",
+      "y": 270
+    },
+    "facing=north,sign=17": {
+      "model": "waw:block/symbols/17",
+      "y": 180
+    },
+    "facing=south,sign=17": {
+      "model": "waw:block/symbols/17"
+    },
+    "facing=west,sign=17": {
+      "model": "waw:block/symbols/17",
+      "y": 90
+    },
+    "facing=east,sign=17": {
+      "model": "waw:block/symbols/17",
+      "y": 270
+    },
+    "facing=north,sign=18": {
+      "model": "waw:block/symbols/18",
+      "y": 180
+    },
+    "facing=south,sign=18": {
+      "model": "waw:block/symbols/18"
+    },
+    "facing=west,sign=18": {
+      "model": "waw:block/symbols/18",
+      "y": 90
+    },
+    "facing=east,sign=18": {
+      "model": "waw:block/symbols/18",
+      "y": 270
+    },
+    "facing=north,sign=19": {
+      "model": "waw:block/symbols/19",
+      "y": 180
+    },
+    "facing=south,sign=19": {
+      "model": "waw:block/symbols/19"
+    },
+    "facing=west,sign=19": {
+      "model": "waw:block/symbols/19",
+      "y": 90
+    },
+    "facing=east,sign=19": {
+      "model": "waw:block/symbols/19",
+      "y": 270
     }
   }
 }

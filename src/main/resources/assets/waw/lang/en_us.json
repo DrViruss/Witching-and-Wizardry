@@ -1,5 +1,7 @@
 {
   "itemGroup.waw": "Witching and Wizardry",
+
+
   "block.waw.ash_log": "Ash Log",
   "block.waw.ash_leaves": "Ash Leaves",
   "block.waw.ash_sapling": "Ash Sapling",
@@ -16,8 +18,14 @@
   "block.waw.ash_door": "Ash Door",
   "block.waw.ash_wood": "Ash Wood",
   "block.waw.ash_stripped_wood": "Stripped Ash Wood",
+  "block.waw.mortar": "Mortar",
+
+
   "item.waw.ash_boat": "Ash Boat",
   "item.waw.chalk_white": "White Chalk",
   "item.waw.chalk_red": "Red Chalk",
-  "waw.subtitle.chalk": "~Chalk sounds~"
+  "item.waw.pestle": "Pestle",
+
+
+  "waw.subtitle.chalk": "Chalk"
 }

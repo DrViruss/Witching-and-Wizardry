@@ -7,7 +7,6 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
@@ -22,7 +21,7 @@ import javax.annotation.Nullable;
 
 public class ChalkSymbol extends Block {
     public static final DirectionProperty FACING = HorizontalBlock.FACING;
-    public static final IntegerProperty SIGN = IntegerProperty.create("sign", 0, 2);
+    public static final IntegerProperty SIGN = IntegerProperty.create("sign", 0, 19);
 
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 0.02, 16);
     private final Chalk.Type type;
@@ -67,7 +66,7 @@ public class ChalkSymbol extends Block {
 
     @Override
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-        if(fromPos.above().getY() == pos.getY()|| fromPos.above().getY() == pos.getY())
+        if((fromPos.above().getY() == pos.getY()|| fromPos.above().getY() == pos.getY()) &&  state.isAir())
             worldIn.removeBlock(pos, false);
     }
 
