@@ -1,7 +1,0 @@
-{
-  "parent": "block/cube_column",
-  "textures": {
-    "end": "waw:blocks/trees/ash/stripped_top",
-    "side": "waw:blocks/trees/ash/stripped_side"
-  }
-}

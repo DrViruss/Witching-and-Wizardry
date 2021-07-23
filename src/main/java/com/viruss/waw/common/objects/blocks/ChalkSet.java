@@ -40,7 +40,7 @@ public class ChalkSet {
         return this.chalkMap.get(type);
     }
 
-    public void getTypes(BiConsumer<? super Chalk.Type, ? super ChalkObject> action)
+    public void foreach(BiConsumer<? super Chalk.Type, ? super ChalkObject> action)
     {
         this.chalkMap.forEach(action);
     }

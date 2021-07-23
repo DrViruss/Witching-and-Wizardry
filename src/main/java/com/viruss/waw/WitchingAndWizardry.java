@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Mod("waw")
 public class WitchingAndWizardry
 {
-    private static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger();
     public static final String MOD_ID = "waw";
 
     public WitchingAndWizardry() {
@@ -34,6 +34,7 @@ public class WitchingAndWizardry
         bus.addListener(this::doClientStuff);
 
         MinecraftForge.EVENT_BUS.register(new EventHandler());
+
         RegistryHandler.init(bus);
     }
 
@@ -55,7 +56,7 @@ public class WitchingAndWizardry
 
     private void enqueueIMC(final InterModEnqueueEvent event)
     {
-        InterModComms.sendTo("examplemod", "helloworld", () -> { LOGGER.info("Hello world from the MDK"); return "Hello world";});
+        InterModComms.sendTo("waw", "helloworld", () -> { LOGGER.info("Hello world from the MDK"); return "Hello world";});
     }
 
     private void processIMC(final InterModProcessEvent event)

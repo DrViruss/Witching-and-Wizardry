@@ -6,12 +6,9 @@ import com.viruss.waw.common.tile.MortarTE;
 import com.viruss.waw.utils.RegistryHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.ContainerBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,15 +20,12 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 
 public class MortarAndPestle {
-    //TODO: fix this sht!
     private final Block mortar;
     private final Item pestle;
     private final TileEntityType<MortarTE> mortarTE;
@@ -42,7 +36,7 @@ public class MortarAndPestle {
         this.mortarTE = TileEntityType.Builder.of(MortarTE::new,mortar).build(null);
 
 
-        RegistryHandler.MDR.register("mortar",new com.viruss.waw.utils.registrations.Block.Builder().setBlockSup(() -> mortar).needItem(WitchingAndWizardry.ITEM_GROUP));
+        RegistryHandler.MDR.register("mortar",new com.viruss.waw.utils.registration.Block.Builder().setBlockSup(() -> mortar).needItem(WitchingAndWizardry.ITEM_GROUP));
         RegistryHandler.MDR.register("pestle",()->pestle, ForgeRegistries.ITEMS);
         RegistryHandler.MDR.register("mortar",()->mortarTE,ForgeRegistries.TILE_ENTITIES);
         WitchingAndWizardry.CLIENT_RENDERER.addTileEntityRenderer(mortarTE, MortarRenderer::new);
@@ -50,6 +44,14 @@ public class MortarAndPestle {
 
     public TileEntityType<MortarTE> getMortarTE() {
         return mortarTE;
+    }
+
+    public Block getMortar() {
+        return mortar;
+    }
+
+    public Item getPestle() {
+        return pestle;
     }
 
     public static class Mortar extends Block {

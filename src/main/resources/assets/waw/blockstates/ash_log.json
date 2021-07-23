@@ -1,7 +1,0 @@
-{
-  "variants": {
-    "axis=y":  { "model":"waw:block/trees/ash/log" },
-    "axis=z":  { "model":"waw:block/trees/ash/log", "x": 90 },
-    "axis=x":  { "model":"waw:block/trees/ash/log", "x": 90, "y": 90 }
-  }
-}

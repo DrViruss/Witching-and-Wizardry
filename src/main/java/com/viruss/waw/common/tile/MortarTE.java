@@ -12,6 +12,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+    /*Thanks OccultismMod (https://github.com/klikli-dev/occultism)*/
 public class MortarTE extends NetworkTileEntity  {
 
     LazyOptional<ItemStackHandler> inventory = LazyOptional.of(() -> new ItemStackHandler(5){

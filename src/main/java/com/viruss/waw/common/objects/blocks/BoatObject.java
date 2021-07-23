@@ -25,7 +25,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class  BoatObject {
+public class  BoatObject { /*TODO: Make boat more flexible!*/
     private final EntityType<BoatEntity> entityType;
     private final Item item;
 
@@ -118,10 +118,10 @@ public class  BoatObject {
             super(worldIn, x, y, z);
         }
 
-        @Override
-        public Item getDropItem() {
-            return RegistryHandler.ASH.getBoat().getItem();
-        }
+//        @Override
+//        public Item getDropItem() {
+//            return RegistryHandler.ASH.getBoat().getItem();
+//        }
 
         @Override
         public IPacket<?> getAddEntityPacket() {

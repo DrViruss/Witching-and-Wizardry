@@ -4,7 +4,7 @@ import com.viruss.waw.WitchingAndWizardry;
 import com.viruss.waw.common.objects.blocks.ChalkSymbol;
 import com.viruss.waw.common.objects.items.Chalk;
 import com.viruss.waw.utils.RegistryHandler;
-import com.viruss.waw.utils.registrations.DoubleRegisteredObject;
+import com.viruss.waw.utils.registration.DoubleRegisteredObject;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+@SuppressWarnings("deprecated")
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = WitchingAndWizardry.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RendererManager {
@@ -81,7 +82,7 @@ public class RendererManager {
             return BiomeColors.getAverageFoliageColor(blockDisplayReader,pos)+0x1f420e;
         }, RegistryHandler.ASH.getLeaves().getPrimary());
 
-        RegistryHandler.CHALKS.getTypes((type, chalkObject) -> {
+        RegistryHandler.CHALKS.foreach((type, chalkObject) -> {
             colors.register((p_getColor_1_, p_getColor_2_, p_getColor_3_, p_getColor_4_) ->
                     ((ChalkSymbol)chalkObject.getSymbol()).getColor(),chalkObject.getSymbol());
         });
@@ -92,7 +93,7 @@ public class RendererManager {
         ItemColors items = event.getItemColors();
         BlockColors blocks = event.getBlockColors();
         items.register(((itemStack, i) -> blocks.getColor(((BlockItem)itemStack.getItem()).getBlock().defaultBlockState(),null,null,i)),RegistryHandler.ASH.getLeaves().getSecondary());
-        RegistryHandler.CHALKS.getTypes((type, chalkObject) -> {
+        RegistryHandler.CHALKS.foreach((type, chalkObject) -> {
             items.register((p_getColor_1_, p_getColor_2_) -> ((Chalk)chalkObject.getChalk()).getColor(),chalkObject.getChalk());
         });
     }

@@ -7,9 +7,8 @@ import com.viruss.waw.common.objects.blocks.SignObject;
 import com.viruss.waw.common.objects.blocks.WoodenObject;
 import com.viruss.waw.common.objects.items.Chalk;
 import com.viruss.waw.common.worldgen.Features;
-import com.viruss.waw.utils.registrations.MultyDeferredRegister;
+import com.viruss.waw.utils.registration.MultyDeferredRegister;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
@@ -31,10 +30,11 @@ public class RegistryHandler {
         MDR.register(bus);
     }
 
+
+                            /*NOTE: add all generatedObjects to BlockStateProvider */
     public static final WoodenObject ASH = new WoodenObject("ash",WitchingAndWizardry.ITEM_GROUP,()-> Features.Trees.ASH,true);
     public static final MortarAndPestle MORTAR_AND_PESTLE = new MortarAndPestle();
     public static final TileEntityType<SignObject.AbstractSignTileEntity> SIGN_TE = registerSign(ASH);
-
     public static final ChalkSet CHALKS = new ChalkSet(new Chalk.Type[]{
          Chalk.Type.WHITE,
          Chalk.Type.RED

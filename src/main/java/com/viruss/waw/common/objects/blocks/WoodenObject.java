@@ -2,10 +2,9 @@ package com.viruss.waw.common.objects.blocks;
 
 import com.viruss.waw.WitchingAndWizardry;
 import com.viruss.waw.client.renders.AbstractBoatRenderer;
-import com.viruss.waw.common.worldgen.Features;
 import com.viruss.waw.utils.EventHandler;
 import com.viruss.waw.utils.RegistryHandler;
-import com.viruss.waw.utils.registrations.DoubleRegisteredObject;
+import com.viruss.waw.utils.registration.DoubleRegisteredObject;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
@@ -52,7 +51,7 @@ public class WoodenObject {
     private final BoatObject boat;
 
     public WoodenObject(String name, ItemGroup group,Supplier<ConfiguredFeature<BaseTreeFeatureConfig, ?>> treeFeature,boolean isStrippable) {
-        com.viruss.waw.utils.registrations.Block.Builder builder = new com.viruss.waw.utils.registrations.Block.Builder().needItem(group);
+        com.viruss.waw.utils.registration.Block.Builder builder = new com.viruss.waw.utils.registration.Block.Builder().needItem(group);
         this.woodType = WoodType.register(WoodType.create(WitchingAndWizardry.MOD_ID+":"+name));
         if (isStrippable) {
             this.stripped_log = RegistryHandler.MDR.register(name+"_stripped_log",builder.setBlockSup(AbstractLog::new));
@@ -168,7 +167,11 @@ public class WoodenObject {
         return boat;
     }
 
-            /*~  Spawn predicates  ~*/
+    public DoubleRegisteredObject<Block, Item> getStrippedWood() {
+        return stripped_wood;
+    }
+
+    /*~  Spawn predicates  ~*/
 
     public static Boolean never(BlockState state, IBlockReader worldIn, BlockPos pos, EntityType<?> entityType) {
         return false;

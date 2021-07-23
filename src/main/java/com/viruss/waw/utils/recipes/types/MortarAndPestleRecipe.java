@@ -55,8 +55,7 @@ public class MortarAndPestleRecipe implements IRecipe<IInventory> {
 
     @Override
     public ItemStack getToastSymbol() {
-//        return new ItemStack(RegistryHandler.MORTAR_AND_PESTLE.getSecondary());
-        return new ItemStack(Blocks.ACACIA_LEAVES);
+        return new ItemStack(RegistryHandler.MORTAR_AND_PESTLE.getMortar());
     }
 
     @Override
@@ -69,8 +68,7 @@ public class MortarAndPestleRecipe implements IRecipe<IInventory> {
     }
     @Override
     public IRecipeType<?> getType() {
-//        return IModdedRecipeType.mortar_and_pestle;
-        return null;
+        return IModdedRecipeType.mortar_and_pestle;
     }
 
     public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<MortarAndPestleRecipe> {
