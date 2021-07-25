@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_stairs",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "waw:sambucus_planks"
+    }
+  },
+  "result": {
+    "item": "waw:sambucus_stairs",
+    "count": 4
+  }
+}

@@ -3,7 +3,7 @@ package com.viruss.waw.client;
 import com.viruss.waw.WitchingAndWizardry;
 import com.viruss.waw.common.objects.blocks.ChalkSymbol;
 import com.viruss.waw.common.objects.items.Chalk;
-import com.viruss.waw.utils.RegistryHandler;
+import com.viruss.waw.utils.ModRegistry;
 import com.viruss.waw.utils.registration.DoubleRegisteredObject;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderType;
@@ -33,7 +33,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-@SuppressWarnings("deprecated")
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = WitchingAndWizardry.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RendererManager {
@@ -80,9 +79,19 @@ public class RendererManager {
             if (i > 15) return 0xFFFFFF;
             if (blockDisplayReader == null || pos == null) return 0x74ff33;
             return BiomeColors.getAverageFoliageColor(blockDisplayReader,pos)+0x1f420e;
-        }, RegistryHandler.ASH.getLeaves().getPrimary());
+        }, ModRegistry.ASH.getLeaves().getPrimary());
 
-        RegistryHandler.CHALKS.foreach((type, chalkObject) -> {
+        colors.register((state, blockDisplayReader, pos, i) -> {
+            if (i > 15) return 0xFFFFFF;
+            if (blockDisplayReader == null || pos == null) return 0x4e0087;
+            return 0x4e0087; //BiomeColors.getAverageFoliageColor(blockDisplayReader,pos)+0x685AAF; TODO: Color
+        }, ModRegistry.SAMBUCUS.getLeaves().getPrimary());
+
+        /*0x6DAD32 lightblue*/
+
+
+        /*~    Chalks     ~*/
+        ModRegistry.CHALKS.foreach((type, chalkObject) -> {
             colors.register((p_getColor_1_, p_getColor_2_, p_getColor_3_, p_getColor_4_) ->
                     ((ChalkSymbol)chalkObject.getSymbol()).getColor(),chalkObject.getSymbol());
         });
@@ -92,8 +101,12 @@ public class RendererManager {
     public static void registerItemColors(ColorHandlerEvent.Item event) {
         ItemColors items = event.getItemColors();
         BlockColors blocks = event.getBlockColors();
-        items.register(((itemStack, i) -> blocks.getColor(((BlockItem)itemStack.getItem()).getBlock().defaultBlockState(),null,null,i)),RegistryHandler.ASH.getLeaves().getSecondary());
-        RegistryHandler.CHALKS.foreach((type, chalkObject) -> {
+
+        items.register(((itemStack, i) -> blocks.getColor(((BlockItem)itemStack.getItem()).getBlock().defaultBlockState(),null,null,i)), ModRegistry.ASH.getLeaves().getSecondary());
+        items.register(((itemStack, i) -> blocks.getColor(((BlockItem)itemStack.getItem()).getBlock().defaultBlockState(),null,null,i)), ModRegistry.SAMBUCUS.getLeaves().getSecondary());
+
+                /*~    Chalks     ~*/
+        ModRegistry.CHALKS.foreach((type, chalkObject) -> {
             items.register((p_getColor_1_, p_getColor_2_) -> ((Chalk)chalkObject.getChalk()).getColor(),chalkObject.getChalk());
         });
     }

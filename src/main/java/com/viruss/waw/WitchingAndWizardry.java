@@ -2,7 +2,7 @@ package com.viruss.waw;
 
 import com.viruss.waw.client.RendererManager;
 import com.viruss.waw.utils.EventHandler;
-import com.viruss.waw.utils.RegistryHandler;
+import com.viruss.waw.utils.ModRegistry;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -35,13 +35,13 @@ public class WitchingAndWizardry
 
         MinecraftForge.EVENT_BUS.register(new EventHandler());
 
-        RegistryHandler.init(bus);
+        ModRegistry.init(bus);
     }
 
     public static final ItemGroup ITEM_GROUP = new ItemGroup(MOD_ID) {
         @Override
         public ItemStack makeIcon() {
-            return RegistryHandler.ASH.getLog().getSecondary().getDefaultInstance();
+            return ModRegistry.ASH.getLog().getSecondary().getDefaultInstance();
         }
     };
 

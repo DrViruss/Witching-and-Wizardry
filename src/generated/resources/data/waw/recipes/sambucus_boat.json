@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "boat",
+  "pattern": [
+    "# #",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "waw:sambucus_planks"
+    }
+  },
+  "result": {
+    "item": "waw:sambucus_boat"
+  }
+}

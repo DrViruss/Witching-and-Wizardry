@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "side": "waw:blocks/trees/sambucus/log_side",
+    "end": "waw:blocks/trees/sambucus/log_end"
+  }
+}

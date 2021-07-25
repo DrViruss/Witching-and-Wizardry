@@ -1,7 +1,7 @@
 package com.viruss.waw.common.objects.items;
 
 import com.viruss.waw.WitchingAndWizardry;
-import com.viruss.waw.utils.RegistryHandler;
+import com.viruss.waw.utils.ModRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -41,13 +41,13 @@ public class Chalk extends Item {   /*~ Thanks OccultismMod ~*/
         PlayerEntity player = context.getPlayer();
         boolean isReplacing = world.getBlockState(pos).getBlock().canBeReplaced(state, new BlockItemUseContext(context));
         if (!world.isClientSide()) {
-            Block symbol  = RegistryHandler.CHALKS.getChalk(type).getSymbol();
+            Block symbol  = ModRegistry.CHALKS.getChalk(type).getSymbol();
             if ((context.getClickedFace() == Direction.UP && symbol.isAir(world.getBlockState(pos.above()), world, pos.above())) || isReplacing) {
                 ItemStack heldChalk = context.getItemInHand();
                 BlockPos placeAt = isReplacing ? pos : pos.above();
                 world.setBlockAndUpdate(placeAt, Objects.requireNonNull(symbol.getStateForPlacement(new BlockItemUseContext(context))));
 
-                world.playSound(null, pos, RegistryHandler.CHALKS.getSound(), SoundCategory.PLAYERS, 3f,3f);
+                world.playSound(null, pos, ModRegistry.CHALKS.getSound(), SoundCategory.PLAYERS, 3f,3f);
 
                 if (!player.isCreative()) {
                     heldChalk.setDamageValue(heldChalk.getDamageValue() + 1);

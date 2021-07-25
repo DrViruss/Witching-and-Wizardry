@@ -1,8 +1,8 @@
 package com.viruss.waw.utils.datagen;
 
 import com.viruss.waw.WitchingAndWizardry;
-import com.viruss.waw.common.objects.blocks.WoodenObject;
-import com.viruss.waw.utils.RegistryHandler;
+import com.viruss.waw.common.objects.packs.WoodenObject;
+import com.viruss.waw.utils.ModRegistry;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.SaplingBlock;
@@ -47,7 +47,9 @@ public class DefaultLootProvider extends BasicLootProvider{
 
         @Override
         protected void addTables() {
-            addWoodDrops(RegistryHandler.ASH);
+            addWoodDrops(ModRegistry.ASH);
+            addWoodDrops(ModRegistry.SAMBUCUS);
+
         }
 
         private void addWoodDrops(WoodenObject wood){
@@ -59,13 +61,16 @@ public class DefaultLootProvider extends BasicLootProvider{
             regularBlock(wood.getFence().getPrimary());
             slabBlock((SlabBlock) wood.getSlab().getPrimary());
             regularBlock(wood.getStairs().getPrimary());
-            regularBlock(wood.getStrippedLog().getPrimary());
             regularBlock(wood.getTrapdoor().getPrimary());
             regularBlock(wood.getSign().getSign());
             regularBlock(wood.getButton().getPrimary());
             regularBlock(wood.getPressure_plate().getPrimary());
             regularBlock(wood.getWood().getPrimary());
-            regularBlock(wood.getStrippedWood().getPrimary());
+
+            if(wood.getStrippedLog()!= null) {
+                regularBlock(wood.getStrippedWood().getPrimary());
+                regularBlock(wood.getStrippedLog().getPrimary());
+            }
             if(wood.getSapling()!= null) {
                 regularBlock(wood.getSapling().getPrimary());
                 leavesBlock((LeavesBlock) wood.getLeaves().getPrimary(), (SaplingBlock) wood.getSapling().getPrimary(),null);

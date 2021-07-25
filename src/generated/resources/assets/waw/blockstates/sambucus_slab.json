@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "waw:block/sambucus_slab_top"
+    },
+    "type=bottom": {
+      "model": "waw:block/sambucus_slab"
+    },
+    "type=double": {
+      "model": "waw:block/sambucus_planks"
+    }
+  }
+}

@@ -1,7 +1,7 @@
 package com.viruss.waw.utils.recipes;
 
 import com.viruss.waw.WitchingAndWizardry;
-import com.viruss.waw.utils.recipes.types.MortarAndPestleRecipe;
+import com.viruss.waw.utils.recipes.types.MortarAndPestle;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IModdedRecipeType<T extends IRecipe<?>>{
-    IRecipeType<MortarAndPestleRecipe> mortar_and_pestle = register("mortar_and_pestle");
+    IRecipeType<MortarAndPestle> mortar_and_pestle = register("mortar_and_pestle");
 
     static <T extends IRecipe<?>> IRecipeType<T> register(final String key) {
         return Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(WitchingAndWizardry.MOD_ID, key), new IRecipeType<T>() {

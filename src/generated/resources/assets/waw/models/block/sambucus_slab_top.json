@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "side": "waw:blocks/trees/sambucus/planks",
+    "bottom": "waw:blocks/trees/sambucus/planks",
+    "top": "waw:blocks/trees/sambucus/planks"
+  }
+}

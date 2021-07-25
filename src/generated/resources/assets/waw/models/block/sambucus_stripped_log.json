@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "waw:blocks/trees/sambucus/stripped_side",
+    "end": "waw:blocks/trees/sambucus/stripped_end"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_rh",
+  "textures": {
+    "bottom": "waw:blocks/trees/sambucus/door_bottom",
+    "top": "waw:blocks/trees/sambucus/door_top"
+  }
+}

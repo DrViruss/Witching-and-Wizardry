@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "waw:sambucus_logs"
+    }
+  ],
+  "result": {
+    "item": "waw:sambucus_planks",
+    "count": 4
+  }
+}

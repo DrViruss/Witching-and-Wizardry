@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "bark",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "waw:sambucus_log"
+    }
+  },
+  "result": {
+    "item": "waw:sambucus_wood",
+    "count": 3
+  }
+}

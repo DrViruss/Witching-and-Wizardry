@@ -1,6 +1,6 @@
 package com.viruss.waw.common.tile;
 
-import com.viruss.waw.utils.RegistryHandler;
+import com.viruss.waw.utils.ModRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
@@ -34,7 +34,7 @@ public class MortarTE extends NetworkTileEntity  {
     });
 
     public MortarTE() {
-        super(RegistryHandler.MORTAR_AND_PESTLE.getMortarTE());
+        super(ModRegistry.MORTAR_AND_PESTLE.getMortarTE());
     }
 
     @Nonnull

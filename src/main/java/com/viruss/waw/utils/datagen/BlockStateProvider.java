@@ -1,8 +1,8 @@
 package com.viruss.waw.utils.datagen;
 
 import com.viruss.waw.WitchingAndWizardry;
-import com.viruss.waw.common.objects.blocks.WoodenObject;
-import com.viruss.waw.utils.RegistryHandler;
+import com.viruss.waw.common.objects.packs.WoodenObject;
+import com.viruss.waw.utils.ModRegistry;
 import net.minecraft.block.*;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.state.properties.AttachFace;
@@ -26,13 +26,15 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
 
     @Override
     protected void registerStatesAndModels() {
-        registerWoods(RegistryHandler.ASH);
+        registerWoods(ModRegistry.ASH);
+        registerWoods(ModRegistry.SAMBUCUS);
+
 
         generateChalks();
     }
 
     private void generateChalks(){
-        RegistryHandler.CHALKS.foreach((type, chalkObject) -> {
+        ModRegistry.CHALKS.foreach((type, chalkObject) -> {
             generatedItem(chalkObject.getChalk(),modLoc("items/chalk"));
         });
     }
@@ -45,28 +47,35 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
             planks(wood.getPlanks().getPrimary(),treeName);
             this.axisBlock((RotatedPillarBlock) wood.getLog().getPrimary(), woodBlocksLocation(treeName,"log"));
             this.doorBlock((DoorBlock) wood.getDoor().getPrimary(), woodBlocksLocation(treeName,"door_bottom"), woodBlocksLocation(treeName,"door_top"));
-            this.fenceBlock((FenceBlock) wood.getFence().getPrimary(), woodBlocksLocation(treeName,"planks"));
             this.fenceGateBlock((FenceGateBlock) wood.getGate().getPrimary(), woodBlocksLocation(treeName,"planks"));
             this.slabBlock((SlabBlock) wood.getSlab().getPrimary(),wood.getPlanks().getPrimary().getRegistryName(), woodBlocksLocation(treeName,"planks"));
             this.stairsBlock((StairsBlock) wood.getStairs().getPrimary(), woodBlocksLocation(treeName,"planks"));
-            this.axisBlock((RotatedPillarBlock) wood.getStrippedLog().getPrimary(), woodBlocksLocation(treeName,"stripped"));
             this.trapdoorBlock((TrapDoorBlock) wood.getTrapdoor().getPrimary(), woodBlocksLocation(treeName,"trapdoor"),true);
             this.signBlock((StandingSignBlock) wood.getSign().getSign(), (WallSignBlock) wood.getSign().getWallSign(), woodBlocksLocation(treeName,"planks"));
             this.buttonBlock((AbstractButtonBlock) wood.getButton().getPrimary(),treeName);
             this.pressurePlate((PressurePlateBlock) wood.getPressure_plate().getPrimary(),treeName);
             this.woodBlock((RotatedPillarBlock) wood.getWood().getPrimary(),"log_side",treeName);
-            this.woodBlock((RotatedPillarBlock) wood.getStrippedWood().getPrimary(),"stripped_side",treeName);
+
+            this.fenceBlockWithItem((FenceBlock) wood.getFence().getPrimary(), woodBlocksLocation(treeName,"planks"));
 
             if(wood.getSapling()!= null) {
                 this.sapling((SaplingBlock) wood.getSapling().getPrimary(), (FlowerPotBlock) wood.getPotted_sapling(),treeName);
                 this.leaves((LeavesBlock) wood.getLeaves().getPrimary());
+
                 basicBlockItem(wood.getLeaves().getPrimary());
                 generatedItem(wood.getSapling().getPrimary(),woodBlocksLocation(treeName,"sapling"));
 //            basicBlockItem(wood.getSapling().getPrimary()); beautiful! :D
             }
 
+            if(wood.getStrippedLog()!= null){
+                this.axisBlock((RotatedPillarBlock) wood.getStrippedLog().getPrimary(), woodBlocksLocation(treeName,"stripped"));
+                this.woodBlock((RotatedPillarBlock) wood.getStrippedWood().getPrimary(),"stripped_side",treeName);
+
+                basicBlockItem(wood.getStrippedLog().getPrimary());
+                basicBlockItem(wood.getStrippedWood().getPrimary());
+            }
+
             basicBlockItem(wood.getWood().getPrimary());
-            basicBlockItem(wood.getStrippedWood().getPrimary());
             basicBlockItem(wood.getStairs().getPrimary());
             basicBlockItem(wood.getSlab().getPrimary());
             basicBlockItem(wood.getPlanks().getPrimary());
@@ -74,12 +83,10 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
             buttonItem((AbstractButtonBlock) wood.getButton().getPrimary(),treeName);
             basicBlockItem(wood.getTrapdoor().getPrimary(),"_bottom");
             basicBlockItem(wood.getGate().getPrimary());
-            basicBlockItem(wood.getFence().getPrimary(),"_side");
             generatedItem(wood.getDoor().getPrimary(),woodItemsLocation(treeName,"door"));
             basicBlockItem(wood.getLog().getPrimary());
             generatedItem(wood.getSign().getSign(),woodItemsLocation(treeName,"sign"));
-            generatedItem(wood.getBoat().getItem(),woodItemsLocation(treeName,"boat"));
-            basicBlockItem(wood.getStrippedLog().getPrimary());
+            generatedItem(wood.getBoat().get(),woodItemsLocation(treeName,"boat"));
         }
     }
 
@@ -192,6 +199,13 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
                         .modelForState().rotationX(rotX).rotationY(rotY).modelFile(normal).addModel();
             }
         }
+    }
+
+    public void fenceBlockWithItem(FenceBlock block, ResourceLocation texture) {
+        fenceBlock(block, texture);
+        ModelFile inventory = models().singleTexture(name(block) + "_inventory",
+                new ResourceLocation(ModelProvider.BLOCK_FOLDER + "/fence_inventory"), "texture", texture);
+        simpleBlockItem(block, inventory);
     }
 
     private ResourceLocation woodBlocksLocation(String treeName, String name){

@@ -3,7 +3,7 @@ package com.viruss.waw.common.worldgen;
 
 import com.google.common.collect.Lists;
 import com.viruss.waw.WitchingAndWizardry;
-import com.viruss.waw.utils.RegistryHandler;
+import com.viruss.waw.utils.ModRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
@@ -33,6 +33,7 @@ public class Features {
 
     public static void setup() {
         init();
+
         for (Map.Entry<RegistryKey<Biome>, Biome> biomeEntry : WorldGenRegistries.BIOME.entrySet()) {
             Biome biome = biomeEntry.getValue();
             if (biome.getBiomeCategory().equals(Biome.Category.NETHER) || biome.getBiomeCategory().equals(Biome.Category.THEEND))
@@ -50,7 +51,7 @@ public class Features {
     private static void init() {
 //      Features.Ore.registerOreFeature("ore_tin",RegistryHandler.ORE_TIN.getPrimary(),9,64,20);
 
-        Features.Trees.addWorldGenFeature(Features.Trees.ASH,240,2);
+//        Features.Trees.addWorldGenFeature(Features.Trees.ASH,240,2);
     }
 
     public static class Ores {
@@ -71,38 +72,74 @@ public class Features {
     public static class Trees{
         public static final List<ConfiguredFeature<?, ?>> list = new ArrayList<>();
 
-        public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> ASH = registerWorldFeature("ash_tree", Feature.TREE.configured(
-        (new BaseTreeFeatureConfig.Builder
-            (
-                new SimpleBlockStateProvider(RegistryHandler.ASH.getLog().getPrimaryRO().get().defaultBlockState()),
-                new SimpleBlockStateProvider(RegistryHandler.ASH.getLeaves().getPrimaryRO().get().defaultBlockState()),
-                new FancyFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(4), 4),
-                new FancyTrunkPlacer(5, 2, 0),
-                new TwoLayerFeature(0, 0, 0, OptionalInt.of(4))
-            )
-        )
-        .ignoreVines()
-        .heightmap(Heightmap.Type.MOTION_BLOCKING)
-        .build()
-        ));
+
+
+//        public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> ASH = registerWorldFeature("ash_tree", Feature.TREE.configured(
+//                (new BaseTreeFeatureConfig.Builder
+//                        (
+//                                new SimpleBlockStateProvider(ModRegistry.ASH.getLog().getPrimary().defaultBlockState()),
+//                                new SimpleBlockStateProvider(ModRegistry.ASH.getLeaves().getPrimary().defaultBlockState()),
+//                                new FancyFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(4), 4),
+//                                new FancyTrunkPlacer(5, 2, 0),
+//                                new TwoLayerFeature(0, 0, 0, OptionalInt.of(4))
+//                        )
+//                )
+//                        .ignoreVines()
+//                        .heightmap(Heightmap.Type.MOTION_BLOCKING)
+//                        .build()
+//        ));
+
+//        public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> ELDER = registerWorldFeature("elder_tree", Feature.TREE.configured(
+//        (new BaseTreeFeatureConfig.Builder
+//            (
+//                new SimpleBlockStateProvider(ModRegistry.ELDER.getLog().getPrimary().defaultBlockState()),
+//                new SimpleBlockStateProvider(ModRegistry.ELDER.getLeaves().getPrimary().defaultBlockState()),
+//                new FancyFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(4), 6),
+//                new FancyTrunkPlacer(4, 2, 0),
+//                new TwoLayerFeature(0, 0, 0, OptionalInt.of(4))
+//            )
+//        )
+//        .ignoreVines()
+//        .heightmap(Heightmap.Type.MOTION_BLOCKING)
+//        .build()
+//        ));
+
+
+
+
+//        public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> ASH = registerWorldFeature("ash_tree", Feature.TREE.configured(
+//        (new BaseTreeFeatureConfig.Builder
+//            (
+//                new SimpleBlockStateProvider(ModRegistry.ASH.getLog().getPrimary().defaultBlockState()),
+//                new SimpleBlockStateProvider(ModRegistry.ASH.getLeaves().getPrimary().defaultBlockState()),
+//                new FancyFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(4), 4),
+//                new FancyTrunkPlacer(5, 2, 0),
+//                new TwoLayerFeature(0, 0, 0, OptionalInt.of(4))
+//            )
+//        )
+//        .ignoreVines()
+//        .heightmap(Heightmap.Type.MOTION_BLOCKING)
+//        .build()
+//        ));
+
+
+
+//        public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> ELDER = registerWorldFeature("elder_tree", Feature.TREE.configured(
+//            (new BaseTreeFeatureConfig.Builder
+//            (
+//                new SimpleBlockStateProvider(ModRegistry.ELDER.getLog().getPrimary().defaultBlockState()),
+//                new SimpleBlockStateProvider(ModRegistry.ELDER.getLeaves().getPrimary().defaultBlockState()),
+//                new FancyFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(4), 6),
+//                new FancyTrunkPlacer(4, 2, 0),
+//                new TwoLayerFeature(0, 0, 0, OptionalInt.of(4))
+//            )
+//        )
+//        .ignoreVines()
+//        .heightmap(Heightmap.Type.MOTION_BLOCKING)
+//        .build()
+//        ));
 
 //OakTree
-
-        private static ConfiguredFeature<BaseTreeFeatureConfig, ?> newTree(String name, Block log,int logH,int logRH,int logR2H, Block leaves,int leavesRad,int leavesOff,int leavesH)
-        {
-            int limit_upper=1,lower =0;
-            return registerWorldFeature(name, Feature.TREE.configured(new BaseTreeFeatureConfig.Builder(
-                    new SimpleBlockStateProvider(log.defaultBlockState()),
-                    new SimpleBlockStateProvider(leaves.defaultBlockState()),
-                    new BlobFoliagePlacer(FeatureSpread.of(leavesRad,0), FeatureSpread.fixed(leavesOff), leavesH),
-                    new StraightTrunkPlacer(logH, logRH, logR2H),
-                    new TwoLayerFeature(limit_upper, lower, limit_upper)
-            )
-                    .heightmap(Heightmap.Type.WORLD_SURFACE)
-                    .maxWaterDepth(1)
-                    .ignoreVines()
-                    .build()) );
-        }
 
         public static void addWorldGenFeature(ConfiguredFeature<BaseTreeFeatureConfig, ?> feature,int chance, int countRandom)
         {
@@ -131,7 +168,7 @@ public class Features {
                 "field_242484_f");
     }
 
-    protected static <FC extends IFeatureConfig, F extends Feature<FC>> ConfiguredFeature<FC, F> registerWorldFeature(String rl, ConfiguredFeature<FC, F> feature) {
+    public static <FC extends IFeatureConfig, F extends Feature<FC>> ConfiguredFeature<FC, F> registerWorldFeature(String rl, ConfiguredFeature<FC, F> feature) {
         return Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(WitchingAndWizardry.MOD_ID,rl), feature);
     }
 }

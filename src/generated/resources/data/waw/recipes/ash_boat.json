@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "boat",
+  "pattern": [
+    "# #",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "waw:ash_planks"
+    }
+  },
+  "result": {
+    "item": "waw:ash_boat"
+  }
+}
