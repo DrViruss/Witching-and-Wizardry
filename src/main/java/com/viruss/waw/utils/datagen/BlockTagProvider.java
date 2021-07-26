@@ -12,8 +12,8 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import javax.annotation.Nullable;
 
 public class BlockTagProvider extends BlockTagsProvider {
-    public BlockTagProvider(DataGenerator p_i48256_1_, @Nullable ExistingFileHelper existingFileHelper) {
-        super(p_i48256_1_, WitchingAndWizardry.MOD_ID, existingFileHelper);
+    public BlockTagProvider(DataGenerator generator, @Nullable ExistingFileHelper existingFileHelper) {
+        super(generator, WitchingAndWizardry.MOD_ID, existingFileHelper);
     }
 
     @Override
