@@ -13,9 +13,7 @@ import net.minecraft.block.trees.Tree;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
@@ -23,6 +21,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.feature.AbstractFeatureSizeType;
@@ -42,6 +41,7 @@ public class WoodenObject {
 
     private final ITag.INamedTag<Item> logsItemTag;
     private final ITag.INamedTag<Block> logsBlockTag;
+
     private final WoodType woodType;
     private final DoubleRegisteredObject<Block, Item> log;
     private DoubleRegisteredObject<Block, Item> stripped_log;
@@ -61,6 +61,9 @@ public class WoodenObject {
     private final DoubleRegisteredObject<Block, Item> pressure_plate;
     private final SignObject sign;
     private final RegistryObject<Item> boat;
+
+    private RegistryObject<Item> fruit;
+
 
     public WoodenObject(String name,ItemGroup group,boolean isStrippable) {
         com.viruss.waw.utils.registration.Block.Builder builder = new com.viruss.waw.utils.registration.Block.Builder().needItem(group);
@@ -95,20 +98,60 @@ public class WoodenObject {
         WitchingAndWizardry.CLIENT_RENDERER.addBlockRenderer(trapdoor, RenderType.translucent());
     }
 
-    public WoodenObject(String name, ItemGroup group, FoliagePlacer foliagePlacer, AbstractTrunkPlacer trunkPlacer, AbstractFeatureSizeType sizeType, boolean vines, Heightmap.Type heightmap, boolean isStrippable) {
+    public WoodenObject(String name, ItemGroup group, FoliagePlacer foliagePlacer, AbstractTrunkPlacer trunkPlacer, AbstractFeatureSizeType sizeType, boolean vines, Heightmap.Type heightmap,boolean isStrippable) {
         this(name,group, isStrippable);
         com.viruss.waw.utils.registration.Block.Builder builder = new com.viruss.waw.utils.registration.Block.Builder().needItem(group);
         this.leaves = ModRegistry.MDR.register(name + "_leaves", builder.setBlockSup(AbstractLeaves::new));
 
-
-
         this.sapling = ModRegistry.MDR.register(name + "_sapling", builder.setBlockSup(() -> new AbstractSapling(new AbstractTree(name,log.getPrimary(),leaves.getPrimary(),foliagePlacer,trunkPlacer,sizeType,vines,heightmap))));
-        this.potted_sapling = ModRegistry.MDR.register(name + "_potted", () -> new FlowerPotBlock(()-> (FlowerPotBlock) Blocks.FLOWER_POT, this.sapling::getPrimary, AbstractBlock.Properties.copy(Blocks.FLOWER_POT)), ForgeRegistries.BLOCKS);
 
+        this.potted_sapling = ModRegistry.MDR.register(name + "_potted", () -> new FlowerPotBlock(()-> (FlowerPotBlock) Blocks.FLOWER_POT, this.sapling::getPrimary, AbstractBlock.Properties.copy(Blocks.FLOWER_POT)), ForgeRegistries.BLOCKS);
         WitchingAndWizardry.CLIENT_RENDERER.addBlockRenderer(sapling, RenderType.cutout());
         WitchingAndWizardry.CLIENT_RENDERER.addBlockRenderer(potted_sapling, RenderType.cutout());
         EventHandler.addWood(this);
+    }
 
+    public WoodenObject(String name, ItemGroup group, FoliagePlacer foliagePlacer, AbstractTrunkPlacer trunkPlacer, AbstractFeatureSizeType sizeType, boolean vines, Heightmap.Type heightmap, boolean isStrippable, Food fruit) {
+        this(name,group, foliagePlacer,trunkPlacer,sizeType,vines,heightmap,isStrippable);
+        String type;
+
+        if(fruit == Foods.APPLE)
+            type = "_apple";
+        else
+            type = "_berries";
+
+        this.fruit = ModRegistry.MDR.register(name+type,()->new Item(new Item.Properties().tab(group).food(fruit)),ForgeRegistries.ITEMS);
+    }
+
+    public WoodenObject(String name, ItemGroup group, FoliagePlacer foliagePlacer, AbstractTrunkPlacer trunkPlacer, AbstractFeatureSizeType sizeType, boolean vines, Heightmap.Type heightmap,boolean isStrippable,int chance, int countRandom,int noiseLevel,int belowNoise,int aboveNoise,Biome.Category biome) {
+        this(name,group, isStrippable);
+        com.viruss.waw.utils.registration.Block.Builder builder = new com.viruss.waw.utils.registration.Block.Builder().needItem(group);
+        this.leaves = ModRegistry.MDR.register(name + "_leaves", builder.setBlockSup(AbstractLeaves::new));
+
+        this.sapling = ModRegistry.MDR.register(name + "_sapling", builder.setBlockSup(() -> new AbstractSapling(new AbstractTree(name,log.getPrimary(),leaves.getPrimary(),foliagePlacer,trunkPlacer,sizeType,vines,heightmap,chance,countRandom,noiseLevel,belowNoise,aboveNoise,biome))));
+
+        this.potted_sapling = ModRegistry.MDR.register(name + "_potted", () -> new FlowerPotBlock(()-> (FlowerPotBlock) Blocks.FLOWER_POT, this.sapling::getPrimary, AbstractBlock.Properties.copy(Blocks.FLOWER_POT)), ForgeRegistries.BLOCKS);
+        WitchingAndWizardry.CLIENT_RENDERER.addBlockRenderer(sapling, RenderType.cutout());
+        WitchingAndWizardry.CLIENT_RENDERER.addBlockRenderer(potted_sapling, RenderType.cutout());
+        EventHandler.addWood(this);
+    }
+
+    public WoodenObject(String name, ItemGroup group, FoliagePlacer foliagePlacer, AbstractTrunkPlacer trunkPlacer, AbstractFeatureSizeType sizeType, boolean vines, Heightmap.Type heightmap,boolean isStrippable,Food fruit,int chance, int countRandom,int noiseLevel,int belowNoise,int aboveNoise,Biome.Category biome) {
+        this(name,group, foliagePlacer,trunkPlacer,sizeType,vines,heightmap,isStrippable,chance,countRandom,noiseLevel,belowNoise,aboveNoise,biome);
+
+        String type;
+        if(fruit == Foods.APPLE)
+            type = "_apple";
+        else
+            type = "_berries";
+
+        this.fruit = ModRegistry.MDR.register(name+type,()->new Item(new Item.Properties().tab(group).food(fruit)),ForgeRegistries.ITEMS);
+
+    }
+
+
+    public RegistryObject<Item> getFruit() {
+        return fruit;
     }
 
     public ITag.INamedTag<Item> getLogsItemTag() {
@@ -343,14 +386,22 @@ public class WoodenObject {
     public static class AbstractTree extends Tree {
         private final ConfiguredFeature<BaseTreeFeatureConfig, ?> treeFeature;
 
-        public AbstractTree(String name, Block log, Block leaves, FoliagePlacer foliagePlacer, AbstractTrunkPlacer trunkPlacer, AbstractFeatureSizeType sizeType, boolean vines, Heightmap.Type heightmap) {
-
+        public AbstractTree(String name, Block log, Block leaves, FoliagePlacer foliagePlacer, AbstractTrunkPlacer trunkPlacer, AbstractFeatureSizeType sizeType, boolean vines, Heightmap.Type heightmap,int chance, int countRandom,int noiseLevel,int belowNoise,int aboveNoise,Biome.Category biome) {
             BaseTreeFeatureConfig.Builder builder = new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(log.defaultBlockState()), new SimpleBlockStateProvider(leaves.defaultBlockState()), foliagePlacer, trunkPlacer, sizeType);
             if (!vines)
                 builder.ignoreVines();
             if(heightmap != null)
                 builder.heightmap(heightmap);
+            this.treeFeature =  Features.registerWorldFeature(name+"_tree",Feature.TREE.configured(builder.build()));
+            Features.Trees.addWorldGenFeature(name+"_tree",treeFeature,chance,countRandom,noiseLevel,belowNoise,aboveNoise,biome); /*TODO: FIXITTT*/
+        }
 
+        public AbstractTree(String name, Block log, Block leaves, FoliagePlacer foliagePlacer, AbstractTrunkPlacer trunkPlacer, AbstractFeatureSizeType sizeType, boolean vines, Heightmap.Type heightmap) {
+            BaseTreeFeatureConfig.Builder builder = new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(log.defaultBlockState()), new SimpleBlockStateProvider(leaves.defaultBlockState()), foliagePlacer, trunkPlacer, sizeType);
+            if (!vines)
+                builder.ignoreVines();
+            if(heightmap != null)
+                builder.heightmap(heightmap);
             this.treeFeature =  Features.registerWorldFeature(name+"_tree",Feature.TREE.configured(builder.build()));
         }
 

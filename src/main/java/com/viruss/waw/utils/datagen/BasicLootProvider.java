@@ -12,6 +12,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IDataProvider;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.loot.*;
 import net.minecraft.loot.conditions.*;
@@ -21,6 +22,7 @@ import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.state.properties.SlabType;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.RegistryObject;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -86,11 +88,11 @@ public class BasicLootProvider implements IDataProvider {
                                 .when(SurvivesExplosion.survivesExplosion())).build());
     }
 
-    public void leavesBlock(LeavesBlock block, SaplingBlock saplingBlock, Supplier<IItemProvider> apple) {
+    public void leavesBlock(LeavesBlock block, SaplingBlock saplingBlock, RegistryObject<Item> apple) {
         leavesBlock(name(block), block, saplingBlock, apple);
     }
 
-    public void leavesBlock(String name, LeavesBlock block, SaplingBlock sapling, Supplier<IItemProvider> apple) {
+    public void leavesBlock(String name, LeavesBlock block, SaplingBlock sapling, RegistryObject<Item> apple) {
         LootTable.Builder builder = LootTable.lootTable().setParamSet(LootParameterSets.BLOCK).withPool(
                 LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(AlternativesLootEntry.alternatives(
                         ItemLootEntry.lootTableItem(block).when(Alternative

@@ -8,7 +8,9 @@ import com.viruss.waw.common.objects.packs.WoodenObject;
 import com.viruss.waw.utils.registration.MultyDeferredRegister;
 import com.viruss.waw.utils.registries.ModEntities;
 import net.minecraft.block.Block;
+import net.minecraft.item.Foods;
 import net.minecraft.item.Item;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.FeatureSpread;
 import net.minecraft.world.gen.feature.TwoLayerFeature;
@@ -36,9 +38,8 @@ public class ModRegistry {
 
 
                             /*NOTE: add all generatedObjects to dataGen */
-    //TODO: add berries!
-    public static final WoodenObject ASH = new WoodenObject("ash",WitchingAndWizardry.ITEM_GROUP,new FancyFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(4), 4),new FancyTrunkPlacer(5, 2, 0),new TwoLayerFeature(0, 0, 0, OptionalInt.of(4)),false, Heightmap.Type.MOTION_BLOCKING,true);
-    public static final WoodenObject SAMBUCUS = new WoodenObject("sambucus",WitchingAndWizardry.ITEM_GROUP,new FancyFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(4), 6),new FancyTrunkPlacer(4, 2, 0),new TwoLayerFeature(0, 0, 0, OptionalInt.of(4)),false, Heightmap.Type.MOTION_BLOCKING,true);
+    public static final WoodenObject ASH = new WoodenObject("ash",WitchingAndWizardry.ITEM_GROUP,new FancyFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(4), 4),new FancyTrunkPlacer(5, 2, 0),new TwoLayerFeature(0, 0, 0, OptionalInt.of(4)),false, Heightmap.Type.MOTION_BLOCKING,true,240,2,12,3,6, Biome.Category.PLAINS);
+    public static final WoodenObject SAMBUCUS = new WoodenObject("sambucus",WitchingAndWizardry.ITEM_GROUP,new FancyFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(4), 6),new FancyTrunkPlacer(4, 2, 0),new TwoLayerFeature(0, 0, 0, OptionalInt.of(4)),false, Heightmap.Type.MOTION_BLOCKING,true, Foods.SWEET_BERRIES,240,2,12,3,6, Biome.Category.PLAINS);
 
 
     public static final MortarAndPestle MORTAR_AND_PESTLE = new MortarAndPestle();

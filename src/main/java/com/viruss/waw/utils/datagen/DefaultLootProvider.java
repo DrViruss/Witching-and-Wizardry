@@ -2,7 +2,6 @@ package com.viruss.waw.utils.datagen;
 
 import com.viruss.waw.WitchingAndWizardry;
 import com.viruss.waw.common.objects.packs.WoodenObject;
-import com.viruss.waw.utils.ModRegistry;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.SaplingBlock;
@@ -13,16 +12,17 @@ import net.minecraft.data.loot.EntityLootTables;
 import net.minecraft.entity.EntityType;
 import net.minecraft.loot.LootTable;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class DefaultLootProvider extends BasicLootProvider{
+    BlockLoot blockLoot;
+    EntityLoot entityLoot;
 
-    BlockLoot blockLoot = new BlockLoot();
-    EntityLoot entityLoot = new EntityLoot();
-
-    public DefaultLootProvider(DataGenerator generator) {
+    public DefaultLootProvider(DataGenerator generator,Set<WoodenObject> woods,Map<EntityType<?>, LootTable.Builder> entityDrops) {
         super(generator,WitchingAndWizardry.MOD_ID);
+        blockLoot = new BlockLoot(woods);
+        entityLoot = new EntityLoot(entityDrops);
     }
 
     @Override
@@ -33,23 +33,28 @@ public class DefaultLootProvider extends BasicLootProvider{
 
 
     public static class EntityLoot extends EntityLootTables{
-        private static Map<EntityType<?>, LootTable.Builder> drops = new HashMap<>();
+        private final Map<EntityType<?>, LootTable.Builder> drops;
+
+        public EntityLoot(Map<EntityType<?>, LootTable.Builder> drops) {
+            this.drops = drops;
+        }
+
         @Override
         protected void addTables() {
             drops.forEach(this::add);
         }
-
-        public static void addLoot(EntityType<?> entityType, LootTable.Builder loot){
-            drops.put(entityType,loot);
-        }
     }
     public class BlockLoot extends BlockLootTables{
+        private final Set<WoodenObject> woodenObjects;
+
+        public BlockLoot(Set<WoodenObject> woodenObjects) {
+            this.woodenObjects = woodenObjects;
+        }
 
         @Override
         protected void addTables() {
-            addWoodDrops(ModRegistry.ASH);
-            addWoodDrops(ModRegistry.SAMBUCUS);
-
+            for(WoodenObject wood : woodenObjects)
+               addWoodDrops(wood);
         }
 
         private void addWoodDrops(WoodenObject wood){
@@ -73,9 +78,8 @@ public class DefaultLootProvider extends BasicLootProvider{
             }
             if(wood.getSapling()!= null) {
                 regularBlock(wood.getSapling().getPrimary());
-                leavesBlock((LeavesBlock) wood.getLeaves().getPrimary(), (SaplingBlock) wood.getSapling().getPrimary(),null);
+                leavesBlock((LeavesBlock) wood.getLeaves().getPrimary(), (SaplingBlock) wood.getSapling().getPrimary(),wood.getFruit());
             }
-
         }
 
 

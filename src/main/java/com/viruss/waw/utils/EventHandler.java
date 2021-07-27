@@ -9,25 +9,24 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.*;
 
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 public class EventHandler {
-    private static ArrayList<WoodenObject>  woodenObjects = new ArrayList<>();
+    private static final Set<WoodenObject> woodenObjects = new HashSet<>();
 
         @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
         net.minecraft.data.DataGenerator generator = event.getGenerator();
         if (event.includeServer()) {
-            generator.addProvider(new RecipeProvider(generator));
-            generator.addProvider(new ItemTagProvider(generator, event.getExistingFileHelper()));
-            generator.addProvider(new BlockTagProvider(generator, event.getExistingFileHelper()));
+            generator.addProvider(new RecipeProvider(generator,woodenObjects));
+            generator.addProvider(new ItemTagProvider(generator, event.getExistingFileHelper(),woodenObjects));
+            generator.addProvider(new BlockTagProvider(generator, event.getExistingFileHelper(),woodenObjects));
 
-            generator.addProvider(new DefaultLootProvider(generator));
+            generator.addProvider(new DefaultLootProvider(generator,woodenObjects,new HashMap<>())); //TODO: add MobLoot!
         }
         if (event.includeClient()) {
-            generator.addProvider(new BlockStateProvider(generator, event.getExistingFileHelper()));
+            generator.addProvider(new BlockStateProvider(generator, event.getExistingFileHelper(),woodenObjects));
         }
     }
 

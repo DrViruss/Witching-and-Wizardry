@@ -16,18 +16,22 @@ import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.Objects;
+import java.util.Set;
 
 /*Thanks TreemendousMod (https://github.com/rehwinkel/treemendous)*/
 public class BlockStateProvider extends net.minecraftforge.client.model.generators.BlockStateProvider{
+    private final Set<WoodenObject> woodenObjects;
 
-    public BlockStateProvider(DataGenerator gen, ExistingFileHelper exFileHelper) {
+
+    public BlockStateProvider(DataGenerator gen, ExistingFileHelper exFileHelper,Set<WoodenObject> woods) {
         super(gen, WitchingAndWizardry.MOD_ID, exFileHelper);
+        this.woodenObjects = woods;
     }
 
     @Override
     protected void registerStatesAndModels() {
-        registerWoods(ModRegistry.ASH);
-        registerWoods(ModRegistry.SAMBUCUS);
+        for(WoodenObject wood : woodenObjects)
+            registerWoods(wood);
 
 
         generateChalks();
@@ -87,6 +91,8 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
             basicBlockItem(wood.getLog().getPrimary());
             generatedItem(wood.getSign().getSign(),woodItemsLocation(treeName,"sign"));
             generatedItem(wood.getBoat().get(),woodItemsLocation(treeName,"boat"));
+            if(wood.getFruit() != null)
+                generatedItem(wood.getFruit().get(),woodItemsLocation(treeName,"berries"));
         }
     }
 

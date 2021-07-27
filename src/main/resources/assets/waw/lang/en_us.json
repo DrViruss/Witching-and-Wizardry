@@ -1,7 +1,6 @@
 {
   "itemGroup.waw": "Witching and Wizardry",
 
-
   "block.waw.ash_log": "Ash Log",
   "block.waw.ash_leaves": "Ash Leaves",
   "block.waw.ash_sapling": "Ash Sapling",
@@ -18,14 +17,32 @@
   "block.waw.ash_door": "Ash Door",
   "block.waw.ash_wood": "Ash Wood",
   "block.waw.ash_stripped_wood": "Stripped Ash Wood",
-  "block.waw.mortar": "Mortar",
-
-
   "item.waw.ash_boat": "Ash Boat",
-  "item.waw.chalk_white": "White Chalk",
-  "item.waw.chalk_red": "Red Chalk",
+
+  "block.waw.sambucus_log": "Sambucus Log",
+  "block.waw.sambucus_leaves": "Sambucus Leaves",
+  "block.waw.sambucus_sapling": "Sambucus Sapling",
+  "block.waw.sambucus_planks": "Sambucus Planks",
+  "block.waw.sambucus_stairs": "Sambucus Stairs",
+  "block.waw.sambucus_slab": "Sambucus Slab",
+  "block.waw.sambucus_fence": "Sambucus Fence",
+  "block.waw.sambucus_gate": "Sambucus Fence Gate",
+  "block.waw.sambucus_button": "Sambucus Button",
+  "block.waw.sambucus_pressure_plate": "Sambucus Pressure Plate",
+  "block.waw.sambucus_sign": "Sambucus Sign",
+  "block.waw.sambucus_trapdoor": "Sambucus Trapdoor",
+  "block.waw.sambucus_stripped_log": "Stripped Sambucus Log",
+  "block.waw.sambucus_door": "Sambucus Door",
+  "block.waw.sambucus_wood": "Sambucus Wood",
+  "block.waw.sambucus_stripped_wood": "Stripped Sambucus Wood",
+  "item.waw.sambucus_boat": "Sambucus Boat",
+  "item.waw.sambucus_berries": "Sambucus Berries",
+
+  "block.waw.mortar": "Mortar",
   "item.waw.pestle": "Pestle",
 
+  "item.waw.chalk_white": "White Chalk",
+  "item.waw.chalk_red": "Red Chalk",
 
   "waw.subtitle.chalk": "Chalk"
 }

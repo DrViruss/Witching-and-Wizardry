@@ -1,7 +1,6 @@
 package com.viruss.waw.utils.datagen;
 
 import com.viruss.waw.common.objects.packs.WoodenObject;
-import com.viruss.waw.utils.ModRegistry;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
@@ -13,17 +12,20 @@ import net.minecraft.tags.ITag;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.registry.Registry;
 
+import java.util.Set;
 import java.util.function.Consumer;
 
 public class RecipeProvider extends net.minecraft.data.RecipeProvider {
-    public RecipeProvider(DataGenerator p_i48262_1_) {
-        super(p_i48262_1_);
+    private final Set<WoodenObject> woodenObjects;
+    public RecipeProvider(DataGenerator generator,Set<WoodenObject> woods) {
+        super(generator);
+        this.woodenObjects = woods;
     }
 
     @Override
     protected void buildShapelessRecipes(Consumer<IFinishedRecipe> recipeConsumer) {
-        generateWoodRecipes(recipeConsumer, ModRegistry.ASH);
-        generateWoodRecipes(recipeConsumer, ModRegistry.SAMBUCUS);
+       for (WoodenObject wood : woodenObjects)
+           generateWoodRecipes(recipeConsumer,wood);
     }
 
     private void generateWoodRecipes(Consumer<IFinishedRecipe> recipeConsumer,WoodenObject wood){

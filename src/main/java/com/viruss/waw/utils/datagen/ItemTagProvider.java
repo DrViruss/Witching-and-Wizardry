@@ -2,7 +2,6 @@ package com.viruss.waw.utils.datagen;
 
 import com.viruss.waw.WitchingAndWizardry;
 import com.viruss.waw.common.objects.packs.WoodenObject;
-import com.viruss.waw.utils.ModRegistry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
@@ -10,16 +9,20 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nullable;
+import java.util.Set;
 
 public class ItemTagProvider extends ItemTagsProvider {
-    public ItemTagProvider(DataGenerator generator, @Nullable ExistingFileHelper existingFileHelper) {
-        super(generator, new BlockTagProvider(generator,existingFileHelper), WitchingAndWizardry.MOD_ID, existingFileHelper);
+    private final Set<WoodenObject> woodenObjects;
+
+    public ItemTagProvider(DataGenerator generator, @Nullable ExistingFileHelper existingFileHelper,Set<WoodenObject> woods) {
+        super(generator, new BlockTagProvider(generator,existingFileHelper,woods), WitchingAndWizardry.MOD_ID, existingFileHelper);
+        this.woodenObjects = woods;
     }
 
     @Override
     protected void addTags() {
-        addWoodTags(ModRegistry.ASH);
-        addWoodTags(ModRegistry.SAMBUCUS);
+        for (WoodenObject wood : woodenObjects)
+            addWoodTags(wood);
 
     }
     
