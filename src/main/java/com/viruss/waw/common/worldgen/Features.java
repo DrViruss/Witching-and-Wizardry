@@ -1,53 +1,57 @@
-
 package com.viruss.waw.common.worldgen;
 
-import com.google.common.collect.Lists;
-import com.viruss.waw.WitchingAndWizardry;
-import net.minecraft.block.Block;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeGenerationSettings;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.*;
-import net.minecraft.world.gen.placement.NoiseDependant;
-import net.minecraft.world.gen.placement.Placement;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import com.google.common.collect.ImmutableList;
+import com.viruss.waw.Main;
+import com.viruss.waw.utils.registries.ModRegistry;
+import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.*;
+import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FancyFoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.FancyTrunkPlacer;
+import net.minecraft.world.level.levelgen.heightproviders.UniformHeight;
+import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 
 import java.util.*;
-import java.util.function.Supplier;
 
 public class Features {
-
     public static void setup() {
-        Map<Biome.Category,Set< ConfiguredFeature<?, ?>>> vegetals = new HashMap<>();
-        Map<Biome.Category,Set< ConfiguredFeature<?, ?>>> ores = new HashMap<>();
+        Map<Biome.BiomeCategory,Set< ConfiguredFeature<?, ?>>> vegetals = new HashMap<>();
+        Map<Biome.BiomeCategory,Set< ConfiguredFeature<?, ?>>> ores = new HashMap<>();
 
         init(ores,vegetals);
 
-        for (Map.Entry<RegistryKey<Biome>, Biome> biomeEntry : WorldGenRegistries.BIOME.entrySet()) {
+        for (Map.Entry<ResourceKey<Biome>, Biome> biomeEntry : BuiltinRegistries.BIOME.entrySet()) {
             Biome biome = biomeEntry.getValue();
 
-            if (biome.getBiomeCategory().equals(Biome.Category.NETHER) || biome.getBiomeCategory().equals(Biome.Category.THEEND))
+            if (biome.getBiomeCategory().equals(Biome.BiomeCategory.NETHER) || biome.getBiomeCategory().equals(Biome.BiomeCategory.THEEND))
                 return;
 
             //vegetals
             vegetals.forEach((category, configuredFeatures) -> {
-                if(biome.getBiomeCategory().equals(category) || category.equals(Biome.Category.NONE))
-                    addFeatures(biome,configuredFeatures, GenerationStage.Decoration.VEGETAL_DECORATION);
+                if(biome.getBiomeCategory().equals(category) || category.equals(Biome.BiomeCategory.NONE));
+//                    addFeatures(biome,configuredFeatures, GenerationStep.Decoration.VEGETAL_DECORATION);
             });
 
             //ores
             ores.forEach((category, configuredFeatures) -> {
-                if(biome.getBiomeCategory().equals(category) || category.equals(Biome.Category.NONE))
-                    addFeatures(biome,configuredFeatures, GenerationStage.Decoration.UNDERGROUND_ORES);
+                if(biome.getBiomeCategory().equals(category) || category.equals(Biome.BiomeCategory.NONE));
+//                    addFeatures(biome,configuredFeatures, GenerationStep.Decoration.UNDERGROUND_ORES);
             });
         }
     }
 
-    private static void init(Map<Biome.Category,Set< ConfiguredFeature<?, ?>>> vegetals,Map<Biome.Category,Set< ConfiguredFeature<?, ?>>> ores) {
+    private static void init(Map<Biome.BiomeCategory,Set< ConfiguredFeature<?, ?>>> vegetals,Map<Biome.BiomeCategory,Set< ConfiguredFeature<?, ?>>> ores) {
 
         Ores.features.forEach((category, feature) -> {
             Set< ConfiguredFeature<?, ?>> currentFeatures = ores.getOrDefault(category,new HashSet<>());
@@ -63,17 +67,61 @@ public class Features {
     }
 
     public static class Ores {
-        private static final Map<Biome.Category,Set<ConfiguredFeature<?, ?>>> features = new HashMap<>();
+        private static final Map<Biome.BiomeCategory,Set<ConfiguredFeature<?, ?>>> features = new HashMap<>();
 
-        public static void registerOreFeature(Block ore, int maxSize, int maxHeight, int veinsPerChunk,Biome.Category biome)
+        public static void registerOre(Block ore,Block deepslateOre ,int minInclusive, int maxInclusive,int size, int veinsPerChunk, Biome.BiomeCategory biome)
         {
-            ConfiguredFeature<?,?> configuredFeature = registerWorldFeature(ore.getRegistryName().getPath()+"_oregen",
-                Feature.ORE.configured(
-                    new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, ore.defaultBlockState(), maxSize)
-                )
-                .range(maxHeight)
+            String name = ore.getRegistryName().getPath();
+
+            ImmutableList<OreConfiguration.TargetBlockState> TARGET_LIST = ImmutableList.of(
+                OreConfiguration.target(OreConfiguration.Predicates.STONE_ORE_REPLACEABLES, ore.defaultBlockState()),
+                OreConfiguration.target(OreConfiguration.Predicates.DEEPSLATE_ORE_REPLACEABLES, deepslateOre.defaultBlockState())
+            );
+
+            ConfiguredFeature<?, ?> configuredFeature = registerWorldFeature(name,
+                Feature.ORE.configured(new OreConfiguration(TARGET_LIST, size))
+                    .rangeTriangle(VerticalAnchor.absolute(minInclusive), VerticalAnchor.absolute(maxInclusive))
+                    .squared()
+                    .count(veinsPerChunk)
+            );
+
+
+            Set<ConfiguredFeature<?,?>> currentFeatures = features.getOrDefault(biome,new HashSet<>());
+            currentFeatures.add(configuredFeature);
+            features.put(biome,currentFeatures);
+        }
+        public static void registerBasicOre(Block ore,int aboveBottom, int belowTop,int size, int discardChanceOnAirExposure,int veinsPerChunk ,Biome.BiomeCategory biome)
+        {
+            String name = ore.getRegistryName().getPath();
+
+            ConfiguredFeature<?, ?> configuredFeature = registerWorldFeature(name,
+                Feature.SCATTERED_ORE.configured(new OreConfiguration(
+                    OreConfiguration.Predicates.STONE_ORE_REPLACEABLES,
+                    ore.defaultBlockState(),
+                    size,
+                    discardChanceOnAirExposure))
+                .count(veinsPerChunk)
+                .range(new RangeDecoratorConfiguration(UniformHeight.of(VerticalAnchor.aboveBottom(aboveBottom), VerticalAnchor.belowTop(belowTop))))
                 .squared()
-                .chance(veinsPerChunk)
+            );
+
+            Set<ConfiguredFeature<?,?>> currentFeatures = features.getOrDefault(biome,new HashSet<>());
+            currentFeatures.add(configuredFeature);
+            features.put(biome,currentFeatures);
+        }
+        public static void registerDeepSlateOre(Block ore,int aboveBottom, int belowTop,int size, int discardChanceOnAirExposure,int veinsPerChunk ,Biome.BiomeCategory biome)
+        {
+            String name = ore.getRegistryName().getPath();
+
+            ConfiguredFeature<?, ?> configuredFeature = registerWorldFeature(name,
+                Feature.SCATTERED_ORE.configured(new OreConfiguration(
+                    OreConfiguration.Predicates.DEEPSLATE_ORE_REPLACEABLES,
+                    ore.defaultBlockState(),
+                    size,
+                    discardChanceOnAirExposure))
+                    .count(veinsPerChunk)
+                    .range(new RangeDecoratorConfiguration(UniformHeight.of(VerticalAnchor.aboveBottom(aboveBottom), VerticalAnchor.belowTop(belowTop))))
+                    .squared()
             );
 
             Set<ConfiguredFeature<?,?>> currentFeatures = features.getOrDefault(biome,new HashSet<>());
@@ -83,15 +131,21 @@ public class Features {
     }
 
     public static class Trees{
-        private static final Map<Biome.Category,Set<ConfiguredFeature<?, ?>>> features = new HashMap<>();
+        private static final Map<Biome.BiomeCategory,Set<ConfiguredFeature<?, ?>>> features = new HashMap<>();
 
-        public static void addWorldGenFeature(String name,ConfiguredFeature<BaseTreeFeatureConfig, ?> feature,int chance, int countRandom,int noiseLevel,int belowNoise, int aboveNoise,Biome.Category biome)
+        //TODO: WorldGen
+
+        public static final ConfiguredFeature<TreeConfiguration, ?> ASH = registerWorldFeature("fancy_ash", Feature.TREE.configured((new TreeConfiguration.TreeConfigurationBuilder(new SimpleStateProvider(ModRegistry.ASH.getLog().getPrimary().defaultBlockState()), new FancyTrunkPlacer(3, 11, 0), new SimpleStateProvider(ModRegistry.ASH.getLeaves().getPrimary().defaultBlockState()), new SimpleStateProvider(ModRegistry.ASH.getSapling().getPrimary().defaultBlockState()), new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(4), 4), new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4)))).ignoreVines().build()));
+        public static final ConfiguredFeature<TreeConfiguration, ?> SAMBUCUS = registerWorldFeature("fancy_ash", Feature.TREE.configured((new TreeConfiguration.TreeConfigurationBuilder(new SimpleStateProvider(ModRegistry.SAMBUCUS.getLog().getPrimary().defaultBlockState()), new FancyTrunkPlacer(3, 11, 0), new SimpleStateProvider(ModRegistry.SAMBUCUS.getLeaves().getPrimary().defaultBlockState()), new SimpleStateProvider(ModRegistry.SAMBUCUS.getSapling().getPrimary().defaultBlockState()), new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(4), 4), new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4)))).ignoreVines().build()));
+
+
+        public static void addWorldGenFeature(String name, ConfiguredFeature<TreeConfiguration, ?> feature, int chance, int countRandom, int noiseLevel, int belowNoise, int aboveNoise, Biome.BiomeCategory biome)
         {
             ConfiguredFeature<?,?> configuredFeature = registerWorldFeature(name+"_wgen",feature
-                    .chance(chance)
                     .countRandom(countRandom)
                     .squared()
-                    .decorated(Placement.COUNT_NOISE.configured(new NoiseDependant(noiseLevel,belowNoise,aboveNoise)))
+                    .decorated(FeatureDecorator.HEIGHTMAP.configured(new HeightmapConfiguration(Heightmap.Types.MOTION_BLOCKING)))
+                    .rarity(chance)
             );
 
             Set<ConfiguredFeature<?,?>> currentFeatures = features.getOrDefault(biome,new HashSet<>());
@@ -101,24 +155,24 @@ public class Features {
     }
 
 
-    private static void addFeatures(Biome biome, Set<ConfiguredFeature<?, ?>> configuredFeatures, GenerationStage.Decoration decoration)
-    {
-        List<List<Supplier<ConfiguredFeature<?, ?>>>> biomeFeatures = new ArrayList<>(biome.getGenerationSettings().features());
+//    private static void addFeatures(Biome biome, Set<ConfiguredFeature<?, ?>> configuredFeatures, GenerationStep.Decoration decoration)
+//    {
+//        List<List<Supplier<ConfiguredFeature<?, ?>>>> biomeFeatures = new ArrayList<>(biome.getGenerationSettings().features());
+//
+//        while (biomeFeatures.size() <=  decoration.ordinal())
+//            biomeFeatures.add(Lists.newArrayList());
+//
+//        List<Supplier<ConfiguredFeature<?, ?>>> features = new ArrayList<>(biomeFeatures.get(decoration.ordinal()));
+//
+//        for(ConfiguredFeature<?,?> feature : configuredFeatures)
+//            features.add(() -> feature);
+//
+//        biomeFeatures.set(decoration.ordinal(), features);
+//        ObfuscationReflectionHelper.setPrivateValue(BiomeGenerationSettings.class, biome.getGenerationSettings(), biomeFeatures,
+//                "field_242484_f");
+//    }
 
-        while (biomeFeatures.size() <=  decoration.ordinal())
-            biomeFeatures.add(Lists.newArrayList());
-
-        List<Supplier<ConfiguredFeature<?, ?>>> features = new ArrayList<>(biomeFeatures.get(decoration.ordinal()));
-
-        for(ConfiguredFeature<?,?> feature : configuredFeatures)
-            features.add(() -> feature);
-
-        biomeFeatures.set(decoration.ordinal(), features);
-        ObfuscationReflectionHelper.setPrivateValue(BiomeGenerationSettings.class, biome.getGenerationSettings(), biomeFeatures,
-                "field_242484_f");
-    }
-
-    public static <FC extends IFeatureConfig, F extends Feature<FC>> ConfiguredFeature<FC, F> registerWorldFeature(String rl, ConfiguredFeature<FC, F> feature) {
-        return Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(WitchingAndWizardry.MOD_ID,rl), feature);
+    public static <FC extends FeatureConfiguration, F extends Feature<FC>> ConfiguredFeature<FC, F> registerWorldFeature(String rl, ConfiguredFeature<FC, F> feature) {
+        return Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(Main.MOD_ID,rl), feature);
     }
 }

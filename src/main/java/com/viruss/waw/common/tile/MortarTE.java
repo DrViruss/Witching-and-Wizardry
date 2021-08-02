@@ -1,9 +1,11 @@
 package com.viruss.waw.common.tile;
 
-import com.viruss.waw.utils.ModRegistry;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import com.viruss.waw.utils.registries.ModRegistry;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -12,10 +14,13 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-    /*Thanks OccultismMod (https://github.com/klikli-dev/occultism)*/
-public class MortarTE extends NetworkTileEntity  {
+public class MortarTE extends NetworkTileEntity {
 
-    LazyOptional<ItemStackHandler> inventory = LazyOptional.of(() -> new ItemStackHandler(5){
+    public MortarTE(BlockPos pos, BlockState state) {
+        super(ModRegistry.MORTAR_AND_PESTLE.getMortarTE(), pos, state);
+    }
+
+    LazyOptional<ItemStackHandler> inventory = LazyOptional.of(() -> new ItemStackHandler(5) {
         @Override
         public int getSlotLimit(int slot) {
             return 1;
@@ -33,14 +38,10 @@ public class MortarTE extends NetworkTileEntity  {
         }
     });
 
-    public MortarTE() {
-        super(ModRegistry.MORTAR_AND_PESTLE.getMortarTE());
-    }
-
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && side == Direction.UP)
+        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && side == Direction.UP)
             return inventory.cast();
         return super.getCapability(cap, side);
     }
@@ -52,13 +53,13 @@ public class MortarTE extends NetworkTileEntity  {
     }
 
     @Override
-    public void loadNetwork(CompoundNBT tag) {
+    public void loadNetwork(CompoundTag tag) {
         super.loadNetwork(tag);
         this.inventory.ifPresent((handler) -> handler.deserializeNBT(tag.getCompound("inventory")));
     }
 
     @Override
-    public CompoundNBT saveNetwork(CompoundNBT tag) {
+    public CompoundTag saveNetwork(CompoundTag tag) {
         this.inventory.ifPresent(handler -> tag.put("inventory", handler.serializeNBT()));
         return super.saveNetwork(tag);
     }

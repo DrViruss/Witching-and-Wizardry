@@ -1,15 +1,15 @@
 package com.viruss.waw.common.objects.packs;
 
-import com.viruss.waw.WitchingAndWizardry;
+import com.viruss.waw.Main;
 import com.viruss.waw.common.objects.blocks.ChalkSymbol;
 import com.viruss.waw.common.objects.items.Chalk;
-import com.viruss.waw.utils.ModRegistry;
 import com.viruss.waw.utils.ModUtils;
-import net.minecraft.block.Block;
+import com.viruss.waw.utils.registries.ModRegistry;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.item.Item;
-import net.minecraft.util.SoundEvent;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashMap;
@@ -20,7 +20,7 @@ public class ChalkSet {
     private final Map<Chalk.Type,ChalkObject> chalkMap;
     private RegistryObject<SoundEvent> sound;
 
-    public ChalkSet(Chalk.Type[] types) {
+    public ChalkSet(Chalk.Type... types) {
         this.chalkMap = new HashMap<>();
 
         for(Chalk.Type type : types)
@@ -30,10 +30,10 @@ public class ChalkSet {
 
     private void initAdditional() {
         this.chalkMap.forEach((type, chalkObject) -> {
-            WitchingAndWizardry.CLIENT_RENDERER.addBlockRenderer(chalkObject.ro, RenderType.cutout());
+            Main.CLIENT_RENDERER.addBlockRenderer(chalkObject.ro, RenderType.cutout());
         });
 
-       sound = ModRegistry.MDR.register("chalk", ()-> ModUtils.loadSound("chalk"),ForgeRegistries.SOUND_EVENTS);
+        sound = ModRegistry.MDR.register("chalk", ()-> ModUtils.Resources.loadSound("chalk"),ForgeRegistries.SOUND_EVENTS);
     }
 
     public ChalkObject getChalk(Chalk.Type type)

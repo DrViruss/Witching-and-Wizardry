@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "waw:ash_log"
+            "items": [
+              "waw:ash_log"
+            ]
           }
         ]
       }

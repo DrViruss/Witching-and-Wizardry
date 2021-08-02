@@ -1,28 +1,21 @@
 package com.viruss.waw.utils.datagen;
 
-import com.viruss.waw.WitchingAndWizardry;
 import com.viruss.waw.common.objects.packs.WoodenObject;
-import net.minecraft.block.DoorBlock;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.block.SaplingBlock;
-import net.minecraft.block.SlabBlock;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.loot.BlockLootTables;
-import net.minecraft.data.loot.EntityLootTables;
-import net.minecraft.entity.EntityType;
-import net.minecraft.loot.LootTable;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.storage.loot.LootTable;
 
 import java.util.Map;
 import java.util.Set;
 
-public class DefaultLootProvider extends BasicLootProvider{
+public class LootProvider extends AbstractLootProvider{
     BlockLoot blockLoot;
     EntityLoot entityLoot;
 
-    public DefaultLootProvider(DataGenerator generator,Set<WoodenObject> woods,Map<EntityType<?>, LootTable.Builder> entityDrops) {
-        super(generator,WitchingAndWizardry.MOD_ID);
+    public LootProvider(DataGenerator generator,Set<WoodenObject> woods,Map<EntityType<?>, LootTable.Builder> entityDrops) {
+        super(generator);
         blockLoot = new BlockLoot(woods);
-        entityLoot = new EntityLoot(entityDrops);
+        this.entityLoot = new EntityLoot(entityDrops);
     }
 
     @Override
@@ -32,7 +25,7 @@ public class DefaultLootProvider extends BasicLootProvider{
     }
 
 
-    public static class EntityLoot extends EntityLootTables{
+    public static class EntityLoot extends net.minecraft.data.loot.EntityLoot{
         private final Map<EntityType<?>, LootTable.Builder> drops;
 
         public EntityLoot(Map<EntityType<?>, LootTable.Builder> drops) {
@@ -44,7 +37,7 @@ public class DefaultLootProvider extends BasicLootProvider{
             drops.forEach(this::add);
         }
     }
-    public class BlockLoot extends BlockLootTables{
+    public class BlockLoot extends net.minecraft.data.loot.BlockLoot{
         private final Set<WoodenObject> woodenObjects;
 
         public BlockLoot(Set<WoodenObject> woodenObjects) {
@@ -54,22 +47,21 @@ public class DefaultLootProvider extends BasicLootProvider{
         @Override
         protected void addTables() {
             for(WoodenObject wood : woodenObjects)
-               addWoodDrops(wood);
+                addWoodDrops(wood);
         }
 
         private void addWoodDrops(WoodenObject wood){
-
             regularBlock(wood.getPlanks().getPrimary());
             regularBlock(wood.getLog().getPrimary());
-            doorBlock((DoorBlock) wood.getDoor().getPrimary());
+            doorBlock(wood.getDoor().getPrimary());
             regularBlock(wood.getGate().getPrimary());
             regularBlock(wood.getFence().getPrimary());
-            slabBlock((SlabBlock) wood.getSlab().getPrimary());
+            slabBlock(wood.getSlab().getPrimary());
             regularBlock(wood.getStairs().getPrimary());
             regularBlock(wood.getTrapdoor().getPrimary());
             regularBlock(wood.getSign().getSign());
             regularBlock(wood.getButton().getPrimary());
-            regularBlock(wood.getPressure_plate().getPrimary());
+            regularBlock(wood.getPressurePlate().getPrimary());
             regularBlock(wood.getWood().getPrimary());
 
             if(wood.getStrippedLog()!= null) {
@@ -78,11 +70,8 @@ public class DefaultLootProvider extends BasicLootProvider{
             }
             if(wood.getSapling()!= null) {
                 regularBlock(wood.getSapling().getPrimary());
-                leavesBlock((LeavesBlock) wood.getLeaves().getPrimary(), (SaplingBlock) wood.getSapling().getPrimary(),wood.getFruit());
+                leavesBlock(wood.getLeaves().getPrimary(),wood.getSapling().getPrimary(),wood.getFruit());
             }
         }
-
-
     }
-
 }

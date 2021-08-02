@@ -1,59 +1,58 @@
 package com.viruss.waw.client;
 
-import com.viruss.waw.WitchingAndWizardry;
+import com.viruss.waw.Main;
 import com.viruss.waw.common.objects.blocks.ChalkSymbol;
 import com.viruss.waw.common.objects.items.Chalk;
-import com.viruss.waw.utils.ModRegistry;
 import com.viruss.waw.utils.registration.DoubleRegisteredObject;
-import net.minecraft.block.Block;
+import com.viruss.waw.utils.registries.ModRegistry;
+import net.minecraft.client.color.block.BlockColors;
+import net.minecraft.client.color.item.ItemColors;
+import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.client.renderer.color.BlockColors;
-import net.minecraft.client.renderer.color.ItemColors;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.world.biome.BiomeColors;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fmllegacy.RegistryObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
+@SuppressWarnings("all")
 @OnlyIn(Dist.CLIENT)
-@Mod.EventBusSubscriber(modid = WitchingAndWizardry.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = Main.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RendererManager {
-    private final Map<EntityType<? extends Entity>, IRenderFactory<? super Entity>> ENTITY_RENDERERS =new HashMap<>();
+    private final Map<EntityType<? extends Entity>, EntityRendererProvider<Entity>> ENTITY_RENDERERS =new HashMap<>();
     private final Map<RegistryObject<Block>, RenderType> BLOCK_RENDERERS = new HashMap<>();
-    private final Map<TileEntityType<? extends TileEntity>, Function<? super TileEntityRendererDispatcher, ? extends TileEntityRenderer<? super TileEntity>>> TILE_RENDERERS =new HashMap<>();
-
+    private final Map<BlockEntityType<? extends BlockEntity>, BlockEntityRendererProvider<BlockEntity>> TILE_RENDERERS =new HashMap<>();
+//
     public void init(){
-        for(TileEntityType<? extends TileEntity> type : TILE_RENDERERS.keySet())
-            ClientRegistry.bindTileEntityRenderer(type, TILE_RENDERERS.get(type));
+        for(BlockEntityType<? extends BlockEntity> type : TILE_RENDERERS.keySet())
+            BlockEntityRenderers.register(type, TILE_RENDERERS.get(type));
 
         for(EntityType<?> type : ENTITY_RENDERERS.keySet())
-            RenderingRegistry.registerEntityRenderingHandler(type, ENTITY_RENDERERS.get(type));
+            EntityRenderers.register(type, ENTITY_RENDERERS.get(type));
 
         for(RegistryObject<Block> ro : BLOCK_RENDERERS.keySet())
-            RenderTypeLookup.setRenderLayer(ro.get(), BLOCK_RENDERERS.get(ro));
+            ItemBlockRenderTypes.setRenderLayer(ro.get(), BLOCK_RENDERERS.get(ro));
     }
 
-    public <T extends Entity> void addEntityRender(EntityType<T> entityClass, IRenderFactory<? super T> renderFactory)
+    public <T extends Entity> void addEntityRender(EntityType<? extends T> entityType, EntityRendererProvider<T> renderFactory)
     {
-        this.ENTITY_RENDERERS.put(entityClass, (IRenderFactory<? super Entity>) renderFactory);
+        this.ENTITY_RENDERERS.put(entityType, (EntityRendererProvider<Entity>) renderFactory);
     }
     public void addBlockRenderer(DoubleRegisteredObject<Block, Item> block, RenderType renderType)
     {
@@ -63,9 +62,9 @@ public class RendererManager {
     {
         this.BLOCK_RENDERERS.put(block,renderType);
     }
-    public <T extends TileEntity> void addTileEntityRenderer(TileEntityType<T> tileEntityType, Function<? super TileEntityRendererDispatcher, ? extends TileEntityRenderer<? super T>> renderType)
+    public <T extends BlockEntity> void addTileEntityRenderer(BlockEntityType<? extends T> tileEntityType, BlockEntityRendererProvider<T> renderType)
     {
-        this.TILE_RENDERERS.put(tileEntityType, (Function<? super TileEntityRendererDispatcher, ? extends TileEntityRenderer<? super TileEntity>>) renderType);
+        this.TILE_RENDERERS.put(tileEntityType, (BlockEntityRendererProvider<BlockEntity>) renderType);
     }
 
 
@@ -76,16 +75,16 @@ public class RendererManager {
         BlockColors colors = event.getBlockColors();
 
         colors.register((state, blockDisplayReader, pos, i) -> {
-            if (i > 15) return 0xFFFFFF;
             if (blockDisplayReader == null || pos == null) return 0x74ff33;
             return BiomeColors.getAverageFoliageColor(blockDisplayReader,pos)+0x1f420e;
         }, ModRegistry.ASH.getLeaves().getPrimary());
 
         colors.register((state, blockDisplayReader, pos, i) -> {
-            if (i > 15) return 0xFFFFFF;
-            if (blockDisplayReader == null || pos == null) return 0x4e0087;
-            return 0x4e0087; //BiomeColors.getAverageFoliageColor(blockDisplayReader,pos)+0x685AAF; TODO: Color
+            if (blockDisplayReader == null || pos == null) return 3473453;
+            return BiomeColors.getAverageFoliageColor(blockDisplayReader,pos) & -12779459;
         }, ModRegistry.SAMBUCUS.getLeaves().getPrimary());
+
+
 
         /*0x6DAD32 lightblue*/
 
@@ -102,6 +101,7 @@ public class RendererManager {
         ItemColors items = event.getItemColors();
         BlockColors blocks = event.getBlockColors();
 
+                /*~    Leaves     ~*/
         items.register(((itemStack, i) -> blocks.getColor(((BlockItem)itemStack.getItem()).getBlock().defaultBlockState(),null,null,i)), ModRegistry.ASH.getLeaves().getSecondary());
         items.register(((itemStack, i) -> blocks.getColor(((BlockItem)itemStack.getItem()).getBlock().defaultBlockState(),null,null,i)), ModRegistry.SAMBUCUS.getLeaves().getSecondary());
 

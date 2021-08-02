@@ -1,35 +1,35 @@
 package com.viruss.waw.common.entities;
 
-import com.viruss.waw.utils.ModRegistry;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.item.BoatEntity;
-import net.minecraft.item.Item;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import com.viruss.waw.utils.registries.ModRegistry;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
-public class CustomBoatEntity extends BoatEntity {
-    private static final DataParameter<String> DATA_TYPE = EntityDataManager.defineId(BoatEntity.class, DataSerializers.STRING);
-
+@SuppressWarnings("all")
+public class CustomBoatEntity extends Boat {
+    private static final EntityDataAccessor<String> DATA_TYPE = SynchedEntityData.defineId(Boat.class, EntityDataSerializers.STRING);
     private Item boatItem;
 
-    public CustomBoatEntity(EntityType<? extends BoatEntity> p_i50129_1_, World p_i50129_2_) {
+    public CustomBoatEntity(EntityType<? extends Boat> p_i50129_1_, Level p_i50129_2_) {
         super(p_i50129_1_, p_i50129_2_);
     }
 
-    public CustomBoatEntity(Item drop,EntityType<? extends BoatEntity> p_i50129_1_, World p_i50129_2_) {
+    public CustomBoatEntity(Item drop,EntityType<? extends Boat> p_i50129_1_, Level p_i50129_2_) {
         this(p_i50129_1_, p_i50129_2_);
         this.boatItem = drop;
     }
 
-    public CustomBoatEntity(Item drop,World worldIn, double x, double y, double z) {
-        this(drop,ModRegistry.ENTITIES.getBoatEntity(), worldIn);
+    public CustomBoatEntity(Item drop,Level worldIn, double x, double y, double z) {
+        this(drop, ModRegistry.ENTITIES.getBoatEntity(), worldIn);
         this.setPos(x, y, z);
-        this.setDeltaMovement(Vector3d.ZERO);
+        this.setDeltaMovement(Vec3.ZERO);
         this.xo = x;
         this.yo = y;
         this.zo = z;
@@ -58,7 +58,7 @@ public class CustomBoatEntity extends BoatEntity {
     }
 
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

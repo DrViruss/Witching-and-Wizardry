@@ -2,11 +2,10 @@ package com.viruss.waw;
 
 import com.viruss.waw.client.RendererManager;
 import com.viruss.waw.utils.EventHandler;
-import com.viruss.waw.utils.ModRegistry;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import com.viruss.waw.utils.registries.ModRegistry;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.InterModComms;
@@ -21,12 +20,12 @@ import org.apache.logging.log4j.Logger;
 import java.util.stream.Collectors;
 
 @Mod("waw")
-public class WitchingAndWizardry
+public class Main
 {
     public static final Logger LOGGER = LogManager.getLogger();
     public static final String MOD_ID = "waw";
 
-    public WitchingAndWizardry() {
+    public Main() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
         bus.addListener(this::enqueueIMC);
@@ -38,21 +37,17 @@ public class WitchingAndWizardry
         ModRegistry.init(bus);
     }
 
-    public static final ItemGroup ITEM_GROUP = new ItemGroup(MOD_ID) {
+    public static final CreativeModeTab ITEM_GROUP = new CreativeModeTab(MOD_ID) {
         @Override
         public ItemStack makeIcon() {
-            return ModRegistry.ASH.getLog().getSecondary().getDefaultInstance();
+            return new ItemStack(Blocks.ACACIA_LEAVES.asItem()); //ModRegistry.ASH.getLog().getSecondary();
         }
     };
 
-
-
-    @OnlyIn(Dist.CLIENT) /* ~??~ */
     public static final RendererManager CLIENT_RENDERER = new RendererManager();
-        /*~~~~~~Events~~~~~~*/
     private void doClientStuff(final FMLClientSetupEvent event) {
         CLIENT_RENDERER.init();
-}
+    }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
     {
