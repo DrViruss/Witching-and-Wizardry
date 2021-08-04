@@ -1,6 +1,6 @@
 package com.viruss.waw.utils.datagen;
 
-import com.viruss.waw.common.objects.packs.WoodenObject;
+import com.viruss.waw.common.objects.packs.WoodenPack;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -12,7 +12,7 @@ public class LootProvider extends AbstractLootProvider{
     BlockLoot blockLoot;
     EntityLoot entityLoot;
 
-    public LootProvider(DataGenerator generator,Set<WoodenObject> woods,Map<EntityType<?>, LootTable.Builder> entityDrops) {
+    public LootProvider(DataGenerator generator, Set<WoodenPack> woods, Map<EntityType<?>, LootTable.Builder> entityDrops) {
         super(generator);
         blockLoot = new BlockLoot(woods);
         this.entityLoot = new EntityLoot(entityDrops);
@@ -38,19 +38,19 @@ public class LootProvider extends AbstractLootProvider{
         }
     }
     public class BlockLoot extends net.minecraft.data.loot.BlockLoot{
-        private final Set<WoodenObject> woodenObjects;
+        private final Set<WoodenPack> woods;
 
-        public BlockLoot(Set<WoodenObject> woodenObjects) {
-            this.woodenObjects = woodenObjects;
+        public BlockLoot(Set<WoodenPack> woodenPacks) {
+            this.woods = woodenPacks;
         }
 
         @Override
         protected void addTables() {
-            for(WoodenObject wood : woodenObjects)
+            for(WoodenPack wood : woods)
                 addWoodDrops(wood);
         }
 
-        private void addWoodDrops(WoodenObject wood){
+        private void addWoodDrops(WoodenPack wood){
             regularBlock(wood.getPlanks().getPrimary());
             regularBlock(wood.getLog().getPrimary());
             doorBlock(wood.getDoor().getPrimary());

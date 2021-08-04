@@ -1,4 +1,4 @@
-package com.viruss.waw.client.renderers.tile;
+package com.viruss.waw.client.renders.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;

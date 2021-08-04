@@ -4,7 +4,7 @@ import com.viruss.waw.Main;
 import com.viruss.waw.common.objects.items.Chalk;
 import com.viruss.waw.common.objects.packs.ChalkSet;
 import com.viruss.waw.common.objects.packs.MortarAndPestle;
-import com.viruss.waw.common.objects.packs.WoodenObject;
+import com.viruss.waw.common.objects.packs.WoodenPack;
 import com.viruss.waw.utils.registration.MultyDeferredRegister;
 import net.minecraft.world.food.Foods;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -25,8 +25,8 @@ public class ModRegistry {
         MDR.register(bus);
     }
 
-    public static final WoodenObject ASH = new WoodenObject("ash", Main.ITEM_GROUP,true, null);
-    public static final WoodenObject SAMBUCUS = new WoodenObject("sambucus", Main.ITEM_GROUP,true, Foods.POISONOUS_POTATO);
+    public static final WoodenPack ASH = new WoodenPack("ash", Main.ITEM_GROUP,true, null);
+    public static final WoodenPack SAMBUCUS = new WoodenPack("sambucus", Main.ITEM_GROUP,true, Foods.POISONOUS_POTATO);
 
     public static final MortarAndPestle MORTAR_AND_PESTLE = new MortarAndPestle();
 

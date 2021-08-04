@@ -1,7 +1,7 @@
 package com.viruss.waw.common.objects.packs;
 
 import com.viruss.waw.Main;
-import com.viruss.waw.client.renderers.tile.MortarRenderer;
+import com.viruss.waw.client.renders.tile.MortarRenderer;
 import com.viruss.waw.common.objects.blocks.MortarBlock;
 import com.viruss.waw.common.tile.MortarTE;
 import com.viruss.waw.utils.registries.ModRegistry;

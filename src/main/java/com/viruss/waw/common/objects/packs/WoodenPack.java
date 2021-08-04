@@ -39,7 +39,7 @@ import java.lang.reflect.Field;
 import java.util.Random;
 
 @SuppressWarnings("all")
-public class WoodenObject {
+public class WoodenPack {
 
     private final Tag.Named<Item> logsItemTag;
     private final Tag.Named<Block> logsBlockTag;
@@ -63,13 +63,13 @@ public class WoodenObject {
     private final DoubleRegisteredObject<Block, Item> trapdoor;
     private final DoubleRegisteredObject<Block, Item> button;
     private final DoubleRegisteredObject<Block, Item> pressure_plate;
-    private final SignObject sign;
+    private final SignPack sign;
     private final RegistryObject<Item> boat;
 
     private RegistryObject<Item> fruit;
 
 
-    public WoodenObject(String name, CreativeModeTab group, boolean isStrippable) {
+    public WoodenPack(String name, CreativeModeTab group, boolean isStrippable) {
         com.viruss.waw.utils.registration.Block.Builder builder = new com.viruss.waw.utils.registration.Block.Builder().needItem(group);
         this.woodType =WoodType.register(WoodType.create(name));    //TODO: move wood ( MOD_ID:name )
 
@@ -89,10 +89,10 @@ public class WoodenObject {
         this.fence = ModRegistry.MDR.register(name+"_fence",builder.setBlockSup(() -> new AbstractFence(planks.getPrimary().defaultMaterialColor())));
         this.gate = ModRegistry.MDR.register(name+"_gate",builder.setBlockSup(() -> new AbstractFenceGate(planks.getPrimary().defaultMaterialColor())));
         this.door = ModRegistry.MDR.register(name+"_door",builder.setBlockSup(() -> new DoorBlock(BlockBehaviour.Properties.of(Material.WOOD, planks.getPrimary().defaultMaterialColor()).strength(3.0F).sound(SoundType.WOOD).noOcclusion())));
-        this.trapdoor = ModRegistry.MDR.register(name+"_trapdoor",builder.setBlockSup(()-> new TrapDoorBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.WOOD).strength(3.0F).sound(SoundType.WOOD).noOcclusion().isValidSpawn(WoodenObject::never))));
+        this.trapdoor = ModRegistry.MDR.register(name+"_trapdoor",builder.setBlockSup(()-> new TrapDoorBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.WOOD).strength(3.0F).sound(SoundType.WOOD).noOcclusion().isValidSpawn(WoodenPack::never))));
         this.button = ModRegistry.MDR.register(name+"_button",builder.setBlockSup(()-> new WoodButtonBlock(BlockBehaviour.Properties.of(Material.DECORATION).noCollission().strength(0.5F).sound(SoundType.WOOD))));
         this.pressure_plate = ModRegistry.MDR.register(name+"_pressure_plate",builder.setBlockSup(()-> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.of(Material.WOOD, planks.getPrimary().defaultMaterialColor()).noCollission().strength(0.5F).sound(SoundType.WOOD))));
-        this.sign = new SignObject(name,this.woodType,group);
+        this.sign = new SignPack(name,this.woodType,group);
         this.boat = ModRegistry.MDR.register(name + "_boat", CustomBoatItem::new, ForgeRegistries.ITEMS);
 
         this.logsItemTag = ItemTags.bind(Main.MOD_ID + ":" + name + "_logs");
@@ -103,7 +103,7 @@ public class WoodenObject {
         Main.CLIENT_RENDERER.addBlockRenderer(trapdoor, RenderType.translucent());
     }
 
-    public WoodenObject(String name, CreativeModeTab group, boolean isStrippable, FoodProperties fruit) {
+    public WoodenPack(String name, CreativeModeTab group, boolean isStrippable, FoodProperties fruit) {
         this(name,group, isStrippable);
         com.viruss.waw.utils.registration.Block.Builder builder = new com.viruss.waw.utils.registration.Block.Builder().needItem(group);
         this.leaves = ModRegistry.MDR.register(name + "_leaves", builder.setBlockSup(AbstractLeaves::new));
@@ -172,7 +172,7 @@ public class WoodenObject {
     }
     public static class AbstractLeaves extends LeavesBlock {
         public AbstractLeaves() {
-            super(Properties.of(Material.LEAVES).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(WoodenObject::parrotOrOcelot));
+            super(Properties.of(Material.LEAVES).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(WoodenPack::parrotOrOcelot));
         }
 
         @Override
@@ -336,7 +336,7 @@ public class WoodenObject {
     public RegistryObject<Item> getBoat() {
         return boat;
     }
-    public SignObject getSign() {
+    public SignPack getSign() {
         return sign;
     }
     public DoubleRegisteredObject<Block, Item> getLeaves() {

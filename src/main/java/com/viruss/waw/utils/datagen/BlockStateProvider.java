@@ -1,8 +1,8 @@
 package com.viruss.waw.utils.datagen;
 
 import com.viruss.waw.Main;
-import com.viruss.waw.common.objects.packs.SignObject;
-import com.viruss.waw.common.objects.packs.WoodenObject;
+import com.viruss.waw.common.objects.packs.SignPack;
+import com.viruss.waw.common.objects.packs.WoodenPack;
 import com.viruss.waw.utils.registries.ModRegistry;
 import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
@@ -21,15 +21,15 @@ import java.util.Set;
 
 @SuppressWarnings("all")
 public class BlockStateProvider extends net.minecraftforge.client.model.generators.BlockStateProvider {
-    private final Set<WoodenObject> woodenObjects;
-    public BlockStateProvider(DataGenerator gen, ExistingFileHelper exFileHelper,Set<WoodenObject> woodenObjects) {
+    private final Set<WoodenPack> woods;
+    public BlockStateProvider(DataGenerator gen, ExistingFileHelper exFileHelper,Set<WoodenPack> woodenPacks) {
         super(gen, Main.MOD_ID, exFileHelper);
-        this.woodenObjects = woodenObjects;
+        this.woods = woodenPacks;
     }
 
     @Override
     protected void registerStatesAndModels() {
-        registerWoods(woodenObjects.toArray(WoodenObject[]::new));
+        registerWoods(woods.toArray(WoodenPack[]::new));
 
         generateChalks();
     }
@@ -41,8 +41,8 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         });
     }
 
-    private void registerWoods(WoodenObject... woods){
-        for(WoodenObject wood : woods)
+    private void registerWoods(WoodenPack... woods){
+        for(WoodenPack wood : woods)
         {
             String treeName =wood.getWoodType().name(); //wood.getWoodType().name().split(":")[1];
 
@@ -88,7 +88,7 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
                         blockTexture(Blocks.OAK_LEAVES)));
         basicBlockItem(block);
     }
-    private void signBlock(SignObject sign, String treeName) {
+    private void signBlock(SignPack sign, String treeName) {
         ModelFile model = models().getBuilder(name(sign.getSign())).texture("particle", woodBlocksLocation(treeName,"planks"));
         simpleBlock(sign.getSign(), model);
         simpleBlock(sign.getWallSign(), model);

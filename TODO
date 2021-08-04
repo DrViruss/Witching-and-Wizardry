@@ -1,0 +1,65 @@
+rename to WaW (Witchcraft & Wizardry)
+Center circle block must have blood of villager baby
+
+    bone,chalk_white,magic tree ash(dust)
+
+add Cerberus
+add GiantSpider
+add very rare Parselmouth ability 
+	-wizardring boost
+	-speaks with snakes
+add divination by coffe (paintig by coffe with noise)
+add magic bloom (+nimbus 2000 name tag) 
+add Vendigo:
+	if player died from hunger in cold biome on this positin will spawn a vendigo mob 
+	-fast
+	-can stay on walls
+	-immortal
+	-1 way to kill -> fire	
+add Ghost from Mirror:
+	-can show hiself  only when player looks in mirrors
+	-to kill it player must to break mirror with ghost and then show mirror to him
+add Morpher:
+	-can turn into mobs
+add Reaper:
+	-hard boss
+	-it drops smth to make a ritual of death summoning
+add Death:
+	-immortal
+	-when player call it with ritual if player use dark magic it will ask "what do you want?":
+		-player give a DealPaper of "Exchange" with significent of 2 players -> death will kill a 2nd player and leave 1st alive (DEATH ISNT FOGIVE A MISTAKES)
+add MagicWand:
+	-loyalty to player (each player)
+		-from -10 to 10
+	-kindess
+		-from -10 to 10
+	how to get it:
+	-generated in dungeons (whery rare):
+		-fully random parameters
+	-crafted (loyalty from 5 to 10) : (depends on player dark magic level )
+		-normal way (white magic):
+			-kindess from 0 to 10 
+		-witching:
+			-kidness from -10 to 0
+add Azazel:
+	-can teach player witching ABILITY
+	-drop Azazels Horn
+
+add Man-eating Tree
+
+add Jackalope (rabbit with horns)
+add Banshee (crying woman-ghost)
+add Doppelganger (players copy in mirror)
+add Centaur
+
+Gamemods:
+Wizard ( like HarryPotter or VolanDeMort :D )
+SupernaturalHunter (like Vinchesters :D )
+Ghost (player can pass throught blocks and move passive mobs) ??
+Werewolf (like witchery)
+Vampire (like witchery)
+Witch (like witchery :D )
+
+Curses:
+	-"Curse of living shadows" - shadows are spawn near a target  and will attack it. to survive player must hide in darkness
+	-"Curse of newerlasting hunger" - 

@@ -1,10 +1,12 @@
 package com.viruss.waw.utils.registries;
 
 import com.viruss.waw.Main;
-import com.viruss.waw.client.renderers.CustomBoatRenderer;
+import com.viruss.waw.client.renders.CustomBoatRenderer;
+import com.viruss.waw.client.renders.entity.BroomRenderer;
+import com.viruss.waw.common.entities.BroomEntity;
 import com.viruss.waw.common.entities.CustomBoatEntity;
-import com.viruss.waw.common.objects.packs.SignObject;
-import com.viruss.waw.common.objects.packs.WoodenObject;
+import com.viruss.waw.common.objects.packs.SignPack;
+import com.viruss.waw.common.objects.packs.WoodenPack;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -14,25 +16,34 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 @SuppressWarnings("all")
 public class EntityRegistry {
-    private final BlockEntityType<SignObject.AbstractSignTileEntity> SIGN_TILE;
-    private final EntityType<CustomBoatEntity> BOAT;
+    private final BlockEntityType<SignPack.AbstractSignTileEntity> SIGN_TILE;
+    private final EntityType<CustomBoatEntity> BOAT = registerBoat();
+    private final EntityType<BroomEntity> BROOM = registerBroom();
+//    private final EntityType<OwlEntity> OWL = registerOwl();
 
-    public EntityRegistry(WoodenObject... woods) {
+//    private EntityType<OwlEntity> registerOwl() {
+//        EntityType<OwlEntity> te = EntityType.Builder.<OwlEntity>of(OwlEntity::new, MobCategory.MISC).sized(0.5f, 1f).clientTrackingRange(10).build("owl");
+//        ModRegistry.MDR.register("owl",()->te, ForgeRegistries.ENTITIES);
+//        Main.CLIENT_RENDERER.addEntityRender(te, OwlRenderer::new);
+//        return te;
+//    }
+
+
+    public EntityRegistry(WoodenPack... woods) {
         this.SIGN_TILE = registerSign(woods);
-        this.BOAT = registerBoat();
     }
 
-    private BlockEntityType<SignObject.AbstractSignTileEntity> registerSign(WoodenObject... woods)
+    private BlockEntityType<SignPack.AbstractSignTileEntity> registerSign(WoodenPack... woods)
     {
         Block[] blocks = new Block[woods.length*2];
         int j=0;
-        for (WoodenObject wood : woods) {
-            SignObject sign = wood.getSign();
+        for (WoodenPack wood : woods) {
+            SignPack sign = wood.getSign();
             blocks[j] = sign.getSign();
             blocks[j + 1] = sign.getWallSign();
             j = j + 2;
         }
-        BlockEntityType<SignObject.AbstractSignTileEntity> te = BlockEntityType.Builder.of(SignObject.AbstractSignTileEntity::new,blocks).build(null);
+        BlockEntityType<SignPack.AbstractSignTileEntity> te = BlockEntityType.Builder.of(SignPack.AbstractSignTileEntity::new,blocks).build(null);
         ModRegistry.MDR.register("sign_te",()->te, ForgeRegistries.BLOCK_ENTITIES);
         Main.CLIENT_RENDERER.addTileEntityRenderer(te, SignRenderer::new);
 
@@ -45,12 +56,24 @@ public class EntityRegistry {
         Main.CLIENT_RENDERER.addEntityRender(te, CustomBoatRenderer::new);
         return te;
     }
-
-    public BlockEntityType<SignObject.AbstractSignTileEntity> getSignTileEntity() {
-        return SIGN_TILE;
+    private EntityType<BroomEntity> registerBroom()
+    {
+        EntityType<BroomEntity> te = EntityType.Builder.<BroomEntity>of(BroomEntity::new, MobCategory.MISC).sized(.3f, .3f).clientTrackingRange(10).build("broom");
+        ModRegistry.MDR.register("broom",()->te, ForgeRegistries.ENTITIES);
+        Main.CLIENT_RENDERER.addEntityRender(te, BroomRenderer::new);
+        return te;
     }
 
+    public BlockEntityType<SignPack.AbstractSignTileEntity> getSignTileEntity() {
+        return SIGN_TILE;
+    }
     public EntityType<CustomBoatEntity> getBoatEntity() {
         return BOAT;
     }
+    public EntityType<BroomEntity> getBroom() {
+        return BROOM;
+    }
+//    public EntityType<OwlEntity> getOwl() {
+//        return OWL;
+//    }
 }

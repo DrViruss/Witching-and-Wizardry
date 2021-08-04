@@ -1,4 +1,4 @@
-package com.viruss.waw.client.renderers;
+package com.viruss.waw.client.renders;
 
 import com.mojang.datafixers.util.Pair;
 import com.viruss.waw.Main;
@@ -23,10 +23,4 @@ public class CustomBoatRenderer extends BoatRenderer {
         CustomBoatEntity boat = (CustomBoatEntity) entity;
         return Pair.of(new ResourceLocation(Main.MOD_ID, "textures/entity/boats/" +boat.getDataType()+".png"),this.boat);
     }
-
-//    @Override
-//    public ResourceLocation getTextureLocation(Boat entity) {
-//        CustomBoatEntity boat = (CustomBoatEntity) entity;
-//        return new ResourceLocation(WitchingAndWizardry.MOD_ID, "textures/entity/boats/" +boat.getDataType()+".png");
-//    }
 }

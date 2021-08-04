@@ -1,12 +1,14 @@
 package com.viruss.waw.client;
 
 import com.viruss.waw.Main;
+import com.viruss.waw.client.models.BroomModel;
 import com.viruss.waw.common.objects.blocks.ChalkSymbol;
 import com.viruss.waw.common.objects.items.Chalk;
 import com.viruss.waw.utils.registration.DoubleRegisteredObject;
 import com.viruss.waw.utils.registries.ModRegistry;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.color.item.ItemColors;
+import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -14,6 +16,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
@@ -24,6 +27,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fmllegacy.RegistryObject;
@@ -31,7 +35,7 @@ import net.minecraftforge.fmllegacy.RegistryObject;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings("all")
+//@SuppressWarnings("all")
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = Main.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RendererManager {
@@ -109,5 +113,16 @@ public class RendererManager {
         ModRegistry.CHALKS.foreach((type, chalkObject) -> {
             items.register((p_getColor_1_, p_getColor_2_) -> ((Chalk)chalkObject.getChalk()).getColor(),chalkObject.getChalk());
         });
+    }
+
+
+    /*      ~Layers~     */
+    public final static ModelLayerLocation BROOM_LAYER = new ModelLayerLocation(new ResourceLocation(Main.MOD_ID, "broom"), "broom");
+//    public final static ModelLayerLocation OWL_LAYER = new ModelLayerLocation(new ResourceLocation(Main.MOD_ID, "owl"), "owl");
+
+
+    @SubscribeEvent
+    public static void registerLayerDefinition(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(BROOM_LAYER, BroomModel::createBodyLayer);
     }
 }

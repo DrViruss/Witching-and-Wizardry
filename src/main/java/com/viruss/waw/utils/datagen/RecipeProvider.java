@@ -1,6 +1,6 @@
 package com.viruss.waw.utils.datagen;
 
-import com.viruss.waw.common.objects.packs.WoodenObject;
+import com.viruss.waw.common.objects.packs.WoodenPack;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -17,8 +17,8 @@ import java.util.function.Consumer;
 
 @SuppressWarnings("all")
 public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
-    private final Set<WoodenObject> woods;
-    public RecipeProvider(DataGenerator p_125973_,Set<WoodenObject> woods) {
+    private final Set<WoodenPack> woods;
+    public RecipeProvider(DataGenerator p_125973_,Set<WoodenPack> woods) {
         super(p_125973_);
         this.woods = woods;
     }
@@ -29,7 +29,7 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
     }
 
     private void registerWoods(Consumer<FinishedRecipe> consumer) {
-        for(WoodenObject wood : woods){
+        for(WoodenPack wood : woods){
 
             shapelessPlanksNew(consumer, wood.getPlanks().getPrimary(), wood.getLogsItemTag());
             shapelessStrippedToPlanks(consumer,wood.getWood().getPrimary() ,wood.getLog().getPrimary());

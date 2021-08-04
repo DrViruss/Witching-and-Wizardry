@@ -1,7 +1,7 @@
 package com.viruss.waw.utils.datagen;
 
 import com.viruss.waw.Main;
-import com.viruss.waw.common.objects.packs.WoodenObject;
+import com.viruss.waw.common.objects.packs.WoodenPack;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.tags.BlockTags;
@@ -12,8 +12,8 @@ import javax.annotation.Nullable;
 import java.util.Set;
 
 public class BlockTagProvider extends BlockTagsProvider {
-    private final Set<WoodenObject> woods;
-    public BlockTagProvider(DataGenerator p_126511_, @Nullable ExistingFileHelper existingFileHelper,Set<WoodenObject> woods) {
+    private final Set<WoodenPack> woods;
+    public BlockTagProvider(DataGenerator p_126511_, @Nullable ExistingFileHelper existingFileHelper,Set<WoodenPack> woods) {
         super(p_126511_, Main.MOD_ID, existingFileHelper);
         this.woods = woods;
     }
@@ -24,7 +24,7 @@ public class BlockTagProvider extends BlockTagsProvider {
     }
 
     private void registerWoods() {
-        for(WoodenObject wood : woods) {
+        for(WoodenPack wood : woods) {
 
             if(wood.getStrippedLog() == null)
                 tag(wood.getLogsBlockTag()).add(wood.getLog().getPrimary()).add(wood.getWood().getPrimary());

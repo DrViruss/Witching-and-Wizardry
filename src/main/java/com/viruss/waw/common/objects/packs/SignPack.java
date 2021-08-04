@@ -18,12 +18,12 @@ import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.ForgeRegistries;
 
 @SuppressWarnings("all")
-public class SignObject {
+public class SignPack {
     private final Block sign;
     private final Block wall_sign;
     private final Item item;
 
-    public SignObject(String name, WoodType wood, CreativeModeTab group) {
+    public SignPack(String name, WoodType wood, CreativeModeTab group) {
         this.sign = new AbstractStandingSign(wood);
         this.wall_sign = new AbstractWallSign(wood,sign);
         this.item = new SignItem((new Item.Properties()).stacksTo(16).tab(group), sign, wall_sign);
