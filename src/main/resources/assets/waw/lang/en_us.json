@@ -43,6 +43,12 @@
 
   "item.waw.chalk_white": "White Chalk",
   "item.waw.chalk_red": "Red Chalk",
+  "item.waw.chalk_central": "Chalk of Heart",
 
-  "waw.subtitle.chalk": "Chalk"
+  "item.waw.calcosvis": "Calcosvis dust",
+  "item.waw.magic_ash": "Magic tree ash",
+
+  "waw.subtitle.chalk": "Chalk",
+
+  "waw.gui.hits" : "Hits:"
 }

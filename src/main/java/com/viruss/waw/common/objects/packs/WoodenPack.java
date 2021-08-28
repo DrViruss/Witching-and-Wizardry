@@ -12,6 +12,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
+import net.minecraft.world.Container;
+import net.minecraft.world.Containers;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
@@ -21,6 +23,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.grower.AbstractTreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -30,7 +33,7 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -71,7 +74,7 @@ public class WoodenPack {
 
     public WoodenPack(String name, CreativeModeTab group, boolean isStrippable) {
         com.viruss.waw.utils.registration.Block.Builder builder = new com.viruss.waw.utils.registration.Block.Builder().needItem(group);
-        this.woodType =WoodType.register(WoodType.create(name));    //TODO: move wood ( MOD_ID:name )
+        this.woodType = WoodType.register(WoodType.create(/*Main.MOD_ID+":"+*/name));    //TODO: move wood ( ResourceLocationException not fixed :c )
 
         if (isStrippable) {
             this.stripped_log = ModRegistry.MDR.register(name+"_stripped_log",builder.setBlockSup(AbstractLog::new));
@@ -282,7 +285,7 @@ public class WoodenPack {
 
         @Nullable
         @Override
-        public BlockState getToolModifiedState(BlockState state, Level world, BlockPos pos, Player player, ItemStack stack, ToolType toolType) {
+        public BlockState getToolModifiedState(BlockState state, Level world, BlockPos pos, Player player, ItemStack stack, ToolAction toolAction) {
             return stripped.defaultBlockState().setValue(AXIS, state.getValue(AXIS));
         }
     }

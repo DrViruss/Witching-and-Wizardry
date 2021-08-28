@@ -1,0 +1,6 @@
+{
+  "parent": "waw:block/symbols/symbols",
+  "textures": {
+    "texture": "waw:blocks/symbols/basic_15"
+  }
+}

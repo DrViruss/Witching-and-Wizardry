@@ -1,6 +1,9 @@
 package com.viruss.waw.utils.datagen;
 
 import com.viruss.waw.Main;
+import com.viruss.waw.common.objects.blocks.chalk.BasicSymbol;
+import com.viruss.waw.common.objects.blocks.chalk.CentralSymbol;
+import com.viruss.waw.common.objects.items.Chalk;
 import com.viruss.waw.common.objects.packs.SignPack;
 import com.viruss.waw.common.objects.packs.WoodenPack;
 import com.viruss.waw.utils.registries.ModRegistry;
@@ -8,14 +11,18 @@ import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.AttachFace;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
+import javax.swing.plaf.basic.BasicArrowButton;
 import java.util.Objects;
 import java.util.Set;
 
@@ -29,19 +36,29 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
 
     @Override
     protected void registerStatesAndModels() {
-        registerWoods(woods.toArray(WoodenPack[]::new));
-
-        generateChalks();
+        woods(woods.toArray(WoodenPack[]::new));
+        chalks();
+        ingredients();
     }
 
+    private void ingredients(){
+        generatedItem(ModRegistry.INGREDIENTS.getCalcosvis(),modLoc("items/magic_dust"));
+        generatedItem(ModRegistry.INGREDIENTS.getMagicAsh(),modLoc("items/magic_dust"));
+    }
 
-    private void generateChalks(){
+    private void chalks(){
         ModRegistry.CHALKS.foreach((type, chalkObject) -> {
+            if(chalkObject.getSymbol() instanceof CentralSymbol)
+                symbolBlock(chalkObject.getSymbol(), CentralSymbol.STAGE,"central");
+            else
+                symbolBlock(chalkObject.getSymbol(), BasicSymbol.SIGN,"basic");
+
             generatedItem(chalkObject.getChalk(),modLoc("items/chalk"));
         });
-    }
 
-    private void registerWoods(WoodenPack... woods){
+
+    }
+    private void woods(WoodenPack... woods){
         for(WoodenPack wood : woods)
         {
             String treeName =wood.getWoodType().name(); //wood.getWoodType().name().split(":")[1];
@@ -181,19 +198,31 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         this.simpleBlock(block,cubeAll(block,woodBlocksLocation(block)));
         this.basicBlockItem(block);
     }
-    private void generatedItem(Block block, ResourceLocation texture) {
+    private void generatedItem(ItemLike block, ResourceLocation texture) {
         itemModels().getBuilder(Objects.requireNonNull(block.asItem().getRegistryName()).getPath())
-                .parent(itemModels().getExistingFile(new ResourceLocation("item/generated")))
-                .texture("layer0", texture);
-    }
-    private void generatedItem(Item item, ResourceLocation texture) {
-        itemModels().getBuilder(Objects.requireNonNull(item.getRegistryName()).getPath())
                 .parent(itemModels().getExistingFile(new ResourceLocation("item/generated")))
                 .texture("layer0", texture);
     }
 
     public ModelFile cubeAll(Block block,ResourceLocation location) {
         return models().cubeAll(name(block), location);
+    }
+
+    protected void symbolBlock(Block block, Property<Integer> property,String name) {
+        ModelFile.ExistingModelFile parent = this.models()
+                .getExistingFile(modLoc("block/symbols/symbols"));
+        this.getVariantBuilder(block)
+                .forAllStates(state -> {
+                    int value = state.getValue(property);
+                    ModelFile subModel = this.models().getBuilder("block/symbols/"+property.getName()+"_" + value).parent(parent)
+                            .texture("texture", modLoc("blocks/symbols/"+name+"_" + value));
+
+                    return ConfiguredModel.builder()
+                            .modelFile(subModel)
+                            .rotationY((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING)
+                                    .toYRot())
+                            .build();
+                });
     }
 
     private String name(Block block) {

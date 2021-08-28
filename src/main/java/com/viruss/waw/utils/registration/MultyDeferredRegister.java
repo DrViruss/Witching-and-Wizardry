@@ -33,7 +33,7 @@ public class MultyDeferredRegister{
     public <T extends IForgeRegistryEntry<T>> RegistryObject<T> register(String name, Supplier<T> supplier, IForgeRegistry<T> type) {
         DeferredRegister<T> dregister = ((DeferredRegister<T>) registerMap.get(type));
         if(dregister == null)
-            throw new RuntimeException("MDR cant find "+type+" register! Check your RegistryHandler class!");
+            throw new RuntimeException("MDR cant find "+type.getRegistryName().getPath()+" register! Check your RegistryHandler class!");
         return dregister.register(name, supplier);
     }
 

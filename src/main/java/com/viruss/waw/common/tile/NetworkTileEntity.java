@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 
 @SuppressWarnings("all")
-public class NetworkTileEntity extends BlockEntity {
+public abstract class NetworkTileEntity extends BlockEntity {
 
     public NetworkTileEntity(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
         super(p_155228_, p_155229_, p_155230_);
@@ -52,18 +52,14 @@ public class NetworkTileEntity extends BlockEntity {
         this.loadNetwork(tag);
     }
 
-    public void loadNetwork(CompoundTag tag){
-    }
+    public abstract void loadNetwork(CompoundTag tag);
 
     public CompoundTag saveNetwork(CompoundTag tag){
         return tag;
     }
 
-    public void updateNetwork()
-    {
+    public void updateNetwork() {
         if(this.level!=null)
-        {
             this.level.sendBlockUpdated(getBlockPos(),getBlockState(),getBlockState(),2);
-        }
     }
 }

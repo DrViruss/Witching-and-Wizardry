@@ -1,0 +1,21 @@
+{
+  "type": "waw:mortar",
+  "result": {
+    "nbt": {
+      "Damage": 0
+    },
+    "item": "waw:chalk_central"
+  },
+  "hits": 5,
+  "ingredients": [
+    {
+      "item": "waw:chalk_white"
+    },
+    {
+      "tag": "forge:bones"
+    },
+    {
+      "item": "waw:magic_ash"
+    }
+  ]
+}

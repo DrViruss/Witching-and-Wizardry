@@ -4,11 +4,19 @@ import com.viruss.waw.Main;
 import com.viruss.waw.client.renders.tile.MortarRenderer;
 import com.viruss.waw.common.objects.blocks.MortarBlock;
 import com.viruss.waw.common.tile.MortarTE;
+import com.viruss.waw.utils.recipes.RecipeTypes;
 import com.viruss.waw.utils.registries.ModRegistry;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistry;
 
 @SuppressWarnings("all")
 public class MortarAndPestle {
@@ -25,6 +33,7 @@ public class MortarAndPestle {
         ModRegistry.MDR.register("mortar",new com.viruss.waw.utils.registration.Block.Builder().setBlockSup(() -> mortar).needItem(Main.ITEM_GROUP));
         ModRegistry.MDR.register("pestle",()->pestle, ForgeRegistries.ITEMS);
         ModRegistry.MDR.register("mortar",()->mortarTE,ForgeRegistries.BLOCK_ENTITIES);
+
         Main.CLIENT_RENDERER.addTileEntityRenderer(mortarTE, MortarRenderer::new);
     }
 

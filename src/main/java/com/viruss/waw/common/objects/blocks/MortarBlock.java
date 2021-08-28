@@ -28,6 +28,39 @@ import javax.annotation.Nullable;
 public class MortarBlock extends BaseEntityBlock {
     private static final VoxelShape SHAPE = Block.box(4, 1, 4, 12, 6, 12);
 
+    @Override
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player playerEntity, InteractionHand hand, BlockHitResult traceResult) {
+        if(!world.isClientSide()){
+            ItemStack item = playerEntity.getItemInHand(hand).copy();
+            item.setCount(1);
+            MortarTE te = (MortarTE) world.getBlockEntity(pos);
+
+            if(playerEntity.isShiftKeyDown() && item == ItemStack.EMPTY)
+                for (int i = te.getInventory().getContainerSize()-1; i >=0 ; i--) {
+                    ItemStack extracted = te.getInventory().removeItem(i, 1);
+                    if (extracted != ItemStack.EMPTY) {
+                        playerEntity.addItem(extracted);
+                        world.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 3f,3f);
+                        return InteractionResult.SUCCESS;
+                    }
+                }
+
+                if(item == ItemStack.EMPTY)
+                    return InteractionResult.PASS;
+
+                if(item.getItem() == ModRegistry.MORTAR_AND_PESTLE.getPestle()) {
+                    System.out.println("Crafting!!");
+                    te.craft(playerEntity);
+                    world.playSound(null, pos, SoundEvents.STONE_HIT, SoundSource.PLAYERS, 3f,3f);
+                    return InteractionResult.SUCCESS;
+                }
+            if(te.getInventory().addItem(item).isEmpty())
+                playerEntity.getItemInHand(hand).shrink(1);
+            world.playSound(null, pos, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.PLAYERS, 0.5f,3f);
+        }
+        return InteractionResult.SUCCESS;
+    }
+
     public MortarBlock() {
         super(Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.5F).sound(SoundType.STONE));
     }
@@ -37,58 +70,16 @@ public class MortarBlock extends BaseEntityBlock {
         return SHAPE;
     }
 
-    @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player playerEntity, InteractionHand hand, BlockHitResult traceResult) {
-        if(!world.isClientSide()){
-            ItemStack item = playerEntity.getItemInHand(hand).copy();
-            item.setCount(1);
-            MortarTE te = (MortarTE) world.getBlockEntity(pos);
-            te.getInventory().ifPresent(itemStackHandler -> {
-                if(playerEntity.isShiftKeyDown() && item == ItemStack.EMPTY)
-                    for (int i = itemStackHandler.getSlots()-1; i >=0 ; i--) {
-                        ItemStack extracted = itemStackHandler.extractItem(i, 1, false);
-                        if (extracted != ItemStack.EMPTY) {
-                            playerEntity.addItem(extracted);
-                            world.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 3f,3f);
-                            return;
-                        }
-                    }
-
-                if(item == ItemStack.EMPTY)
-                    return;
-
-                if(itemStackHandler.getStackInSlot(itemStackHandler.getSlots()-1) != ItemStack.EMPTY && item.getItem() == ModRegistry.MORTAR_AND_PESTLE.getPestle()) {
-                    System.out.println("Crafting!!");
-                    world.playSound(null, pos, SoundEvents.STONE_HIT, SoundSource.PLAYERS, 3f,3f);
-                    return;
-                }
-
-                for(int i=0; i<itemStackHandler.getSlots();i++) {
-                    if(itemStackHandler.getStackInSlot(i).getItem() == ModRegistry.MORTAR_AND_PESTLE.getPestle())
-                        break;
-                    if (itemStackHandler.getStackInSlot(i) == ItemStack.EMPTY) {
-                        itemStackHandler.insertItem(i, item,false);
-                        playerEntity.getItemInHand(hand).shrink(1);
-                        world.playSound(null, pos, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.PLAYERS, 0.5f,3f);
-                        return;
-                    }
-                }
-            });
-        }
-        return InteractionResult.SUCCESS;
-    }
-
 
 
     @Override
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState p_196243_4_, boolean p_196243_5_) {
         if(!world.isClientSide())
         {
-            ((MortarTE)world.getBlockEntity(pos)).getInventory().ifPresent(itemStackHandler -> {
-                for (int i = 0; i < itemStackHandler.getSlots(); i++) {
-                    Containers.dropItemStack(world, pos.getX(), pos.getY() + 0.5, pos.getZ(), itemStackHandler.getStackInSlot(i));
-                }
-            });
+            MortarTE te = (MortarTE) world.getBlockEntity(pos);
+            for(int i=0; i<te.getInventory().getContainerSize(); i++) {
+                Containers.dropItemStack(world, pos.getX(), pos.getY() + 0.5, pos.getZ(),te.getInventory().getItem(i));
+            }
         }
         super.onRemove(state, world, pos, p_196243_4_, p_196243_5_);
     }

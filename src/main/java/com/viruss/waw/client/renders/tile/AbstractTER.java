@@ -11,8 +11,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.data.EmptyModelData;
 
-public class AbstractTER<T extends BlockEntity> implements BlockEntityRenderer<T> {
-    private final Minecraft minecraft;
+public abstract class AbstractTER<T extends BlockEntity> implements BlockEntityRenderer<T> {
+    protected final Minecraft minecraft;
     public AbstractTER() {
         this.minecraft = Minecraft.getInstance();
     }
@@ -20,7 +20,6 @@ public class AbstractTER<T extends BlockEntity> implements BlockEntityRenderer<T
     @Override
     public void render(T tileEntity, float partialTicks, PoseStack stack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         renderBlock(tileEntity, stack, buffer, combinedLight, combinedOverlay);
-
     }
     private void renderBlock(T tileEntity, PoseStack stack, MultiBufferSource buffer, int combinedLight, int combinedOverlay){
         BlockState state = tileEntity.getBlockState();

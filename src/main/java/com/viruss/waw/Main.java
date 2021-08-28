@@ -32,6 +32,8 @@ public class Main
         bus.addListener(this::processIMC);
         bus.addListener(this::doClientStuff);
 
+//        bus.addListener();
+
         MinecraftForge.EVENT_BUS.register(new EventHandler());
 
         ModRegistry.init(bus);
@@ -47,6 +49,7 @@ public class Main
     public static final RendererManager CLIENT_RENDERER = new RendererManager();
     private void doClientStuff(final FMLClientSetupEvent event) {
         CLIENT_RENDERER.init();
+//        Minecraft.getInstance().getSkinManager().registerTexture(); ??
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)

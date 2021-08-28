@@ -2,7 +2,7 @@ package com.viruss.waw.client;
 
 import com.viruss.waw.Main;
 import com.viruss.waw.client.models.BroomModel;
-import com.viruss.waw.common.objects.blocks.ChalkSymbol;
+import com.viruss.waw.common.objects.blocks.chalk.IColorful;
 import com.viruss.waw.common.objects.items.Chalk;
 import com.viruss.waw.utils.registration.DoubleRegisteredObject;
 import com.viruss.waw.utils.registries.ModRegistry;
@@ -32,10 +32,11 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fmllegacy.RegistryObject;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-//@SuppressWarnings("all")
+@SuppressWarnings("all")
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = Main.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RendererManager {
@@ -96,7 +97,7 @@ public class RendererManager {
         /*~    Chalks     ~*/
         ModRegistry.CHALKS.foreach((type, chalkObject) -> {
             colors.register((p_getColor_1_, p_getColor_2_, p_getColor_3_, p_getColor_4_) ->
-                    ((ChalkSymbol)chalkObject.getSymbol()).getColor(),chalkObject.getSymbol());
+                    ((IColorful)chalkObject.getSymbol()).getColor(),chalkObject.getSymbol());
         });
     }
 
@@ -113,6 +114,9 @@ public class RendererManager {
         ModRegistry.CHALKS.foreach((type, chalkObject) -> {
             items.register((p_getColor_1_, p_getColor_2_) -> ((Chalk)chalkObject.getChalk()).getColor(),chalkObject.getChalk());
         });
+
+        /*~    Dusts     ~*/
+        items.register((p_92672_, p_92673_) -> Color.DARK_GRAY.getRGB(),ModRegistry.INGREDIENTS.getMagicAsh());
     }
 
 
