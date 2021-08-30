@@ -12,8 +12,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
-import net.minecraft.world.Container;
-import net.minecraft.world.Containers;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
@@ -23,7 +21,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.grower.AbstractTreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -74,7 +71,7 @@ public class WoodenPack {
 
     public WoodenPack(String name, CreativeModeTab group, boolean isStrippable) {
         com.viruss.waw.utils.registration.Block.Builder builder = new com.viruss.waw.utils.registration.Block.Builder().needItem(group);
-        this.woodType = WoodType.register(WoodType.create(/*Main.MOD_ID+":"+*/name));    //TODO: move wood ( ResourceLocationException not fixed :c )
+        this.woodType =  WoodType.register(WoodType.create(name)); //TODO: move wood ( ResourceLocationException not fixed :c )
 
         if (isStrippable) {
             this.stripped_log = ModRegistry.MDR.register(name+"_stripped_log",builder.setBlockSup(AbstractLog::new));
@@ -106,11 +103,11 @@ public class WoodenPack {
         Main.CLIENT_RENDERER.addBlockRenderer(trapdoor, RenderType.translucent());
     }
 
-    public WoodenPack(String name, CreativeModeTab group, boolean isStrippable, FoodProperties fruit) {
+    public WoodenPack(String name, CreativeModeTab group, boolean isStrippable, FoodProperties fruit, boolean isGenerateble) {
         this(name,group, isStrippable);
         com.viruss.waw.utils.registration.Block.Builder builder = new com.viruss.waw.utils.registration.Block.Builder().needItem(group);
         this.leaves = ModRegistry.MDR.register(name + "_leaves", builder.setBlockSup(AbstractLeaves::new));
-        this.sapling = ModRegistry.MDR.register(name + "_sapling", builder.setBlockSup(() -> new SaplingBlock(new AbstractTree(name), BlockBehaviour.Properties.of(Material.PLANT).instabreak().sound(SoundType.CROP).randomTicks().noCollission())));
+        this.sapling = ModRegistry.MDR.register(name + "_sapling", builder.setBlockSup(() -> new SaplingBlock(new AbstractTree(name,isGenerateble), BlockBehaviour.Properties.of(Material.PLANT).instabreak().sound(SoundType.CROP).randomTicks().noCollission())));
         this.potted_sapling = ModRegistry.MDR.register(name + "_potted", () -> new FlowerPotBlock(()-> (FlowerPotBlock) Blocks.FLOWER_POT, this.sapling::getPrimary, BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)), ForgeRegistries.BLOCKS);
 
         if(fruit != null){
@@ -258,10 +255,12 @@ public class WoodenPack {
     }
     public static class AbstractTree extends AbstractTreeGrower {
         Field t;
-        public AbstractTree(String name) {
+        public AbstractTree(String name, boolean isGeneratable) {
             try {
                 t = Features.Trees.class.getField(name.toUpperCase());
-            }catch (Exception ignored){}
+            }catch (Exception ignored){
+                throw new RuntimeException("Tree not found! \n Check your Features.Trees class!");
+            }
         }
 
         @Nullable
@@ -271,7 +270,6 @@ public class WoodenPack {
             try {
                 feature = (ConfiguredFeature<TreeConfiguration, ?>) t.get(feature);
             } catch (Exception ignored){}
-            System.out.println(feature.toString());
             return feature;
         }
     }

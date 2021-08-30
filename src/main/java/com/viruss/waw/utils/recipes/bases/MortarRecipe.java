@@ -1,17 +1,12 @@
 package com.viruss.waw.utils.recipes.bases;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.viruss.waw.Main;
-import com.viruss.waw.common.tile.MortarTE;
 import com.viruss.waw.utils.ModUtils;
 import com.viruss.waw.utils.recipes.RecipeTypes;
-import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.advancements.Advancement;
 import net.minecraft.core.NonNullList;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -21,13 +16,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
-import org.apache.logging.log4j.core.util.JsonUtils;
-import org.lwjgl.system.CallbackI;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.Objects;
 
-//@SuppressWarnings("all")
+@SuppressWarnings("all")
 public class MortarRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation id;
     private final NonNullList<Ingredient> ingredients;
@@ -72,17 +65,23 @@ public class MortarRecipe implements Recipe<SimpleContainer> {
 
     @Override
     public boolean matches(SimpleContainer container, Level level) {
-        System.out.println(this);
-        for(int i=0; i< ingredients.size(); i++) {
-            Ingredient ingredient = ingredients.get(i);
-            for (int j = 0; j < ingredient.getItems().length; i++) {
-                ItemStack item = container.getItem(i);
-                if (!item.isEmpty() && !ingredient.test(item))
+            Ingredient ingredients = Ingredient.merge(this.ingredients);
+            for (int j = 0; j < container.getContainerSize(); j++) {
+                ItemStack item = container.getItem(j);
+                if (!item.isEmpty() && !ingredients.test(item))
                     return false;
             }
-        }
-
         return true;
+    }
+
+    private boolean testChalk(ItemStack recipeItem,ItemStack containerItem){
+        if(recipeItem.getTag() == null || containerItem.getTag() == null ) return false;
+        int color0 = recipeItem.getTag().contains("color") ? recipeItem.getTag().getInt("color") : 0;
+        int color1 = containerItem.getTag().contains("color") ? containerItem.getTag().getInt("color") : 0;
+            return color0 == color1 && testDurability(containerItem,recipeItem.getDamageValue()) ;
+    }
+    private boolean testDurability(ItemStack stack,int durability){
+        return stack.getDamageValue() <= durability;
     }
 
     public int getHits() {
@@ -133,11 +132,29 @@ public class MortarRecipe implements Recipe<SimpleContainer> {
             this.output = result.getDefaultInstance();
         }
 
+        public FinishedRecipe(int hits, ItemStack result, Ingredient... ingredients) {
+            if(ingredients.length>4) throw new ArrayIndexOutOfBoundsException("Mortar max supports 4 ingredients");
+
+            this.id = new ResourceLocation(Main.MOD_ID,"mortar/"+Objects.requireNonNull(result.getItem().getRegistryName()).getPath());
+            this.input = ingredients;
+            this.hits = hits;
+            this.output = result;
+        }
+
         public FinishedRecipe(ResourceLocation id, ItemStack output, int hits, Ingredient... input) {
             if(input.length>4) throw new ArrayIndexOutOfBoundsException("Mortar max supports 4 ingredients");
 
             this.id = id;
             this.output = output;
+            this.input = input;
+            this.hits = hits;
+        }
+
+        public FinishedRecipe(ResourceLocation id, Item output, int hits, Ingredient... input) {
+            if(input.length>4) throw new ArrayIndexOutOfBoundsException("Mortar max supports 4 ingredients");
+
+            this.id = id;
+            this.output = output.getDefaultInstance();
             this.input = input;
             this.hits = hits;
         }

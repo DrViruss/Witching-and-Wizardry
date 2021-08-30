@@ -1,8 +1,9 @@
 package com.viruss.waw.common.objects.blocks.chalk;
 
-import com.viruss.waw.common.objects.items.Chalk;
+import com.viruss.waw.utils.ModUtils;
 import com.viruss.waw.utils.registries.ModRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
@@ -15,7 +16,6 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Fluid;
@@ -27,15 +27,24 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 
 @SuppressWarnings("all")
-public class BasicSymbol extends Block implements IColorful {
+public class BasicSymbol extends Block {
     public static final IntegerProperty SIGN = IntegerProperty.create("sign", 0, 19);
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    protected static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 0.02, 16);
-    protected final Chalk.Type type;
+    public static final IntegerProperty COLOR = IntegerProperty.create("color", 0, 2);
 
-    public BasicSymbol(Chalk.Type type) {
+    protected static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 0.02, 16);
+
+    public BasicSymbol() {
         super(Properties.of(Material.CLOTH_DECORATION).strength(0.3f).sound(SoundType.BASALT).noDrops().noCollission());
-        this.type = type;
+    }
+
+    public BlockState getStateForPlacement(BlockPlaceContext context, CompoundTag tag) {
+        if(tag.contains("color"))
+            return super.getStateForPlacement(context)
+                .setValue(SIGN, RANDOM.nextInt(SIGN.getPossibleValues().size()))
+                .setValue(FACING,context.getHorizontalDirection().getOpposite())
+                .setValue(COLOR, ModUtils.Colors.colorToProperty(tag.getInt("color")));
+        return getStateForPlacement(context);
     }
 
     @Nullable
@@ -43,12 +52,13 @@ public class BasicSymbol extends Block implements IColorful {
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return super.getStateForPlacement(context)
             .setValue(SIGN, RANDOM.nextInt(SIGN.getPossibleValues().size()))
-            .setValue(FACING,context.getHorizontalDirection().getOpposite());
+            .setValue(FACING,context.getHorizontalDirection().getOpposite())
+            .setValue(COLOR, 0);
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(SIGN).add(BlockStateProperties.HORIZONTAL_FACING);
+        builder.add(SIGN).add(FACING).add(COLOR);
         super.createBlockStateDefinition(builder);
     }
 
@@ -73,11 +83,6 @@ public class BasicSymbol extends Block implements IColorful {
             worldIn.removeBlock(pos, false);
     }
 
-    @Override
-    public int getColor() {
-        return type.getColor();
-    }
-
     @Nullable
     @Override
     public BlockPathTypes getAiPathNodeType(BlockState state, BlockGetter world, BlockPos pos, @Nullable Mob entity) {
@@ -91,6 +96,6 @@ public class BasicSymbol extends Block implements IColorful {
 
     @Override
     public Item asItem() {
-        return ModRegistry.CHALKS.getChalk(this.type).getChalk();
+        return ModRegistry.CHALKS.getChalk();
     }
 }

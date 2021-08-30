@@ -2,8 +2,8 @@ package com.viruss.waw.client;
 
 import com.viruss.waw.Main;
 import com.viruss.waw.client.models.BroomModel;
-import com.viruss.waw.common.objects.blocks.chalk.IColorful;
-import com.viruss.waw.common.objects.items.Chalk;
+import com.viruss.waw.common.objects.blocks.chalk.BasicSymbol;
+import com.viruss.waw.utils.ModUtils;
 import com.viruss.waw.utils.registration.DoubleRegisteredObject;
 import com.viruss.waw.utils.registries.ModRegistry;
 import net.minecraft.client.color.block.BlockColors;
@@ -43,7 +43,7 @@ public class RendererManager {
     private final Map<EntityType<? extends Entity>, EntityRendererProvider<Entity>> ENTITY_RENDERERS =new HashMap<>();
     private final Map<RegistryObject<Block>, RenderType> BLOCK_RENDERERS = new HashMap<>();
     private final Map<BlockEntityType<? extends BlockEntity>, BlockEntityRendererProvider<BlockEntity>> TILE_RENDERERS =new HashMap<>();
-//
+
     public void init(){
         for(BlockEntityType<? extends BlockEntity> type : TILE_RENDERERS.keySet())
             BlockEntityRenderers.register(type, TILE_RENDERERS.get(type));
@@ -90,15 +90,9 @@ public class RendererManager {
         }, ModRegistry.SAMBUCUS.getLeaves().getPrimary());
 
 
-
         /*0x6DAD32 lightblue*/
 
-
-        /*~    Chalks     ~*/
-        ModRegistry.CHALKS.foreach((type, chalkObject) -> {
-            colors.register((p_getColor_1_, p_getColor_2_, p_getColor_3_, p_getColor_4_) ->
-                    ((IColorful)chalkObject.getSymbol()).getColor(),chalkObject.getSymbol());
-        });
+        colors.register((p_92567_, p_92568_, p_92569_, p_92570_) -> ModUtils.Colors.propertyToColor(p_92567_.getValue(BasicSymbol.COLOR)),ModRegistry.CHALKS.getBasicBlock(),ModRegistry.CHALKS.getCentralBlock());
     }
 
     @SubscribeEvent
@@ -106,14 +100,13 @@ public class RendererManager {
         ItemColors items = event.getItemColors();
         BlockColors blocks = event.getBlockColors();
 
+        /*~    Chalks     ~*/
+        items.register((p_92672_, p_92673_) -> p_92672_.getTag().contains("color") ? p_92672_.getTag().getInt("color") : 0xFFFFFF,ModRegistry.CHALKS.getChalk());
+
                 /*~    Leaves     ~*/
         items.register(((itemStack, i) -> blocks.getColor(((BlockItem)itemStack.getItem()).getBlock().defaultBlockState(),null,null,i)), ModRegistry.ASH.getLeaves().getSecondary());
         items.register(((itemStack, i) -> blocks.getColor(((BlockItem)itemStack.getItem()).getBlock().defaultBlockState(),null,null,i)), ModRegistry.SAMBUCUS.getLeaves().getSecondary());
 
-                /*~    Chalks     ~*/
-        ModRegistry.CHALKS.foreach((type, chalkObject) -> {
-            items.register((p_getColor_1_, p_getColor_2_) -> ((Chalk)chalkObject.getChalk()).getColor(),chalkObject.getChalk());
-        });
 
         /*~    Dusts     ~*/
         items.register((p_92672_, p_92673_) -> Color.DARK_GRAY.getRGB(),ModRegistry.INGREDIENTS.getMagicAsh());

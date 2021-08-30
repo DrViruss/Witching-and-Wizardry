@@ -1,6 +1,5 @@
 package com.viruss.waw.utils.datagen;
 
-import com.viruss.waw.common.objects.items.Chalk;
 import com.viruss.waw.common.objects.packs.WoodenPack;
 import com.viruss.waw.utils.recipes.bases.MortarRecipe;
 import com.viruss.waw.utils.registries.ModRegistry;
@@ -9,8 +8,10 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
@@ -64,11 +65,19 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
         */
         consumer.accept(new MortarRecipe.FinishedRecipe(
             5,
-            ModRegistry.CHALKS.getChalk(Chalk.Type.CENTRAL).getChalk(),
-            Ingredient.of(ModRegistry.CHALKS.getChalk(Chalk.Type.WHITE).getChalk()),
+            ModRegistry.INGREDIENTS.getCalcosvis(),
+            Ingredient.of(ModRegistry.CHALKS.getChalk()),
             Ingredient.of(Tags.Items.BONES),
             Ingredient.of(ModRegistry.INGREDIENTS.getMagicAsh())
         ));
+    }
+
+    private ItemStack colorfulChalk(int color){
+        ItemStack stack = new ItemStack(ModRegistry.CHALKS.getChalk());
+        CompoundTag tag = new CompoundTag();
+        tag.putInt("color", color);
+        stack.setTag(tag);
+        return stack;
     }
 
 

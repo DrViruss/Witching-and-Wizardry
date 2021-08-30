@@ -11,7 +11,7 @@ import net.minecraftforge.event.RegistryEvent;
 public class RecipeTypes {
 
     public static void registerRecipes(RegistryEvent.Register<RecipeSerializer<?>> event){
-        Mortar.registerRecipeSerializers(event); // TODO: add to MDR
+        Mortar.register(event);
     }
 
     public static class Mortar {
@@ -23,9 +23,10 @@ public class RecipeTypes {
         };
         public static final RecipeSerializer<MortarRecipe> SERIALIZER = new MortarRecipe.Serializer();
 
-        private static void registerRecipeSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
+        private static void register(RegistryEvent.Register<RecipeSerializer<?>> event) {
             Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(RecipeTypes.Mortar.TYPE.toString()), RecipeTypes.Mortar.TYPE);
             event.getRegistry().register(RecipeTypes.Mortar.SERIALIZER);
         }
     }
+
 }

@@ -1,12 +1,12 @@
 package com.viruss.waw.common.objects.blocks.chalk;
 
-import com.viruss.waw.common.objects.items.Chalk;
 import com.viruss.waw.common.tile.CentralSymbolTE;
+import com.viruss.waw.utils.ModUtils;
 import com.viruss.waw.utils.registries.ModRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
@@ -38,16 +38,25 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import javax.annotation.Nullable;
 
 @SuppressWarnings("all")
-public class CentralSymbol extends BaseEntityBlock implements IColorful {
+public class CentralSymbol extends BaseEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final IntegerProperty STAGE = IntegerProperty.create("stage", 0, 2);
-    protected static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 0.02, 16);
-    protected final Chalk.Type type;
+    public static final IntegerProperty COLOR = IntegerProperty.create("color", 0, 2);
 
-    public CentralSymbol(Chalk.Type type) {
+    protected static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 0.02, 16);
+
+    public CentralSymbol() {
         super(Properties.of(Material.CLOTH_DECORATION).strength(0.3f).sound(SoundType.BASALT).noDrops().noCollission());
-        this.type = type;
         MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    public BlockState getStateForPlacement(BlockPlaceContext context, CompoundTag tag) {
+        if(tag.contains("color"))
+            return super.getStateForPlacement(context)
+                    .setValue(STAGE, 0)
+                    .setValue(FACING,context.getHorizontalDirection().getOpposite())
+                    .setValue(COLOR, ModUtils.Colors.colorToProperty(tag.getInt("color")));
+        return getStateForPlacement(context);
     }
 
     @Nullable
@@ -55,12 +64,13 @@ public class CentralSymbol extends BaseEntityBlock implements IColorful {
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return super.getStateForPlacement(context)
                 .setValue(STAGE, 0)
-                .setValue(FACING,context.getHorizontalDirection().getOpposite());
+                .setValue(FACING,context.getHorizontalDirection().getOpposite())
+                .setValue(COLOR, 0xFFFFF);
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(STAGE).add(FACING);
+        builder.add(STAGE).add(FACING).add(COLOR);
         super.createBlockStateDefinition(builder);
     }
 
@@ -102,7 +112,8 @@ public class CentralSymbol extends BaseEntityBlock implements IColorful {
         if(!level.isClientSide() && !player.isShiftKeyDown()) {
             if (player.getItemInHand(hand).is(ModRegistry.INGREDIENTS.getCalcosvis()) && blockState.getValue(STAGE) == 0) {
                 level.setBlockAndUpdate(pos, blockState.setValue(STAGE, 1));
-                player.getItemInHand(hand).shrink(1);
+//                player.getItemInHand(hand).shrink(1);
+                ModUtils.Inventory.damageItem(player.isCreative(),player.getItemInHand(hand));
             }
 
             CentralSymbolTE center = (CentralSymbolTE) level.getBlockEntity(pos);
@@ -128,12 +139,7 @@ public class CentralSymbol extends BaseEntityBlock implements IColorful {
     }
 
     @Override
-    public int getColor() {
-        return type.getColor();
-    }
-
-    @Override
     public Item asItem() {
-        return ModRegistry.CHALKS.getChalk(this.type).getChalk();
+        return ModRegistry.CHALKS.getChalk();
     }
 }

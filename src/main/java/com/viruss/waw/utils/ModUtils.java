@@ -1,9 +1,11 @@
 package com.viruss.waw.utils;
 
 import com.google.gson.JsonObject;
-import com.mojang.realmsclient.dto.Ops;
-import com.mojang.serialization.*;
+import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.serialization.JsonOps;
 import com.viruss.waw.Main;
+import com.viruss.waw.common.objects.packs.ChalkSet;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
@@ -12,12 +14,14 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("all")
 public class ModUtils {
 
     public static class Colors{
@@ -32,6 +36,18 @@ public class ModUtils {
 
         public static float getBlue(int color){
             return (color & 255) / 255.0F;
+        }
+
+        public static int propertyToColor(int property)
+        {
+            return ChalkSet.COLORS[property];
+        }
+        public static int colorToProperty(int color)
+        {
+            for(int i=0; i<ChalkSet.COLORS.length; i++)
+                if(ChalkSet.COLORS[i] == color)
+                    return i;
+            return 0;
         }
     }
 
@@ -51,6 +67,14 @@ public class ModUtils {
             }
 
             return Integer.MAX_VALUE;
+        }
+
+        public static void damageItem(boolean isCreative,ItemStack stack) {
+            if (isCreative) return;
+
+            stack.setDamageValue(stack.getDamageValue() + 1);
+            if (stack.getDamageValue() >= stack.getMaxDamage())
+                stack.shrink(1);
         }
     }
 
@@ -89,6 +113,19 @@ public class ModUtils {
                 values.add(new net.minecraft.world.item.crafting.Ingredient.TagValue(tag));
             return net.minecraft.world.item.crafting.Ingredient.fromValues(values.stream());
         }
+    }
 
+    public static class Keyboard{
+        private static final long Window = Minecraft.getInstance().getWindow().getWindow();
+
+        @OnlyIn(Dist.CLIENT)
+        public static boolean isHoldingShift() {
+            return InputConstants.isKeyDown(Window , GLFW.GLFW_KEY_LEFT_SHIFT) || InputConstants.isKeyDown(Window,GLFW.GLFW_KEY_RIGHT_SHIFT);
+        }
+
+        @OnlyIn(Dist.CLIENT)
+        public static boolean isHoldingCtrl() {
+            return InputConstants.isKeyDown(Window , GLFW.GLFW_KEY_LEFT_CONTROL) || InputConstants.isKeyDown(Window, GLFW.GLFW_KEY_RIGHT_CONTROL);
+        }
     }
 }

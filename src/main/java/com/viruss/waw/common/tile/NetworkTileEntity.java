@@ -59,7 +59,7 @@ public abstract class NetworkTileEntity extends BlockEntity {
     }
 
     public void updateNetwork() {
-        if(this.level!=null)
+        if(level!=null && !level.isClientSide())
             this.level.sendBlockUpdated(getBlockPos(),getBlockState(),getBlockState(),2);
     }
 }

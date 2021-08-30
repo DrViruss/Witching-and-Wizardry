@@ -3,14 +3,12 @@ package com.viruss.waw.utils.datagen;
 import com.viruss.waw.Main;
 import com.viruss.waw.common.objects.blocks.chalk.BasicSymbol;
 import com.viruss.waw.common.objects.blocks.chalk.CentralSymbol;
-import com.viruss.waw.common.objects.items.Chalk;
 import com.viruss.waw.common.objects.packs.SignPack;
 import com.viruss.waw.common.objects.packs.WoodenPack;
 import com.viruss.waw.utils.registries.ModRegistry;
 import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.AttachFace;
@@ -22,7 +20,6 @@ import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-import javax.swing.plaf.basic.BasicArrowButton;
 import java.util.Objects;
 import java.util.Set;
 
@@ -47,21 +44,15 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
     }
 
     private void chalks(){
-        ModRegistry.CHALKS.foreach((type, chalkObject) -> {
-            if(chalkObject.getSymbol() instanceof CentralSymbol)
-                symbolBlock(chalkObject.getSymbol(), CentralSymbol.STAGE,"central");
-            else
-                symbolBlock(chalkObject.getSymbol(), BasicSymbol.SIGN,"basic");
-
-            generatedItem(chalkObject.getChalk(),modLoc("items/chalk"));
-        });
-
-
+        generatedItem(ModRegistry.CHALKS.getChalk(),modLoc("items/chalk"));
+        symbolBlock(ModRegistry.CHALKS.getBasicBlock(), BasicSymbol.SIGN,"basic");
+        symbolBlock(ModRegistry.CHALKS.getCentralBlock(), CentralSymbol.STAGE,"central");
     }
+
     private void woods(WoodenPack... woods){
         for(WoodenPack wood : woods)
         {
-            String treeName =wood.getWoodType().name(); //wood.getWoodType().name().split(":")[1];
+            String treeName = wood.getWoodType().name();    //wood.getWoodType().name().split(":")[1];
 
             basicWoodBlockAndItem(wood.getPlanks().getPrimary());
             axisBlockAndItem(wood.getLog().getPrimary(), woodBlocksLocation(treeName,"log"));
@@ -214,7 +205,7 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         this.getVariantBuilder(block)
                 .forAllStates(state -> {
                     int value = state.getValue(property);
-                    ModelFile subModel = this.models().getBuilder("block/symbols/"+property.getName()+"_" + value).parent(parent)
+                    ModelFile subModel = this.models().getBuilder("block/symbols/"+name+"_"+property.getName()+"_" + value).parent(parent)
                             .texture("texture", modLoc("blocks/symbols/"+name+"_" + value));
 
                     return ConfiguredModel.builder()

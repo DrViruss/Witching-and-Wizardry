@@ -1,0 +1,904 @@
+{
+  "variants": {
+    "color=0,facing=north,sign=0": {
+      "model": "waw:block/symbols/basic_sign_0",
+      "y": 180
+    },
+    "color=1,facing=north,sign=0": {
+      "model": "waw:block/symbols/basic_sign_0",
+      "y": 180
+    },
+    "color=2,facing=north,sign=0": {
+      "model": "waw:block/symbols/basic_sign_0",
+      "y": 180
+    },
+    "color=0,facing=south,sign=0": {
+      "model": "waw:block/symbols/basic_sign_0"
+    },
+    "color=1,facing=south,sign=0": {
+      "model": "waw:block/symbols/basic_sign_0"
+    },
+    "color=2,facing=south,sign=0": {
+      "model": "waw:block/symbols/basic_sign_0"
+    },
+    "color=0,facing=west,sign=0": {
+      "model": "waw:block/symbols/basic_sign_0",
+      "y": 90
+    },
+    "color=1,facing=west,sign=0": {
+      "model": "waw:block/symbols/basic_sign_0",
+      "y": 90
+    },
+    "color=2,facing=west,sign=0": {
+      "model": "waw:block/symbols/basic_sign_0",
+      "y": 90
+    },
+    "color=0,facing=east,sign=0": {
+      "model": "waw:block/symbols/basic_sign_0",
+      "y": 270
+    },
+    "color=1,facing=east,sign=0": {
+      "model": "waw:block/symbols/basic_sign_0",
+      "y": 270
+    },
+    "color=2,facing=east,sign=0": {
+      "model": "waw:block/symbols/basic_sign_0",
+      "y": 270
+    },
+    "color=0,facing=north,sign=1": {
+      "model": "waw:block/symbols/basic_sign_1",
+      "y": 180
+    },
+    "color=1,facing=north,sign=1": {
+      "model": "waw:block/symbols/basic_sign_1",
+      "y": 180
+    },
+    "color=2,facing=north,sign=1": {
+      "model": "waw:block/symbols/basic_sign_1",
+      "y": 180
+    },
+    "color=0,facing=south,sign=1": {
+      "model": "waw:block/symbols/basic_sign_1"
+    },
+    "color=1,facing=south,sign=1": {
+      "model": "waw:block/symbols/basic_sign_1"
+    },
+    "color=2,facing=south,sign=1": {
+      "model": "waw:block/symbols/basic_sign_1"
+    },
+    "color=0,facing=west,sign=1": {
+      "model": "waw:block/symbols/basic_sign_1",
+      "y": 90
+    },
+    "color=1,facing=west,sign=1": {
+      "model": "waw:block/symbols/basic_sign_1",
+      "y": 90
+    },
+    "color=2,facing=west,sign=1": {
+      "model": "waw:block/symbols/basic_sign_1",
+      "y": 90
+    },
+    "color=0,facing=east,sign=1": {
+      "model": "waw:block/symbols/basic_sign_1",
+      "y": 270
+    },
+    "color=1,facing=east,sign=1": {
+      "model": "waw:block/symbols/basic_sign_1",
+      "y": 270
+    },
+    "color=2,facing=east,sign=1": {
+      "model": "waw:block/symbols/basic_sign_1",
+      "y": 270
+    },
+    "color=0,facing=north,sign=2": {
+      "model": "waw:block/symbols/basic_sign_2",
+      "y": 180
+    },
+    "color=1,facing=north,sign=2": {
+      "model": "waw:block/symbols/basic_sign_2",
+      "y": 180
+    },
+    "color=2,facing=north,sign=2": {
+      "model": "waw:block/symbols/basic_sign_2",
+      "y": 180
+    },
+    "color=0,facing=south,sign=2": {
+      "model": "waw:block/symbols/basic_sign_2"
+    },
+    "color=1,facing=south,sign=2": {
+      "model": "waw:block/symbols/basic_sign_2"
+    },
+    "color=2,facing=south,sign=2": {
+      "model": "waw:block/symbols/basic_sign_2"
+    },
+    "color=0,facing=west,sign=2": {
+      "model": "waw:block/symbols/basic_sign_2",
+      "y": 90
+    },
+    "color=1,facing=west,sign=2": {
+      "model": "waw:block/symbols/basic_sign_2",
+      "y": 90
+    },
+    "color=2,facing=west,sign=2": {
+      "model": "waw:block/symbols/basic_sign_2",
+      "y": 90
+    },
+    "color=0,facing=east,sign=2": {
+      "model": "waw:block/symbols/basic_sign_2",
+      "y": 270
+    },
+    "color=1,facing=east,sign=2": {
+      "model": "waw:block/symbols/basic_sign_2",
+      "y": 270
+    },
+    "color=2,facing=east,sign=2": {
+      "model": "waw:block/symbols/basic_sign_2",
+      "y": 270
+    },
+    "color=0,facing=north,sign=3": {
+      "model": "waw:block/symbols/basic_sign_3",
+      "y": 180
+    },
+    "color=1,facing=north,sign=3": {
+      "model": "waw:block/symbols/basic_sign_3",
+      "y": 180
+    },
+    "color=2,facing=north,sign=3": {
+      "model": "waw:block/symbols/basic_sign_3",
+      "y": 180
+    },
+    "color=0,facing=south,sign=3": {
+      "model": "waw:block/symbols/basic_sign_3"
+    },
+    "color=1,facing=south,sign=3": {
+      "model": "waw:block/symbols/basic_sign_3"
+    },
+    "color=2,facing=south,sign=3": {
+      "model": "waw:block/symbols/basic_sign_3"
+    },
+    "color=0,facing=west,sign=3": {
+      "model": "waw:block/symbols/basic_sign_3",
+      "y": 90
+    },
+    "color=1,facing=west,sign=3": {
+      "model": "waw:block/symbols/basic_sign_3",
+      "y": 90
+    },
+    "color=2,facing=west,sign=3": {
+      "model": "waw:block/symbols/basic_sign_3",
+      "y": 90
+    },
+    "color=0,facing=east,sign=3": {
+      "model": "waw:block/symbols/basic_sign_3",
+      "y": 270
+    },
+    "color=1,facing=east,sign=3": {
+      "model": "waw:block/symbols/basic_sign_3",
+      "y": 270
+    },
+    "color=2,facing=east,sign=3": {
+      "model": "waw:block/symbols/basic_sign_3",
+      "y": 270
+    },
+    "color=0,facing=north,sign=4": {
+      "model": "waw:block/symbols/basic_sign_4",
+      "y": 180
+    },
+    "color=1,facing=north,sign=4": {
+      "model": "waw:block/symbols/basic_sign_4",
+      "y": 180
+    },
+    "color=2,facing=north,sign=4": {
+      "model": "waw:block/symbols/basic_sign_4",
+      "y": 180
+    },
+    "color=0,facing=south,sign=4": {
+      "model": "waw:block/symbols/basic_sign_4"
+    },
+    "color=1,facing=south,sign=4": {
+      "model": "waw:block/symbols/basic_sign_4"
+    },
+    "color=2,facing=south,sign=4": {
+      "model": "waw:block/symbols/basic_sign_4"
+    },
+    "color=0,facing=west,sign=4": {
+      "model": "waw:block/symbols/basic_sign_4",
+      "y": 90
+    },
+    "color=1,facing=west,sign=4": {
+      "model": "waw:block/symbols/basic_sign_4",
+      "y": 90
+    },
+    "color=2,facing=west,sign=4": {
+      "model": "waw:block/symbols/basic_sign_4",
+      "y": 90
+    },
+    "color=0,facing=east,sign=4": {
+      "model": "waw:block/symbols/basic_sign_4",
+      "y": 270
+    },
+    "color=1,facing=east,sign=4": {
+      "model": "waw:block/symbols/basic_sign_4",
+      "y": 270
+    },
+    "color=2,facing=east,sign=4": {
+      "model": "waw:block/symbols/basic_sign_4",
+      "y": 270
+    },
+    "color=0,facing=north,sign=5": {
+      "model": "waw:block/symbols/basic_sign_5",
+      "y": 180
+    },
+    "color=1,facing=north,sign=5": {
+      "model": "waw:block/symbols/basic_sign_5",
+      "y": 180
+    },
+    "color=2,facing=north,sign=5": {
+      "model": "waw:block/symbols/basic_sign_5",
+      "y": 180
+    },
+    "color=0,facing=south,sign=5": {
+      "model": "waw:block/symbols/basic_sign_5"
+    },
+    "color=1,facing=south,sign=5": {
+      "model": "waw:block/symbols/basic_sign_5"
+    },
+    "color=2,facing=south,sign=5": {
+      "model": "waw:block/symbols/basic_sign_5"
+    },
+    "color=0,facing=west,sign=5": {
+      "model": "waw:block/symbols/basic_sign_5",
+      "y": 90
+    },
+    "color=1,facing=west,sign=5": {
+      "model": "waw:block/symbols/basic_sign_5",
+      "y": 90
+    },
+    "color=2,facing=west,sign=5": {
+      "model": "waw:block/symbols/basic_sign_5",
+      "y": 90
+    },
+    "color=0,facing=east,sign=5": {
+      "model": "waw:block/symbols/basic_sign_5",
+      "y": 270
+    },
+    "color=1,facing=east,sign=5": {
+      "model": "waw:block/symbols/basic_sign_5",
+      "y": 270
+    },
+    "color=2,facing=east,sign=5": {
+      "model": "waw:block/symbols/basic_sign_5",
+      "y": 270
+    },
+    "color=0,facing=north,sign=6": {
+      "model": "waw:block/symbols/basic_sign_6",
+      "y": 180
+    },
+    "color=1,facing=north,sign=6": {
+      "model": "waw:block/symbols/basic_sign_6",
+      "y": 180
+    },
+    "color=2,facing=north,sign=6": {
+      "model": "waw:block/symbols/basic_sign_6",
+      "y": 180
+    },
+    "color=0,facing=south,sign=6": {
+      "model": "waw:block/symbols/basic_sign_6"
+    },
+    "color=1,facing=south,sign=6": {
+      "model": "waw:block/symbols/basic_sign_6"
+    },
+    "color=2,facing=south,sign=6": {
+      "model": "waw:block/symbols/basic_sign_6"
+    },
+    "color=0,facing=west,sign=6": {
+      "model": "waw:block/symbols/basic_sign_6",
+      "y": 90
+    },
+    "color=1,facing=west,sign=6": {
+      "model": "waw:block/symbols/basic_sign_6",
+      "y": 90
+    },
+    "color=2,facing=west,sign=6": {
+      "model": "waw:block/symbols/basic_sign_6",
+      "y": 90
+    },
+    "color=0,facing=east,sign=6": {
+      "model": "waw:block/symbols/basic_sign_6",
+      "y": 270
+    },
+    "color=1,facing=east,sign=6": {
+      "model": "waw:block/symbols/basic_sign_6",
+      "y": 270
+    },
+    "color=2,facing=east,sign=6": {
+      "model": "waw:block/symbols/basic_sign_6",
+      "y": 270
+    },
+    "color=0,facing=north,sign=7": {
+      "model": "waw:block/symbols/basic_sign_7",
+      "y": 180
+    },
+    "color=1,facing=north,sign=7": {
+      "model": "waw:block/symbols/basic_sign_7",
+      "y": 180
+    },
+    "color=2,facing=north,sign=7": {
+      "model": "waw:block/symbols/basic_sign_7",
+      "y": 180
+    },
+    "color=0,facing=south,sign=7": {
+      "model": "waw:block/symbols/basic_sign_7"
+    },
+    "color=1,facing=south,sign=7": {
+      "model": "waw:block/symbols/basic_sign_7"
+    },
+    "color=2,facing=south,sign=7": {
+      "model": "waw:block/symbols/basic_sign_7"
+    },
+    "color=0,facing=west,sign=7": {
+      "model": "waw:block/symbols/basic_sign_7",
+      "y": 90
+    },
+    "color=1,facing=west,sign=7": {
+      "model": "waw:block/symbols/basic_sign_7",
+      "y": 90
+    },
+    "color=2,facing=west,sign=7": {
+      "model": "waw:block/symbols/basic_sign_7",
+      "y": 90
+    },
+    "color=0,facing=east,sign=7": {
+      "model": "waw:block/symbols/basic_sign_7",
+      "y": 270
+    },
+    "color=1,facing=east,sign=7": {
+      "model": "waw:block/symbols/basic_sign_7",
+      "y": 270
+    },
+    "color=2,facing=east,sign=7": {
+      "model": "waw:block/symbols/basic_sign_7",
+      "y": 270
+    },
+    "color=0,facing=north,sign=8": {
+      "model": "waw:block/symbols/basic_sign_8",
+      "y": 180
+    },
+    "color=1,facing=north,sign=8": {
+      "model": "waw:block/symbols/basic_sign_8",
+      "y": 180
+    },
+    "color=2,facing=north,sign=8": {
+      "model": "waw:block/symbols/basic_sign_8",
+      "y": 180
+    },
+    "color=0,facing=south,sign=8": {
+      "model": "waw:block/symbols/basic_sign_8"
+    },
+    "color=1,facing=south,sign=8": {
+      "model": "waw:block/symbols/basic_sign_8"
+    },
+    "color=2,facing=south,sign=8": {
+      "model": "waw:block/symbols/basic_sign_8"
+    },
+    "color=0,facing=west,sign=8": {
+      "model": "waw:block/symbols/basic_sign_8",
+      "y": 90
+    },
+    "color=1,facing=west,sign=8": {
+      "model": "waw:block/symbols/basic_sign_8",
+      "y": 90
+    },
+    "color=2,facing=west,sign=8": {
+      "model": "waw:block/symbols/basic_sign_8",
+      "y": 90
+    },
+    "color=0,facing=east,sign=8": {
+      "model": "waw:block/symbols/basic_sign_8",
+      "y": 270
+    },
+    "color=1,facing=east,sign=8": {
+      "model": "waw:block/symbols/basic_sign_8",
+      "y": 270
+    },
+    "color=2,facing=east,sign=8": {
+      "model": "waw:block/symbols/basic_sign_8",
+      "y": 270
+    },
+    "color=0,facing=north,sign=9": {
+      "model": "waw:block/symbols/basic_sign_9",
+      "y": 180
+    },
+    "color=1,facing=north,sign=9": {
+      "model": "waw:block/symbols/basic_sign_9",
+      "y": 180
+    },
+    "color=2,facing=north,sign=9": {
+      "model": "waw:block/symbols/basic_sign_9",
+      "y": 180
+    },
+    "color=0,facing=south,sign=9": {
+      "model": "waw:block/symbols/basic_sign_9"
+    },
+    "color=1,facing=south,sign=9": {
+      "model": "waw:block/symbols/basic_sign_9"
+    },
+    "color=2,facing=south,sign=9": {
+      "model": "waw:block/symbols/basic_sign_9"
+    },
+    "color=0,facing=west,sign=9": {
+      "model": "waw:block/symbols/basic_sign_9",
+      "y": 90
+    },
+    "color=1,facing=west,sign=9": {
+      "model": "waw:block/symbols/basic_sign_9",
+      "y": 90
+    },
+    "color=2,facing=west,sign=9": {
+      "model": "waw:block/symbols/basic_sign_9",
+      "y": 90
+    },
+    "color=0,facing=east,sign=9": {
+      "model": "waw:block/symbols/basic_sign_9",
+      "y": 270
+    },
+    "color=1,facing=east,sign=9": {
+      "model": "waw:block/symbols/basic_sign_9",
+      "y": 270
+    },
+    "color=2,facing=east,sign=9": {
+      "model": "waw:block/symbols/basic_sign_9",
+      "y": 270
+    },
+    "color=0,facing=north,sign=10": {
+      "model": "waw:block/symbols/basic_sign_10",
+      "y": 180
+    },
+    "color=1,facing=north,sign=10": {
+      "model": "waw:block/symbols/basic_sign_10",
+      "y": 180
+    },
+    "color=2,facing=north,sign=10": {
+      "model": "waw:block/symbols/basic_sign_10",
+      "y": 180
+    },
+    "color=0,facing=south,sign=10": {
+      "model": "waw:block/symbols/basic_sign_10"
+    },
+    "color=1,facing=south,sign=10": {
+      "model": "waw:block/symbols/basic_sign_10"
+    },
+    "color=2,facing=south,sign=10": {
+      "model": "waw:block/symbols/basic_sign_10"
+    },
+    "color=0,facing=west,sign=10": {
+      "model": "waw:block/symbols/basic_sign_10",
+      "y": 90
+    },
+    "color=1,facing=west,sign=10": {
+      "model": "waw:block/symbols/basic_sign_10",
+      "y": 90
+    },
+    "color=2,facing=west,sign=10": {
+      "model": "waw:block/symbols/basic_sign_10",
+      "y": 90
+    },
+    "color=0,facing=east,sign=10": {
+      "model": "waw:block/symbols/basic_sign_10",
+      "y": 270
+    },
+    "color=1,facing=east,sign=10": {
+      "model": "waw:block/symbols/basic_sign_10",
+      "y": 270
+    },
+    "color=2,facing=east,sign=10": {
+      "model": "waw:block/symbols/basic_sign_10",
+      "y": 270
+    },
+    "color=0,facing=north,sign=11": {
+      "model": "waw:block/symbols/basic_sign_11",
+      "y": 180
+    },
+    "color=1,facing=north,sign=11": {
+      "model": "waw:block/symbols/basic_sign_11",
+      "y": 180
+    },
+    "color=2,facing=north,sign=11": {
+      "model": "waw:block/symbols/basic_sign_11",
+      "y": 180
+    },
+    "color=0,facing=south,sign=11": {
+      "model": "waw:block/symbols/basic_sign_11"
+    },
+    "color=1,facing=south,sign=11": {
+      "model": "waw:block/symbols/basic_sign_11"
+    },
+    "color=2,facing=south,sign=11": {
+      "model": "waw:block/symbols/basic_sign_11"
+    },
+    "color=0,facing=west,sign=11": {
+      "model": "waw:block/symbols/basic_sign_11",
+      "y": 90
+    },
+    "color=1,facing=west,sign=11": {
+      "model": "waw:block/symbols/basic_sign_11",
+      "y": 90
+    },
+    "color=2,facing=west,sign=11": {
+      "model": "waw:block/symbols/basic_sign_11",
+      "y": 90
+    },
+    "color=0,facing=east,sign=11": {
+      "model": "waw:block/symbols/basic_sign_11",
+      "y": 270
+    },
+    "color=1,facing=east,sign=11": {
+      "model": "waw:block/symbols/basic_sign_11",
+      "y": 270
+    },
+    "color=2,facing=east,sign=11": {
+      "model": "waw:block/symbols/basic_sign_11",
+      "y": 270
+    },
+    "color=0,facing=north,sign=12": {
+      "model": "waw:block/symbols/basic_sign_12",
+      "y": 180
+    },
+    "color=1,facing=north,sign=12": {
+      "model": "waw:block/symbols/basic_sign_12",
+      "y": 180
+    },
+    "color=2,facing=north,sign=12": {
+      "model": "waw:block/symbols/basic_sign_12",
+      "y": 180
+    },
+    "color=0,facing=south,sign=12": {
+      "model": "waw:block/symbols/basic_sign_12"
+    },
+    "color=1,facing=south,sign=12": {
+      "model": "waw:block/symbols/basic_sign_12"
+    },
+    "color=2,facing=south,sign=12": {
+      "model": "waw:block/symbols/basic_sign_12"
+    },
+    "color=0,facing=west,sign=12": {
+      "model": "waw:block/symbols/basic_sign_12",
+      "y": 90
+    },
+    "color=1,facing=west,sign=12": {
+      "model": "waw:block/symbols/basic_sign_12",
+      "y": 90
+    },
+    "color=2,facing=west,sign=12": {
+      "model": "waw:block/symbols/basic_sign_12",
+      "y": 90
+    },
+    "color=0,facing=east,sign=12": {
+      "model": "waw:block/symbols/basic_sign_12",
+      "y": 270
+    },
+    "color=1,facing=east,sign=12": {
+      "model": "waw:block/symbols/basic_sign_12",
+      "y": 270
+    },
+    "color=2,facing=east,sign=12": {
+      "model": "waw:block/symbols/basic_sign_12",
+      "y": 270
+    },
+    "color=0,facing=north,sign=13": {
+      "model": "waw:block/symbols/basic_sign_13",
+      "y": 180
+    },
+    "color=1,facing=north,sign=13": {
+      "model": "waw:block/symbols/basic_sign_13",
+      "y": 180
+    },
+    "color=2,facing=north,sign=13": {
+      "model": "waw:block/symbols/basic_sign_13",
+      "y": 180
+    },
+    "color=0,facing=south,sign=13": {
+      "model": "waw:block/symbols/basic_sign_13"
+    },
+    "color=1,facing=south,sign=13": {
+      "model": "waw:block/symbols/basic_sign_13"
+    },
+    "color=2,facing=south,sign=13": {
+      "model": "waw:block/symbols/basic_sign_13"
+    },
+    "color=0,facing=west,sign=13": {
+      "model": "waw:block/symbols/basic_sign_13",
+      "y": 90
+    },
+    "color=1,facing=west,sign=13": {
+      "model": "waw:block/symbols/basic_sign_13",
+      "y": 90
+    },
+    "color=2,facing=west,sign=13": {
+      "model": "waw:block/symbols/basic_sign_13",
+      "y": 90
+    },
+    "color=0,facing=east,sign=13": {
+      "model": "waw:block/symbols/basic_sign_13",
+      "y": 270
+    },
+    "color=1,facing=east,sign=13": {
+      "model": "waw:block/symbols/basic_sign_13",
+      "y": 270
+    },
+    "color=2,facing=east,sign=13": {
+      "model": "waw:block/symbols/basic_sign_13",
+      "y": 270
+    },
+    "color=0,facing=north,sign=14": {
+      "model": "waw:block/symbols/basic_sign_14",
+      "y": 180
+    },
+    "color=1,facing=north,sign=14": {
+      "model": "waw:block/symbols/basic_sign_14",
+      "y": 180
+    },
+    "color=2,facing=north,sign=14": {
+      "model": "waw:block/symbols/basic_sign_14",
+      "y": 180
+    },
+    "color=0,facing=south,sign=14": {
+      "model": "waw:block/symbols/basic_sign_14"
+    },
+    "color=1,facing=south,sign=14": {
+      "model": "waw:block/symbols/basic_sign_14"
+    },
+    "color=2,facing=south,sign=14": {
+      "model": "waw:block/symbols/basic_sign_14"
+    },
+    "color=0,facing=west,sign=14": {
+      "model": "waw:block/symbols/basic_sign_14",
+      "y": 90
+    },
+    "color=1,facing=west,sign=14": {
+      "model": "waw:block/symbols/basic_sign_14",
+      "y": 90
+    },
+    "color=2,facing=west,sign=14": {
+      "model": "waw:block/symbols/basic_sign_14",
+      "y": 90
+    },
+    "color=0,facing=east,sign=14": {
+      "model": "waw:block/symbols/basic_sign_14",
+      "y": 270
+    },
+    "color=1,facing=east,sign=14": {
+      "model": "waw:block/symbols/basic_sign_14",
+      "y": 270
+    },
+    "color=2,facing=east,sign=14": {
+      "model": "waw:block/symbols/basic_sign_14",
+      "y": 270
+    },
+    "color=0,facing=north,sign=15": {
+      "model": "waw:block/symbols/basic_sign_15",
+      "y": 180
+    },
+    "color=1,facing=north,sign=15": {
+      "model": "waw:block/symbols/basic_sign_15",
+      "y": 180
+    },
+    "color=2,facing=north,sign=15": {
+      "model": "waw:block/symbols/basic_sign_15",
+      "y": 180
+    },
+    "color=0,facing=south,sign=15": {
+      "model": "waw:block/symbols/basic_sign_15"
+    },
+    "color=1,facing=south,sign=15": {
+      "model": "waw:block/symbols/basic_sign_15"
+    },
+    "color=2,facing=south,sign=15": {
+      "model": "waw:block/symbols/basic_sign_15"
+    },
+    "color=0,facing=west,sign=15": {
+      "model": "waw:block/symbols/basic_sign_15",
+      "y": 90
+    },
+    "color=1,facing=west,sign=15": {
+      "model": "waw:block/symbols/basic_sign_15",
+      "y": 90
+    },
+    "color=2,facing=west,sign=15": {
+      "model": "waw:block/symbols/basic_sign_15",
+      "y": 90
+    },
+    "color=0,facing=east,sign=15": {
+      "model": "waw:block/symbols/basic_sign_15",
+      "y": 270
+    },
+    "color=1,facing=east,sign=15": {
+      "model": "waw:block/symbols/basic_sign_15",
+      "y": 270
+    },
+    "color=2,facing=east,sign=15": {
+      "model": "waw:block/symbols/basic_sign_15",
+      "y": 270
+    },
+    "color=0,facing=north,sign=16": {
+      "model": "waw:block/symbols/basic_sign_16",
+      "y": 180
+    },
+    "color=1,facing=north,sign=16": {
+      "model": "waw:block/symbols/basic_sign_16",
+      "y": 180
+    },
+    "color=2,facing=north,sign=16": {
+      "model": "waw:block/symbols/basic_sign_16",
+      "y": 180
+    },
+    "color=0,facing=south,sign=16": {
+      "model": "waw:block/symbols/basic_sign_16"
+    },
+    "color=1,facing=south,sign=16": {
+      "model": "waw:block/symbols/basic_sign_16"
+    },
+    "color=2,facing=south,sign=16": {
+      "model": "waw:block/symbols/basic_sign_16"
+    },
+    "color=0,facing=west,sign=16": {
+      "model": "waw:block/symbols/basic_sign_16",
+      "y": 90
+    },
+    "color=1,facing=west,sign=16": {
+      "model": "waw:block/symbols/basic_sign_16",
+      "y": 90
+    },
+    "color=2,facing=west,sign=16": {
+      "model": "waw:block/symbols/basic_sign_16",
+      "y": 90
+    },
+    "color=0,facing=east,sign=16": {
+      "model": "waw:block/symbols/basic_sign_16",
+      "y": 270
+    },
+    "color=1,facing=east,sign=16": {
+      "model": "waw:block/symbols/basic_sign_16",
+      "y": 270
+    },
+    "color=2,facing=east,sign=16": {
+      "model": "waw:block/symbols/basic_sign_16",
+      "y": 270
+    },
+    "color=0,facing=north,sign=17": {
+      "model": "waw:block/symbols/basic_sign_17",
+      "y": 180
+    },
+    "color=1,facing=north,sign=17": {
+      "model": "waw:block/symbols/basic_sign_17",
+      "y": 180
+    },
+    "color=2,facing=north,sign=17": {
+      "model": "waw:block/symbols/basic_sign_17",
+      "y": 180
+    },
+    "color=0,facing=south,sign=17": {
+      "model": "waw:block/symbols/basic_sign_17"
+    },
+    "color=1,facing=south,sign=17": {
+      "model": "waw:block/symbols/basic_sign_17"
+    },
+    "color=2,facing=south,sign=17": {
+      "model": "waw:block/symbols/basic_sign_17"
+    },
+    "color=0,facing=west,sign=17": {
+      "model": "waw:block/symbols/basic_sign_17",
+      "y": 90
+    },
+    "color=1,facing=west,sign=17": {
+      "model": "waw:block/symbols/basic_sign_17",
+      "y": 90
+    },
+    "color=2,facing=west,sign=17": {
+      "model": "waw:block/symbols/basic_sign_17",
+      "y": 90
+    },
+    "color=0,facing=east,sign=17": {
+      "model": "waw:block/symbols/basic_sign_17",
+      "y": 270
+    },
+    "color=1,facing=east,sign=17": {
+      "model": "waw:block/symbols/basic_sign_17",
+      "y": 270
+    },
+    "color=2,facing=east,sign=17": {
+      "model": "waw:block/symbols/basic_sign_17",
+      "y": 270
+    },
+    "color=0,facing=north,sign=18": {
+      "model": "waw:block/symbols/basic_sign_18",
+      "y": 180
+    },
+    "color=1,facing=north,sign=18": {
+      "model": "waw:block/symbols/basic_sign_18",
+      "y": 180
+    },
+    "color=2,facing=north,sign=18": {
+      "model": "waw:block/symbols/basic_sign_18",
+      "y": 180
+    },
+    "color=0,facing=south,sign=18": {
+      "model": "waw:block/symbols/basic_sign_18"
+    },
+    "color=1,facing=south,sign=18": {
+      "model": "waw:block/symbols/basic_sign_18"
+    },
+    "color=2,facing=south,sign=18": {
+      "model": "waw:block/symbols/basic_sign_18"
+    },
+    "color=0,facing=west,sign=18": {
+      "model": "waw:block/symbols/basic_sign_18",
+      "y": 90
+    },
+    "color=1,facing=west,sign=18": {
+      "model": "waw:block/symbols/basic_sign_18",
+      "y": 90
+    },
+    "color=2,facing=west,sign=18": {
+      "model": "waw:block/symbols/basic_sign_18",
+      "y": 90
+    },
+    "color=0,facing=east,sign=18": {
+      "model": "waw:block/symbols/basic_sign_18",
+      "y": 270
+    },
+    "color=1,facing=east,sign=18": {
+      "model": "waw:block/symbols/basic_sign_18",
+      "y": 270
+    },
+    "color=2,facing=east,sign=18": {
+      "model": "waw:block/symbols/basic_sign_18",
+      "y": 270
+    },
+    "color=0,facing=north,sign=19": {
+      "model": "waw:block/symbols/basic_sign_19",
+      "y": 180
+    },
+    "color=1,facing=north,sign=19": {
+      "model": "waw:block/symbols/basic_sign_19",
+      "y": 180
+    },
+    "color=2,facing=north,sign=19": {
+      "model": "waw:block/symbols/basic_sign_19",
+      "y": 180
+    },
+    "color=0,facing=south,sign=19": {
+      "model": "waw:block/symbols/basic_sign_19"
+    },
+    "color=1,facing=south,sign=19": {
+      "model": "waw:block/symbols/basic_sign_19"
+    },
+    "color=2,facing=south,sign=19": {
+      "model": "waw:block/symbols/basic_sign_19"
+    },
+    "color=0,facing=west,sign=19": {
+      "model": "waw:block/symbols/basic_sign_19",
+      "y": 90
+    },
+    "color=1,facing=west,sign=19": {
+      "model": "waw:block/symbols/basic_sign_19",
+      "y": 90
+    },
+    "color=2,facing=west,sign=19": {
+      "model": "waw:block/symbols/basic_sign_19",
+      "y": 90
+    },
+    "color=0,facing=east,sign=19": {
+      "model": "waw:block/symbols/basic_sign_19",
+      "y": 270
+    },
+    "color=1,facing=east,sign=19": {
+      "model": "waw:block/symbols/basic_sign_19",
+      "y": 270
+    },
+    "color=2,facing=east,sign=19": {
+      "model": "waw:block/symbols/basic_sign_19",
+      "y": 270
+    }
+  }
+}

@@ -1,15 +1,12 @@
 {
   "type": "waw:mortar",
   "result": {
-    "nbt": {
-      "Damage": 0
-    },
-    "item": "waw:chalk_central"
+    "item": "waw:calcosvis"
   },
   "hits": 5,
   "ingredients": [
     {
-      "item": "waw:chalk_white"
+      "item": "waw:chalk"
     },
     {
       "tag": "forge:bones"

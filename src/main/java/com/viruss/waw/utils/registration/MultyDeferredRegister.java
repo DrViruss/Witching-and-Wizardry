@@ -29,7 +29,6 @@ public class MultyDeferredRegister{
         registerMap.forEach((key, value) -> value.register(bus));
     }
 
-    //TODO: Remove type
     public <T extends IForgeRegistryEntry<T>> RegistryObject<T> register(String name, Supplier<T> supplier, IForgeRegistry<T> type) {
         DeferredRegister<T> dregister = ((DeferredRegister<T>) registerMap.get(type));
         if(dregister == null)

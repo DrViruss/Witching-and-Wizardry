@@ -28,15 +28,6 @@ public class MortarTE extends NetworkTileEntity {
             MortarTE.this.updateNetwork();
             recipe = null;
         }
-
-        @Override
-        public ItemStack removeItem(int slot, int amount) {
-            if(slot>0)
-                return super.removeItem(slot, amount);
-            ItemStack result = super.getItem(0).copy();
-            clearContent();
-            return result;
-        }
     };
 
     public MortarTE(BlockPos pos, BlockState state) {
@@ -44,13 +35,8 @@ public class MortarTE extends NetworkTileEntity {
     }
 
     @Override
-    public void handleUpdateTag(CompoundTag tag) {
-        this.inventory.clearContent();
-        super.handleUpdateTag(tag);
-    }
-
-    @Override
     public void loadNetwork(CompoundTag tag) {
+        this.inventory.clearContent();
         this.inventory.fromTag(tag.getList("inventory",10));
     }
 
@@ -77,6 +63,7 @@ public class MortarTE extends NetworkTileEntity {
             ItemStack result =recipe.assemble(inventory);
             inventory.clearContent();
             inventory.addItem(result);
+            hits=0;
         }
     }
 
