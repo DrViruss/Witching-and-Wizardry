@@ -6,10 +6,11 @@ import com.viruss.waw.utils.registries.ModRegistry;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.registration.*;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
+import mezz.jei.api.registration.IRecipeCategoryRegistration;
+import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 
 @JeiPlugin
@@ -36,6 +37,6 @@ public class Plugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(new ItemStack(ModRegistry.MORTAR_AND_PESTLE.getMortar()), MortarCategory.ID);
+        registration.addRecipeCatalyst(new ItemStack(ModRegistry.GADGETS.getMortar()), MortarCategory.ID);
     }
 }

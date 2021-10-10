@@ -58,8 +58,7 @@ public class BasicSymbol extends Block {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(SIGN).add(FACING).add(COLOR);
-        super.createBlockStateDefinition(builder);
+        super.createBlockStateDefinition(builder.add(SIGN,COLOR,FACING));
     }
 
     @Override

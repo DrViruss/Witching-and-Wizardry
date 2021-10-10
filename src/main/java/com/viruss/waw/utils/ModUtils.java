@@ -6,6 +6,7 @@ import com.mojang.serialization.JsonOps;
 import com.viruss.waw.Main;
 import com.viruss.waw.common.objects.packs.ChalkSet;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
@@ -66,7 +67,18 @@ public class ModUtils {
                     return i;
             }
 
-            return Integer.MAX_VALUE;
+            return Integer.MIN_VALUE;
+        }
+
+        public static int getSlotByItem(Container container, NonNullList<net.minecraft.world.item.crafting.Ingredient> list) {
+            for(net.minecraft.world.item.crafting.Ingredient ingredient : list){
+                for(int i=0; i<container.getContainerSize(); i++) {
+                    if(ingredient.test(container.getItem(i)))
+                        return i;
+                }
+            }
+
+            return Integer.MIN_VALUE;
         }
 
         public static void damageItem(boolean isCreative,ItemStack stack) {

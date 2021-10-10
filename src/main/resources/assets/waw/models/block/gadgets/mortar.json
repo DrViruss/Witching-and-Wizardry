@@ -3,8 +3,8 @@
 	"parent": "block/block",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "waw:blocks/mortar",
-		"particle": "waw:blocks/mortar"
+		"0": "waw:blocks/gadgets/mortar",
+		"particle": "waw:blocks/gadgets/mortar"
 	},
 	"elements": [
 		{

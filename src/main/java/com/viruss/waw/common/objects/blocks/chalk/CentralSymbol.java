@@ -70,8 +70,7 @@ public class CentralSymbol extends BaseEntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(STAGE).add(FACING).add(COLOR);
-        super.createBlockStateDefinition(builder);
+        super.createBlockStateDefinition(builder.add(STAGE,FACING,COLOR));
     }
 
 
@@ -112,7 +111,6 @@ public class CentralSymbol extends BaseEntityBlock {
         if(!level.isClientSide() && !player.isShiftKeyDown()) {
             if (player.getItemInHand(hand).is(ModRegistry.INGREDIENTS.getCalcosvis()) && blockState.getValue(STAGE) == 0) {
                 level.setBlockAndUpdate(pos, blockState.setValue(STAGE, 1));
-//                player.getItemInHand(hand).shrink(1);
                 ModUtils.Inventory.damageItem(player.isCreative(),player.getItemInHand(hand));
             }
 

@@ -36,6 +36,14 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         woods(woods.toArray(WoodenPack[]::new));
         chalks();
         ingredients();
+        complexBlocks();
+    }
+
+    private void complexBlocks() {
+        customBlockAndItem(ModRegistry.GADGETS.getBrazier(),"gadgets/ancient_brazier");
+
+        customBlockAndItem(ModRegistry.GADGETS.getMortar(), "gadgets/mortar");
+        generatedItem(ModRegistry.GADGETS.getPestle(),modLoc("items/pestle"));
     }
 
     private void ingredients(){
@@ -83,6 +91,11 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         }
     }
 
+    private void customBlockAndItem(Block block, String path){
+        ModelFile.ExistingModelFile model = this.models().getExistingFile(modLoc("block/"+path));
+        this.simpleBlock(block, model);
+        this.simpleBlockItem(block,model);
+    }
     private void saplingAndItem(Block sapling, Block pottedBlock, String treeName) {
         simpleBlock(sapling, models().cross(name(sapling), woodBlocksLocation(treeName,"sapling")));
         simpleBlock(pottedBlock, models().singleTexture(name(pottedBlock),

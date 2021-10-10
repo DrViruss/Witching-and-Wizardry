@@ -2,8 +2,8 @@ package com.viruss.waw.utils.registries;
 
 import com.viruss.waw.Main;
 import com.viruss.waw.common.objects.packs.ChalkSet;
+import com.viruss.waw.common.objects.packs.Gadgets;
 import com.viruss.waw.common.objects.packs.Ingredients;
-import com.viruss.waw.common.objects.packs.MortarAndPestle;
 import com.viruss.waw.common.objects.packs.WoodenPack;
 import com.viruss.waw.utils.recipes.RecipeTypes;
 import com.viruss.waw.utils.registration.MultyDeferredRegister;
@@ -32,11 +32,8 @@ public class ModRegistry {
     public static final WoodenPack ASH = new WoodenPack("ash", Main.ITEM_GROUP,true, null,true);
     public static final WoodenPack SAMBUCUS = new WoodenPack("sambucus", Main.ITEM_GROUP,true, Foods.POISONOUS_POTATO,true);
 
-    public static final MortarAndPestle MORTAR_AND_PESTLE = new MortarAndPestle();
-
+    public static final Gadgets GADGETS = new Gadgets();
     public static final ChalkSet CHALKS = new ChalkSet();
-
     public static final EntityRegistry ENTITIES = new EntityRegistry(ASH,SAMBUCUS);
-
     public static final Ingredients INGREDIENTS = new Ingredients();
 }

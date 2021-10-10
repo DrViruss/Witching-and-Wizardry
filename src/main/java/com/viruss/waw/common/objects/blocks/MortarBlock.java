@@ -28,6 +28,10 @@ import javax.annotation.Nullable;
 public class MortarBlock extends BaseEntityBlock {
     private static final VoxelShape SHAPE = Block.box(4, 1, 4, 12, 6, 12);
 
+    public MortarBlock() {
+        super(Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.5F).sound(SoundType.STONE));
+    }
+
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player playerEntity, InteractionHand hand, BlockHitResult traceResult) {
         if(!world.isClientSide()){
@@ -48,8 +52,7 @@ public class MortarBlock extends BaseEntityBlock {
                 if(item == ItemStack.EMPTY)
                     return InteractionResult.PASS;
 
-                if(item.getItem() == ModRegistry.MORTAR_AND_PESTLE.getPestle()) {
-                    System.out.println("Crafting!!");
+                if(item.getItem() == ModRegistry.GADGETS.getPestle()) {
                     te.craft(playerEntity);
                     world.playSound(null, pos, SoundEvents.STONE_HIT, SoundSource.PLAYERS, 3f,3f);
                     return InteractionResult.SUCCESS;
@@ -61,26 +64,15 @@ public class MortarBlock extends BaseEntityBlock {
         return InteractionResult.SUCCESS;
     }
 
-    public MortarBlock() {
-        super(Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.5F).sound(SoundType.STONE));
-    }
-
     @Override
     public VoxelShape getShape(BlockState p_60555_, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {
         return SHAPE;
     }
 
-
-
     @Override
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState p_196243_4_, boolean p_196243_5_) {
         if(!world.isClientSide())
-        {
-            MortarTE te = (MortarTE) world.getBlockEntity(pos);
-            for(int i=0; i<te.getInventory().getContainerSize(); i++) {
-                Containers.dropItemStack(world, pos.getX(), pos.getY() + 0.5, pos.getZ(),te.getInventory().getItem(i));
-            }
-        }
+            Containers.dropContents(world,pos,((MortarTE) world.getBlockEntity(pos)).getInventory());
         super.onRemove(state, world, pos, p_196243_4_, p_196243_5_);
     }
 

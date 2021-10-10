@@ -38,15 +38,17 @@
   "item.waw.sambucus_boat": "Sambucus Boat",
   "item.waw.sambucus_berries": "Sambucus Berries",
 
+  "item.waw.chalk": "Chalk",
+
   "block.waw.mortar": "Mortar",
   "item.waw.pestle": "Pestle",
 
-  "item.waw.chalk_white": "White Chalk",
-  "item.waw.chalk_red": "Red Chalk",
-  "item.waw.chalk_central": "Chalk of Heart",
+  "block.waw.ancient_stand": "Ancient Stand",
+  "block.waw.ancient_brazier": "Ancient Brazier",
 
-  "item.waw.calcosvis": "Calcosvis dust",
-  "item.waw.magic_ash": "Magic tree ash",
+
+  "item.waw.calcosvis": "Calcosvis Dust",
+  "item.waw.magic_ash": "Magic Tree Ash",
 
   "waw.subtitle.chalk": "Chalk",
 

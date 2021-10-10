@@ -2,7 +2,6 @@ package com.viruss.waw.compat.jei;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.viruss.waw.Main;
-import com.viruss.waw.utils.ModUtils;
 import com.viruss.waw.utils.recipes.bases.MortarRecipe;
 import com.viruss.waw.utils.registries.ModRegistry;
 import mezz.jei.api.constants.VanillaTypes;
@@ -14,17 +13,12 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.common.Tags;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MortarCategory implements IRecipeCategory<MortarRecipe> {
     public static final ResourceLocation ID = new ResourceLocation(Main.MOD_ID,"mortar");
@@ -33,7 +27,7 @@ public class MortarCategory implements IRecipeCategory<MortarRecipe> {
 
     public MortarCategory(IGuiHelper helper) {
         this.background = helper.createDrawable(new ResourceLocation(Main.MOD_ID, "textures/gui/jei/mortar.png"),3, 4, 155, 65);
-        this.icon = helper.createDrawableIngredient(new ItemStack(ModRegistry.MORTAR_AND_PESTLE.getMortar()));
+        this.icon = helper.createDrawableIngredient(new ItemStack(ModRegistry.GADGETS.getMortar()));
     }
 
     @Override
@@ -48,7 +42,7 @@ public class MortarCategory implements IRecipeCategory<MortarRecipe> {
 
     @Override
     public Component getTitle() {
-        return ModRegistry.MORTAR_AND_PESTLE.getMortar().getName();
+        return ModRegistry.GADGETS.getMortar().getName();
     }
 
     @Override

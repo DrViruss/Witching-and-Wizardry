@@ -23,13 +23,12 @@ public class MortarRenderer extends AbstractTER<MortarTE> {
         super.render(tileEntity,partialTicks,poseStack,bufferSource,combinedLight,combinedOverlay);
         for(int i=0; i< tileEntity.getInventory().getContainerSize();i++) {
             ItemStack stack = tileEntity.getInventory().getItem(i);
-            if(stack == ItemStack.EMPTY)
-                continue;
+            if(stack == ItemStack.EMPTY) continue;
+
             poseStack.pushPose();
             Random random = new Random(stack.getItem().hashCode());
-            int rotation = random.nextInt(random.nextInt(360));
             poseStack.translate(0.5,0.2 + random.nextFloat()/16,0.5);
-            poseStack.mulPose(Vector3f.YN.rotationDegrees(rotation));
+            poseStack.mulPose(Vector3f.YN.rotationDegrees(random.nextInt(random.nextInt(360))));
             poseStack.scale(0.375F, 0.375F, 0.375F);
             Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemTransforms.TransformType.FIXED,combinedLight,combinedOverlay,poseStack,bufferSource,0);
             poseStack.popPose();
