@@ -82,12 +82,12 @@ public class RendererManager {
         colors.register((state, blockDisplayReader, pos, i) -> {
             if (blockDisplayReader == null || pos == null) return 0x74ff33;
             return BiomeColors.getAverageFoliageColor(blockDisplayReader,pos)+0x1f420e;
-        }, ModRegistry.ASH.getLeaves().getPrimary());
+        }, ModRegistry.WOOD.ASH.getLeaves().getPrimary());
 
         colors.register((state, blockDisplayReader, pos, i) -> {
             if (blockDisplayReader == null || pos == null) return 3473453;
             return BiomeColors.getAverageFoliageColor(blockDisplayReader,pos) & -12779459;
-        }, ModRegistry.SAMBUCUS.getLeaves().getPrimary());
+        }, ModRegistry.WOOD.SAMBUCUS.getLeaves().getPrimary());
 
 
         /*0x6DAD32 lightblue*/
@@ -104,8 +104,8 @@ public class RendererManager {
         items.register((p_92672_, p_92673_) -> p_92672_.getTag().contains("color") ? p_92672_.getTag().getInt("color") : 0xFFFFFF,ModRegistry.CHALKS.getChalk());
 
                 /*~    Leaves     ~*/
-        items.register(((itemStack, i) -> blocks.getColor(((BlockItem)itemStack.getItem()).getBlock().defaultBlockState(),null,null,i)), ModRegistry.ASH.getLeaves().getSecondary());
-        items.register(((itemStack, i) -> blocks.getColor(((BlockItem)itemStack.getItem()).getBlock().defaultBlockState(),null,null,i)), ModRegistry.SAMBUCUS.getLeaves().getSecondary());
+        items.register(((itemStack, i) -> blocks.getColor(((BlockItem)itemStack.getItem()).getBlock().defaultBlockState(),null,null,i)), ModRegistry.WOOD.ASH.getLeaves().getSecondary());
+        items.register(((itemStack, i) -> blocks.getColor(((BlockItem)itemStack.getItem()).getBlock().defaultBlockState(),null,null,i)), ModRegistry.WOOD.SAMBUCUS.getLeaves().getSecondary());
 
 
         /*~    Dusts     ~*/

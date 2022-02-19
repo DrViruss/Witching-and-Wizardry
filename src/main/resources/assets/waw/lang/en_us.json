@@ -43,14 +43,17 @@
   "block.waw.mortar": "Mortar",
   "item.waw.pestle": "Pestle",
 
-  "block.waw.ancient_stand": "Ancient Stand",
   "block.waw.ancient_brazier": "Ancient Brazier",
-
 
   "item.waw.calcosvis": "Calcosvis Dust",
   "item.waw.magic_ash": "Magic Tree Ash",
 
-  "waw.subtitle.chalk": "Chalk",
+  "waw.subtitle.chalk": "Chalk writing",
 
-  "waw.gui.hits" : "Hits:"
+  "waw.ritual.condition.sacrifice":  "This ritual needs a sacrifice",
+  "waw.ritual.unknown": "Unknown ritual...",
+  "waw.ritual.condition.day" : "This ritual can be performed only at daytime",
+  "waw.ritual.condition.night" : "This ritual can be performed only at nighttime",
+
+  "waw.gui.hits": "Hits:"
 }

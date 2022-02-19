@@ -57,7 +57,7 @@ public class Chalk extends Item {
             boolean isReplacing = world.getBlockState(pos).getBlock().canBeReplaced(state, placeContext);
             if ((context.getClickedFace() == Direction.UP && world.getBlockState(pos.above()).isAir()) || isReplacing) {
                 BlockState newState = player.isShiftKeyDown() && context.getItemInHand().getTag().contains("color") && context.getItemInHand().getTag().getInt("color") == Color.LIGHT_GRAY.getRGB()  ? //TODO: think how to make it better
-                    ((CentralSymbol) ModRegistry.CHALKS.getCentralBlock()).getStateForPlacement(placeContext, context.getItemInHand().getTag()) //texture from layers??
+                    ((CentralSymbol) ModRegistry.CHALKS.getCentralBlock()).getStateForPlacement(placeContext, context.getItemInHand().getTag())
                         :
                     ((BasicSymbol) ModRegistry.CHALKS.getBasicBlock()).getStateForPlacement(placeContext, context.getItemInHand().getTag());
 

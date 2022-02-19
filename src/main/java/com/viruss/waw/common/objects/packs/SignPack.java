@@ -52,7 +52,7 @@ public class SignPack {
 
         public AbstractSignTileEntity(BlockPos pos, BlockState state) {
             super(pos,state);
-            this.type = ModRegistry.ENTITIES.getSignTileEntity();
+            this.type = ModRegistry.WOOD.getSignTileEntity();
         }
 
         @Override

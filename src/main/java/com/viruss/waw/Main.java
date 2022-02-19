@@ -19,7 +19,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod("waw")
+@Mod(Main.MOD_ID)
 public class Main
 {
     public static final Logger LOGGER = LogManager.getLogger();
@@ -27,7 +27,6 @@ public class Main
 
     public Main() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-
         bus.addListener(this::enqueueIMC);
         bus.addListener(this::processIMC);
         bus.addListener(this::doClientStuff);
@@ -50,6 +49,7 @@ public class Main
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         CLIENT_RENDERER.init();
+
 //        event.enqueueWork(()->{
 //            Sheets.addWoodType(ModRegistry.ASH.getWoodType());
 //            Sheets.addWoodType(ModRegistry.SAMBUCUS.getWoodType());

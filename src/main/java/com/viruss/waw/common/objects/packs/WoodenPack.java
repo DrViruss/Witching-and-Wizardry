@@ -71,7 +71,7 @@ public class WoodenPack {
 
     public WoodenPack(String name, CreativeModeTab group, boolean isStrippable) {
         com.viruss.waw.utils.registration.Block.Builder builder = new com.viruss.waw.utils.registration.Block.Builder().needItem(group);
-        this.woodType =  WoodType.register(WoodType.create(name)); //TODO: move wood ( ResourceLocationException not fixed :c )
+        this.woodType =  WoodType.register(WoodType.create(Main.MOD_ID+":"+name));
 
         if (isStrippable) {
             this.stripped_log = ModRegistry.MDR.register(name+"_stripped_log",builder.setBlockSup(AbstractLog::new));

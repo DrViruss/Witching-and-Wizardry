@@ -1,0 +1,14 @@
+{
+  "type": "waw:brazier",
+  "action": "rain_action",
+  "time": 300,
+  "cost": 0,
+  "ingredients": [
+    {
+      "item": "waw:ash_sapling"
+    },
+    {
+      "item": "minecraft:coal"
+    }
+  ]
+}

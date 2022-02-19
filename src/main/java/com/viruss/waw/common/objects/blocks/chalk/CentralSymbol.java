@@ -21,6 +21,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
@@ -37,12 +39,12 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import javax.annotation.Nullable;
 
+import static com.viruss.waw.common.objects.blocks.chalk.BasicSymbol.COLOR;
+
 @SuppressWarnings("all")
 public class CentralSymbol extends BaseEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final IntegerProperty STAGE = IntegerProperty.create("stage", 0, 2);
-    public static final IntegerProperty COLOR = IntegerProperty.create("color", 0, 2);
-
     protected static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 0.02, 16);
 
     public CentralSymbol() {
@@ -108,14 +110,14 @@ public class CentralSymbol extends BaseEntityBlock {
 
     @Override
     public InteractionResult use(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if(!level.isClientSide() && !player.isShiftKeyDown()) {
-            if (player.getItemInHand(hand).is(ModRegistry.INGREDIENTS.getCalcosvis()) && blockState.getValue(STAGE) == 0) {
-                level.setBlockAndUpdate(pos, blockState.setValue(STAGE, 1));
-                ModUtils.Inventory.damageItem(player.isCreative(),player.getItemInHand(hand));
-            }
-
-            CentralSymbolTE center = (CentralSymbolTE) level.getBlockEntity(pos);
-            center.use();
+        if(!level.isClientSide() && !player.isShiftKeyDown() && hand == InteractionHand.MAIN_HAND) {
+            if(blockState.getValue(STAGE) == 2)
+                ((CentralSymbolTE) level.getBlockEntity(pos)).use(blockState,level,pos,player);
+            else
+                if (player.getItemInHand(hand).is(ModRegistry.INGREDIENTS.getCalcosvis()) && blockState.getValue(STAGE) == 0) {
+                    level.setBlockAndUpdate(pos, blockState.setValue(STAGE, 1));
+                    ModUtils.Inventory.damageItem(player.isCreative(),player.getItemInHand(hand));
+                }
         }
         return super.use(blockState, level, pos, player, hand, hitResult);
     }
@@ -134,6 +136,12 @@ public class CentralSymbol extends BaseEntityBlock {
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new CentralSymbolTE(pos,state);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return level.isClientSide() ? null : createTickerHelper(type, ModRegistry.CHALKS.getCenterTE(), CentralSymbolTE::tick);
     }
 
     @Override

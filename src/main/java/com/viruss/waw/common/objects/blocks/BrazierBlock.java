@@ -6,6 +6,7 @@ import com.viruss.waw.utils.registries.ModRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -22,7 +23,10 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -40,11 +44,12 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BrazierBlock extends BaseEntityBlock implements EntityBlock,SimpleWaterloggedBlock {
+@SuppressWarnings("all")
+public class BrazierBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-    private static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 15, 14);
+    private static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 15, 14); //TODO: make brazier 1.25 block h
 
     public BrazierBlock() {
         super(Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(5F).sound(SoundType.STONE));
@@ -86,7 +91,7 @@ public class BrazierBlock extends BaseEntityBlock implements EntityBlock,SimpleW
 
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (!entity.fireImmune() && state.getValue(LIT) && entity instanceof LivingEntity && !EnchantmentHelper.hasFrostWalker((LivingEntity)entity))
+        if (!entity.fireImmune() && state.getValue(LIT) && entity instanceof LivingEntity && !EnchantmentHelper.hasFrostWalker((LivingEntity)entity) && entity.blockPosition().getX() == pos.getX() && entity.blockPosition().getZ() == pos.getZ())
             entity.hurt(DamageSource.IN_FIRE, 1);
         super.entityInside(state, level, pos, entity);
     }
@@ -108,13 +113,12 @@ public class BrazierBlock extends BaseEntityBlock implements EntityBlock,SimpleW
             assert tile != null;
             ItemStack stack = player.getItemInHand(hand);
             if(stack.is(Items.FLINT_AND_STEEL)) {
-                if(tile.tryLit(state, level, pos)) {
-                    level.setBlock(pos, state.setValue(LIT, true),11);
+                if (tile.tryLit(state, level, pos, (ServerPlayer) player))
                     ModUtils.Inventory.damageItem(player.isCreative(), stack);
-                }
             }
-            else if(stack == ItemStack.EMPTY && state.getValue(LIT) ) {
+            else if(stack == ItemStack.EMPTY && state.getValue(LIT) && hand == InteractionHand.MAIN_HAND ) {
                 level.setBlock(pos, state.setValue(LIT, false),11);
+                player.hurt(DamageSource.ON_FIRE, 0.25F);
                 tile.clearRecipe();
                 level.playSound(null, pos, SoundEvents.GENERIC_EXTINGUISH_FIRE, SoundSource.BLOCKS, 1.0F, 1.0F);
                 level.addParticle(ParticleTypes.SMOKE, pos.getX()+0.4, pos.getY()+0.3, pos.getZ()+0.5, 0.0D, 0.0D, 0.0D);
@@ -142,7 +146,7 @@ public class BrazierBlock extends BaseEntityBlock implements EntityBlock,SimpleW
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide() ? null : createTickerHelper(type, ModRegistry.GADGETS.getBrazierTE(), BrazierTE::brazierTick);
+        return level.isClientSide() ? null : createTickerHelper(type, ModRegistry.GADGETS.getBrazierTE(), BrazierTE::tick);
     }
 
     @Override
@@ -154,7 +158,9 @@ public class BrazierBlock extends BaseEntityBlock implements EntityBlock,SimpleW
     @Override
     public void onProjectileHit(Level level, BlockState state, BlockHitResult hitResult, Projectile projectile) {
         BlockPos blockpos = hitResult.getBlockPos();
+        Entity archer = projectile.getOwner();
         if (!level.isClientSide && projectile.isOnFire() && projectile.mayInteract(level, blockpos) && !state.getValue(LIT) && !state.getValue(WATERLOGGED))
-            level.setBlock(blockpos, state.setValue(BlockStateProperties.LIT, true), 11);
+            ((BrazierTE)level.getBlockEntity(blockpos)).tryLit(state,level,blockpos, archer instanceof Player ? (ServerPlayer) archer : null );
+
     }
 }

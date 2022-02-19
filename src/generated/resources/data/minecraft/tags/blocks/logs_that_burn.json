@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#waw:sambucus_logs",
-    "#waw:ash_logs"
+    "#waw:ash_logs",
+    "#waw:sambucus_logs"
   ]
 }

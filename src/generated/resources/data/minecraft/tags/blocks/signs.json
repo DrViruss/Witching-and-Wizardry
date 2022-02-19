@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "waw:sambucus_sign",
-    "waw:sambucus_wall_sign",
     "waw:ash_sign",
-    "waw:ash_wall_sign"
+    "waw:ash_wall_sign",
+    "waw:sambucus_sign",
+    "waw:sambucus_wall_sign"
   ]
 }

@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class LootProvider extends AbstractLootProvider{
-    BlockLoot blockLoot;
-    EntityLoot entityLoot;
+    final BlockLoot blockLoot;
+    final EntityLoot entityLoot;
 
     public LootProvider(DataGenerator generator, Set<WoodenPack> woods, Map<EntityType<?>, LootTable.Builder> entityDrops) {
         super(generator);

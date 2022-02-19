@@ -63,8 +63,8 @@ public class MortarTE extends NetworkTileEntity {
         hits +=1;
         if(this.hits >= recipe.getHits()){
             ItemStack result =recipe.assemble(inventory);
-            inventory.clearContent();
-            inventory.addItem(result);
+            for(int i=0;i<result.getCount();i++)
+                inventory.addItem(result);
             hits=0;
         }
     }

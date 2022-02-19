@@ -1,0 +1,28 @@
+{
+  "type": "waw:rituals",
+  "result": {
+    "item": "minecraft:air"
+  },
+  "action": "thunder_action",
+  "cost": 1200,
+  "circles": {
+    "small": -65536,
+    "medium": -4144960
+  },
+  "candles": [
+    {
+      "color": 5000268,
+      "amount": 2
+    },
+    {
+      "color": 6724056,
+      "amount": 2
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:feather",
+      "count": 16
+    }
+  ]
+}

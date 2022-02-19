@@ -1,6 +1,7 @@
 package com.viruss.waw.compat.jei;
 
 import com.viruss.waw.Main;
+import com.viruss.waw.common.objects.packs.Rituals;
 import com.viruss.waw.utils.recipes.RecipeTypes;
 import com.viruss.waw.utils.registries.ModRegistry;
 import mezz.jei.api.IModPlugin;
@@ -9,6 +10,7 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.ISubtypeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -38,5 +40,13 @@ public class Plugin implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(ModRegistry.GADGETS.getMortar()), MortarCategory.ID);
+    }
+
+    @Override
+    public void registerItemSubtypes(ISubtypeRegistration registration) {
+        registration.useNbtForSubtypes(ModRegistry.CHALKS.getChalk());
+        registration.useNbtForSubtypes(Rituals.TEST_TALISMAN.get());
+
+        IModPlugin.super.registerItemSubtypes(registration);
     }
 }

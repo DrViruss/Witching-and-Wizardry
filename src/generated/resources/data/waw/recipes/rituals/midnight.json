@@ -1,0 +1,31 @@
+{
+  "type": "waw:rituals",
+  "result": {
+    "item": "minecraft:air"
+  },
+  "action": "midnight_action",
+  "cost": 1200,
+  "circles": {
+    "small": -65536,
+    "medium": -4144960
+  },
+  "candles": [
+    {
+      "color": 1644825,
+      "amount": 2
+    },
+    {
+      "color": 6724056,
+      "amount": 2
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:ender_eye",
+      "count": 3
+    },
+    {
+      "item": "minecraft:clock"
+    }
+  ]
+}

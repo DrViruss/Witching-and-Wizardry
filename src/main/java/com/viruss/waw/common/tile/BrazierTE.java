@@ -1,11 +1,13 @@
 package com.viruss.waw.common.tile;
 
-import com.viruss.waw.common.objects.blocks.BrazierBlock;
 import com.viruss.waw.utils.ModUtils;
+import com.viruss.waw.utils.recipes.RecipeTypes;
+import com.viruss.waw.utils.recipes.bases.BrazierRecipe;
 import com.viruss.waw.utils.registries.ModRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
@@ -21,6 +23,11 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ForgeHooks;
+
+import java.util.UUID;
+
+import static com.viruss.waw.common.objects.blocks.BrazierBlock.LIT;
 
 public class BrazierTE extends NetworkTileEntity {
     final SimpleContainer inventory = new SimpleContainer(4){
@@ -32,13 +39,14 @@ public class BrazierTE extends NetworkTileEntity {
         @Override
         public void setChanged() {
             BrazierTE.this.updateNetwork();
-            recipe = "";
         }
     };
 
     int litTime=0;
     Type type = Type.NONE;
-    String recipe = "";
+    String load = "";
+    Recipe<?> recipe;
+    UUID playerID;
 
     public BrazierTE(BlockPos p_155229_, BlockState p_155230_) {
         super(ModRegistry.GADGETS.getBrazierTE(), p_155229_, p_155230_);
@@ -72,7 +80,7 @@ public class BrazierTE extends NetworkTileEntity {
 
         if(item.isEmpty()) return;
 
-        if(inventory.addItem(item).isEmpty())
+        if(AbstractFurnaceBlockEntity.isFuel(item) && inventory.addItem(item).isEmpty())
             player.getItemInHand(hand).shrink(1);
 
     }
@@ -88,23 +96,37 @@ public class BrazierTE extends NetworkTileEntity {
         for(int i=0; i<inventory.getContainerSize();i++) {
             for (SmeltingRecipe recipe : level.getRecipeManager().getAllRecipesFor(RecipeType.SMELTING))
                 if (recipe.getIngredients().get(0).test(inventory.getItem(i))) {
-                    setRecipe(recipe);
+                    this.type = Type.SMELTING;
+                    this.recipe = recipe;
+                    this.litTime = recipe.getCookingTime();
+                    level.setBlock(getBlockPos(), getBlockState().setValue(LIT, true),11);
                     return;
                 }
-            //TODO: check rituals
         }
+
+        for (BrazierRecipe recipe : level.getRecipeManager().getAllRecipesFor(RecipeTypes.Brazier.TYPE))
+            if (recipe.matches(inventory,level)) {
+                this.type = Type.RITUAL;
+                this.recipe = recipe;
+                this.litTime = recipe.getTime();
+                level.setBlock(getBlockPos(), getBlockState().setValue(LIT, true),11);
+                return;
+            }
+
+
         for(int i=0; i<inventory.getContainerSize();i++) {
             ItemStack stack = inventory.getItem(i);
             if(stack.isEmpty()) continue;
-            litTime = AbstractFurnaceBlockEntity.getFuel().getOrDefault(stack.getItem(),0);
+            litTime = ForgeHooks.getBurnTime(stack,null);
+            level.setBlock(getBlockPos(), getBlockState().setValue(LIT, true),11);
             break;
         }
     }
 
-    public static void brazierTick(Level level, BlockPos pos, BlockState state, BrazierTE tile) {
-        if (!level.isClientSide() && tile.isLit()) {
+    public static void tick(Level level, BlockPos pos, BlockState state, BrazierTE tile) {
+        if (tile.isLit()) {
             if( (level.isRaining() && level.canSeeSky(pos) && level.getBiome(pos).getPrecipitation() != Biome.Precipitation.NONE ) ||  (level.getBlockState(pos.above()) != Blocks.AIR.defaultBlockState()) ) {
-                level.setBlock(pos, state.setValue(BrazierBlock.LIT, false),11);
+                level.setBlock(pos, state.setValue(LIT, false),11);
                 tile.clearRecipe();
                 return;
             }
@@ -117,42 +139,54 @@ public class BrazierTE extends NetworkTileEntity {
     }
 
     private void updateLit(Level level, BlockPos pos, BlockState state){
+        if(this.recipe instanceof BrazierRecipe brecipe)
+            brecipe.getAction().tick(level,pos);
+
         --litTime;
         if(isLit()) return;
 
-        if(type ==Type.RECIPE) {
-            level.getRecipeManager().byKey(new ResourceLocation(recipe)).ifPresent(value -> inventory.setItem(ModUtils.Inventory.getSlotByItem(inventory,value.getIngredients()),((SmeltingRecipe)value).assemble(inventory)));
-            type = Type.NONE;
+        if(!load.isEmpty()) {
+            level.getRecipeManager().byKey(new ResourceLocation(load));
+            load ="";
         }
-        else
+
+        level.setBlockAndUpdate(pos,state.setValue(LIT,false));
+
+        if(type == Type.RITUAL) {
+            BrazierRecipe r = (BrazierRecipe)recipe;
+            inventory.addItem(r.assemble(inventory));
+            r.getAction().start(level,pos,inventory,playerID != null ? level.getPlayerByUUID(playerID) : null );
+            clearRecipe();
+            return;
+        }
+        else if(type ==Type.SMELTING) {
+            inventory.setItem(ModUtils.Inventory.getSlotByItem(inventory,recipe.getIngredients()),((SmeltingRecipe)recipe).assemble(inventory));
+            clearRecipe();
+        }
+        else{
             for(int i=0; i<inventory.getContainerSize();i++) {
-                if(inventory.getItem(i).isEmpty()) continue;
-                inventory.removeItem(i,Integer.MAX_VALUE);
+                ItemStack stack = inventory.getItem(i);
+                if(stack.isEmpty()) continue;
+                inventory.setItem(i,ItemStack.EMPTY);
                 break;
             }
+        }
 
         updateRecipe();
-
-        if(!isLit())
-            level.setBlockAndUpdate(pos,state.setValue(BrazierBlock.LIT,false));
     }
 
     public void clearRecipe(){
-        litTime =0;
-        type = Type.NONE;
-        recipe = "";
+        this.litTime =0;
+        this.type = Type.NONE;
+        this.recipe = null;
+        this.playerID = null;
     }
 
-    public void setRecipe(Recipe<?> recipe) {
-        type = Type.RECIPE;
-        this.recipe = recipe.getId().toString();
-
-        if(recipe instanceof SmeltingRecipe smeltingRecipe)
-            litTime = smeltingRecipe.getCookingTime();
-    }
-
-    public boolean tryLit(BlockState state, Level level, BlockPos pos) {
-        if(isLit() || level.getBlockState(pos.above()) != Blocks.AIR.defaultBlockState() || inventory.isEmpty()) return false;
+    public boolean tryLit(BlockState state, Level level, BlockPos pos, ServerPlayer player) {
+        if(player!= null)
+            this.playerID = player.getUUID();
+        boolean test = level.getBlockState(pos.above()) != Blocks.AIR.defaultBlockState();
+        if(isLit() || test || inventory.isEmpty()) return false;
         updateRecipe();
         return this.litTime > 0;
     }
@@ -163,17 +197,16 @@ public class BrazierTE extends NetworkTileEntity {
         litTime = nbt.getInt("litTime") ;
         if(nbt.contains("type"))
         type = Type.valueOf(nbt.getString("type"));
-        if(type == Type.RECIPE)
-            recipe = nbt.getString("recipe");
-
+        if(nbt.contains("recipe"))
+            load = nbt.getString("recipe");
     }
 
     @Override
     public CompoundTag save(CompoundTag nbt) {
         nbt.putInt("litTime",litTime);
         nbt.putString("type",type.toString());
-        if(type == Type.RECIPE)
-            nbt.putString("recipe", recipe);
+        if(recipe != null)
+            nbt.putString("recipe", recipe.getId().toString());
 
         return super.save(nbt);
     }
@@ -188,7 +221,7 @@ public class BrazierTE extends NetworkTileEntity {
 
     enum Type{
         NONE,
-        RECIPE,
+        SMELTING,
         RITUAL
     }
 }

@@ -60,7 +60,7 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
     private void woods(WoodenPack... woods){
         for(WoodenPack wood : woods)
         {
-            String treeName = wood.getWoodType().name();    //wood.getWoodType().name().split(":")[1];
+            String treeName = wood.getWoodType().name().split(":")[1];
 
             basicWoodBlockAndItem(wood.getPlanks().getPrimary());
             axisBlockAndItem(wood.getLog().getPrimary(), woodBlocksLocation(treeName,"log"));

@@ -1,0 +1,27 @@
+{
+  "type": "waw:rituals",
+  "result": {
+    "item": "minecraft:air"
+  },
+  "action": "clear_weather_action",
+  "cost": 120,
+  "circles": {
+    "small": -1,
+    "medium": -1,
+    "large": -1
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:amethyst_shard",
+      "count": 2
+    },
+    {
+      "item": "minecraft:cactus",
+      "count": 2
+    },
+    {
+      "item": "minecraft:torch",
+      "count": 2
+    }
+  ]
+}

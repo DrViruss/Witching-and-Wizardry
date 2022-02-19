@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.vehicle.Boat;
 
+@SuppressWarnings("all")
 public class CustomBoatRenderer extends BoatRenderer {
     private final BoatModel boat;
 

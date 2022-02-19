@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "waw:sambucus_pressure_plate",
-    "waw:ash_pressure_plate"
+    "waw:ash_pressure_plate",
+    "waw:sambucus_pressure_plate"
   ]
 }

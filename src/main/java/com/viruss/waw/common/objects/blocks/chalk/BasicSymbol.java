@@ -1,5 +1,6 @@
 package com.viruss.waw.common.objects.blocks.chalk;
 
+import com.viruss.waw.common.objects.packs.ChalkSet;
 import com.viruss.waw.utils.ModUtils;
 import com.viruss.waw.utils.registries.ModRegistry;
 import net.minecraft.core.BlockPos;
@@ -30,7 +31,7 @@ import javax.annotation.Nullable;
 public class BasicSymbol extends Block {
     public static final IntegerProperty SIGN = IntegerProperty.create("sign", 0, 19);
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    public static final IntegerProperty COLOR = IntegerProperty.create("color", 0, 2);
+    public static final IntegerProperty COLOR = IntegerProperty.create("color", 0, ChalkSet.COLORS.length-1);
 
     protected static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 0.02, 16);
 

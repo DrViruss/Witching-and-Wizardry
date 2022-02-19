@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.viruss.waw.Main;
+import com.viruss.waw.common.objects.items.Chalk;
 import com.viruss.waw.utils.ModUtils;
 import com.viruss.waw.utils.recipes.RecipeTypes;
 import net.minecraft.core.NonNullList;
@@ -56,30 +57,38 @@ public class MortarRecipe implements Recipe<SimpleContainer> {
     @Override
     public String toString() {
         return "MortarRecipe{" +
-            ", id=" + id +
-            ", ingredients=" + ingredients.toString() +
-            ", hits=" + hits +
-            ", result=" + result +
-            '}';
+                ", id=" + id +
+                ", ingredients=" + ingredients.toString() +
+                ", hits=" + hits +
+                ", result=" + result +
+                '}';
     }
 
     @Override
     public boolean matches(SimpleContainer container, Level level) {
-            Ingredient ingredients = Ingredient.merge(this.ingredients);
-            for (int j = 0; j < container.getContainerSize(); j++) {
-                ItemStack item = container.getItem(j);
-                if (!item.isEmpty() && !ingredients.test(item))
-                    return false;
-            }
+        Ingredient ingredients = Ingredient.merge(this.ingredients);
+        for (int j = 0; j < container.getContainerSize(); j++) {
+            ItemStack item = container.getItem(j);
+            if(item.getItem() instanceof Chalk && testChalk(ingredients.getItems(),item))
+                continue;
+            if (!item.isEmpty() && !ingredients.test(item))
+                return false;
+        }
         return true;
     }
 
-    private boolean testChalk(ItemStack recipeItem,ItemStack containerItem){
-        if(recipeItem.getTag() == null || containerItem.getTag() == null ) return false;
-        int color0 = recipeItem.getTag().contains("color") ? recipeItem.getTag().getInt("color") : 0;
-        int color1 = containerItem.getTag().contains("color") ? containerItem.getTag().getInt("color") : 0;
-            return color0 == color1 && testDurability(containerItem,recipeItem.getDamageValue()) ;
+    private boolean testChalk(ItemStack[] ingredients,ItemStack containerItem){
+        for(ItemStack stack : ingredients){
+            if(!(stack.getItem() instanceof Chalk))
+                continue;
+            int color0 = stack.getTag().contains("color") ? stack.getTag().getInt("color") : 0;
+            int color1 = containerItem.getTag().contains("color") ? containerItem.getTag().getInt("color") : 0;
+            if(color0 == color1)
+                return testDurability(containerItem,stack.getDamageValue());
+        }
+        return false;
     }
+
     private boolean testDurability(ItemStack stack,int durability){
         return stack.getDamageValue() <= durability;
     }
@@ -89,7 +98,8 @@ public class MortarRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack assemble(SimpleContainer p_44001_) {
+    public ItemStack assemble(SimpleContainer inventory) {
+        inventory.clearContent();
         return result.copy();
     }
 
@@ -203,7 +213,7 @@ public class MortarRecipe implements Recipe<SimpleContainer> {
         @Override
         public MortarRecipe fromJson(ResourceLocation id, JsonObject json) {
             int hits = json.get("hits").getAsInt();
-            ItemStack result = ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "result")).getDefaultInstance();
+            ItemStack result = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
 
             JsonArray ingArr = json.get("ingredients").getAsJsonArray();
             Ingredient[] ingredients = new Ingredient[ingArr.size()];

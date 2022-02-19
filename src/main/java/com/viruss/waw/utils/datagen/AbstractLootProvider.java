@@ -37,7 +37,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings("all")
-public class AbstractLootProvider implements DataProvider {
+public abstract class AbstractLootProvider implements DataProvider {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private final DataGenerator generator;
     private final String modid = Main.MOD_ID;

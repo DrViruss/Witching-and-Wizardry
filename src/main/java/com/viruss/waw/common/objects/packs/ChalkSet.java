@@ -22,7 +22,7 @@ import java.awt.*;
 public class ChalkSet {
     public static final int[] COLORS = new int[]{
             Color.WHITE.getRGB(),
-            Color.red.getRGB(),     //TODO: think about strings
+            Color.RED.getRGB(),     //TODO: think about strings
             Color.LIGHT_GRAY.getRGB()
     };
 
@@ -50,7 +50,7 @@ public class ChalkSet {
         Main.CLIENT_RENDERER.addBlockRenderer(basicBlock, RenderType.cutout());
         Main.CLIENT_RENDERER.addTileEntityRenderer(this.centerTE, CentralSymbolRenderer::new);
 
-        sound = ModRegistry.MDR.register("chalk", ()-> ModUtils.Resources.loadSound("chalk"),ForgeRegistries.SOUND_EVENTS);
+        sound = ModRegistry.MDR.register("chalk", ()-> ModUtils.Resources.loadSound(Main.MOD_ID,"chalk"),ForgeRegistries.SOUND_EVENTS);
     }
 
     public SoundEvent getSound() {

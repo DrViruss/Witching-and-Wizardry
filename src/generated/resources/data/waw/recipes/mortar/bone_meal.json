@@ -1,0 +1,13 @@
+{
+  "type": "waw:mortar",
+  "result": {
+    "item": "minecraft:bone_meal",
+    "count": 3
+  },
+  "hits": 3,
+  "ingredients": [
+    {
+      "item": "minecraft:bone"
+    }
+  ]
+}

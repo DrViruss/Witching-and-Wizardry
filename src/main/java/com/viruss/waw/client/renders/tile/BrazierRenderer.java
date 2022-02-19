@@ -16,6 +16,7 @@ import net.minecraftforge.client.model.data.EmptyModelData;
 
 import java.util.Random;
 
+@SuppressWarnings("all")
 @OnlyIn(Dist.CLIENT)
 public class BrazierRenderer extends AbstractTER<BrazierTE>{
     public BrazierRenderer(BlockEntityRendererProvider.Context context) {super();}

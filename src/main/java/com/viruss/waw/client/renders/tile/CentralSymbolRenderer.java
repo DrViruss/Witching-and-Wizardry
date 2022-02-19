@@ -5,6 +5,7 @@ import com.viruss.waw.common.tile.CentralSymbolTE;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
+@SuppressWarnings("all")
 public class CentralSymbolRenderer extends AbstractTER<CentralSymbolTE>{
 
     public CentralSymbolRenderer(BlockEntityRendererProvider.Context context) {

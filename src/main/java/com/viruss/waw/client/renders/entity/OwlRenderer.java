@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
+@SuppressWarnings("all")
 public class OwlRenderer extends EntityRenderer<OwlEntity> {
     EntityModel<OwlEntity> model;
 

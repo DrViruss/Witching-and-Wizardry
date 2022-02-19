@@ -1,7 +1,10 @@
 package com.viruss.waw.utils.datagen;
 
+import com.viruss.waw.common.objects.packs.ChalkSet;
 import com.viruss.waw.common.objects.packs.WoodenPack;
+import com.viruss.waw.utils.recipes.bases.BrazierRecipe;
 import com.viruss.waw.utils.recipes.bases.MortarRecipe;
+import com.viruss.waw.utils.recipes.bases.RitualRecipe;
 import com.viruss.waw.utils.registries.ModRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
@@ -16,8 +19,11 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.common.Tags;
+import oshi.util.tuples.Pair;
 
+import java.util.Arrays;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -34,6 +40,8 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
     protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
         registerWood(consumer,woods);
         registerMortar(consumer);
+        registerRituals(consumer);
+        registerBrazier(consumer);
     }
 
     private void registerWood(Consumer<FinishedRecipe> consumer, Set<WoodenPack> woods) {
@@ -70,6 +78,95 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
             Ingredient.of(Tags.Items.BONES),
             Ingredient.of(ModRegistry.INGREDIENTS.getMagicAsh())
         ));
+
+        consumer.accept(new MortarRecipe.FinishedRecipe(
+            3,
+            new ItemStack(Items.BONE_MEAL,3),
+            Ingredient.of(Items.BONE)
+        ));
+    }
+    private void registerRituals(Consumer<FinishedRecipe> consumer){
+        consumer.accept(new RitualRecipe.FinishedRecipe(
+            ModRegistry.RITUALS.RAIN.get(),
+            120,
+            new Pair[]{
+                new Pair("medium", ChalkSet.COLORS[0])
+            },
+            Arrays.asList(
+                new Pair<>(MaterialColor.COLOR_LIGHT_BLUE.col,2)
+            ),
+            Ingredient.of(Items.WATER_BUCKET)
+        ));
+
+        consumer.accept(new RitualRecipe.FinishedRecipe(
+            ModRegistry.RITUALS.THUNDER.get(),
+            1200,
+            new Pair[]{
+                new Pair("small", ChalkSet.COLORS[1]),
+                new Pair("medium", ChalkSet.COLORS[2])
+            },
+            Arrays.asList(
+                new Pair<>(MaterialColor.COLOR_GRAY.col,2),
+                new Pair<>(MaterialColor.COLOR_LIGHT_BLUE.col,2)
+            ),
+            Ingredient.of(new ItemStack(Items.FEATHER,16))
+        ));
+
+        consumer.accept(new RitualRecipe.FinishedRecipe(
+                ModRegistry.RITUALS.NOON.get(),
+                1200,
+                new Pair[]{
+                        new Pair("small", ChalkSet.COLORS[1]),
+                        new Pair("medium", ChalkSet.COLORS[2])
+                },
+                Arrays.asList(
+                        new Pair<>(MaterialColor.COLOR_YELLOW.col,2),
+                        new Pair<>(MaterialColor.COLOR_LIGHT_BLUE.col,2)
+                ),
+                Ingredient.of(new ItemStack(Items.SUNFLOWER,3)),
+                Ingredient.of(Items.CLOCK)
+        ));
+
+        consumer.accept(new RitualRecipe.FinishedRecipe(
+                ModRegistry.RITUALS.MIDNIGHT.get(),
+                1200,
+                new Pair[]{
+                        new Pair("small", ChalkSet.COLORS[1]),
+                        new Pair("medium", ChalkSet.COLORS[2])
+                },
+                Arrays.asList(
+                        new Pair<>(MaterialColor.COLOR_BLACK.col,2),
+                        new Pair<>(MaterialColor.COLOR_LIGHT_BLUE.col,2)
+                ),
+                Ingredient.of(new ItemStack(Items.ENDER_EYE,3)),
+                Ingredient.of(Items.CLOCK)
+        ));
+
+        consumer.accept(new RitualRecipe.FinishedRecipe(
+            ModRegistry.RITUALS.CLEAR.get(),
+            120,
+            new Pair[]{
+                new Pair("small", ChalkSet.COLORS[0]),
+                new Pair("medium",ChalkSet.COLORS[0]),
+                new Pair("large", ChalkSet.COLORS[0])
+            },
+                null,
+            Ingredient.of(new ItemStack(Items.AMETHYST_SHARD,2)),
+            Ingredient.of(new ItemStack(Items.CACTUS,2)),
+            Ingredient.of(new ItemStack(Items.TORCH,2))
+        ));
+
+    }
+
+    private void registerBrazier(Consumer<FinishedRecipe> consumer){
+
+        consumer.accept(new BrazierRecipe.FinishedRecipe(
+                ModRegistry.RITUALS.RAIN.get(),
+                300,
+                Ingredient.of(ModRegistry.WOOD.ASH.getSapling().getSecondary()),
+                Ingredient.of(Items.COAL)
+        ));
+
     }
 
     private ItemStack colorfulChalk(int color){

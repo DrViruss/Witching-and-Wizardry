@@ -1,6 +1,9 @@
 package com.viruss.waw.common.entities;
 
 import com.viruss.waw.utils.registries.ModRegistry;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -27,7 +30,7 @@ public class CustomBoatEntity extends Boat {
     }
 
     public CustomBoatEntity(Item drop,Level worldIn, double x, double y, double z) {
-        this(drop, ModRegistry.ENTITIES.getBoatEntity(), worldIn);
+        this(drop, ModRegistry.WOOD.getBoatEntity(), worldIn);
         this.setPos(x, y, z);
         this.setDeltaMovement(Vec3.ZERO);
         this.xo = x;
@@ -51,10 +54,26 @@ public class CustomBoatEntity extends Boat {
 
     @Override
     public Item getDropItem() {
-        Item drop = boatItem;
-        if(drop== null)
-            drop = super.getDropItem();
-        return drop;
+        if(boatItem == null)
+            return super.getDropItem();
+        return boatItem;
+    }
+
+    @Override
+    public Component getName() {
+        return new TranslatableComponent("entity.minecraft.boat");
+    }
+
+    @Override
+    protected void addAdditionalSaveData(CompoundTag tag) {
+        if(getDataType() != "pattern")
+            tag.putString("type",getDataType());
+    }
+
+    @Override
+    protected void readAdditionalSaveData(CompoundTag tag) {
+        if(tag.contains("type"))
+        setDataType(tag.getString("type"));
     }
 
     @Override
