@@ -3,6 +3,7 @@ package com.viruss.waw.common.tile;
 import com.viruss.waw.utils.ModUtils;
 import com.viruss.waw.utils.recipes.RecipeTypes;
 import com.viruss.waw.utils.recipes.bases.BrazierRecipe;
+import com.viruss.waw.utils.recipes.bases.RitualRecipe;
 import com.viruss.waw.utils.registries.ModRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -39,6 +40,7 @@ public class BrazierTE extends NetworkTileEntity {
         @Override
         public void setChanged() {
             BrazierTE.this.updateNetwork();
+            BrazierTE.this.setChanged();
         }
     };
 
@@ -100,6 +102,7 @@ public class BrazierTE extends NetworkTileEntity {
                     this.recipe = recipe;
                     this.litTime = recipe.getCookingTime();
                     level.setBlock(getBlockPos(), getBlockState().setValue(LIT, true),11);
+                    setChanged();
                     return;
                 }
         }
@@ -110,6 +113,7 @@ public class BrazierTE extends NetworkTileEntity {
                 this.recipe = recipe;
                 this.litTime = recipe.getTime();
                 level.setBlock(getBlockPos(), getBlockState().setValue(LIT, true),11);
+                setChanged();
                 return;
             }
 
@@ -119,6 +123,7 @@ public class BrazierTE extends NetworkTileEntity {
             if(stack.isEmpty()) continue;
             litTime = ForgeHooks.getBurnTime(stack,null);
             level.setBlock(getBlockPos(), getBlockState().setValue(LIT, true),11);
+            setChanged();
             break;
         }
     }
@@ -146,7 +151,7 @@ public class BrazierTE extends NetworkTileEntity {
         if(isLit()) return;
 
         if(!load.isEmpty()) {
-            level.getRecipeManager().byKey(new ResourceLocation(load));
+            level.getRecipeManager().byKey(new ResourceLocation(load)).ifPresent(recipe -> this.recipe = recipe);
             load ="";
         }
 
@@ -180,6 +185,7 @@ public class BrazierTE extends NetworkTileEntity {
         this.type = Type.NONE;
         this.recipe = null;
         this.playerID = null;
+        setChanged();
     }
 
     public boolean tryLit(BlockState state, Level level, BlockPos pos, ServerPlayer player) {
@@ -202,13 +208,12 @@ public class BrazierTE extends NetworkTileEntity {
     }
 
     @Override
-    public CompoundTag save(CompoundTag nbt) {
+    protected void saveAdditional(CompoundTag nbt) {
+        super.saveAdditional(nbt);
         nbt.putInt("litTime",litTime);
         nbt.putString("type",type.toString());
         if(recipe != null)
             nbt.putString("recipe", recipe.getId().toString());
-
-        return super.save(nbt);
     }
 
     @Override

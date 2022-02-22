@@ -1,8 +1,5 @@
 {
   "type": "waw:rituals",
-  "result": {
-    "item": "minecraft:air"
-  },
   "action": "noon_action",
   "cost": 1200,
   "circles": {

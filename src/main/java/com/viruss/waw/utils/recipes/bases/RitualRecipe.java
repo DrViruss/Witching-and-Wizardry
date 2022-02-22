@@ -23,8 +23,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistryEntry;
+import net.minecraftforge.registries.RegistryObject;
 import oshi.util.tuples.Pair;
 
 import javax.annotation.Nullable;
@@ -227,7 +227,8 @@ public class RitualRecipe implements Recipe<SimpleContainer> {
 
         @Override
         public void serializeRecipeData(JsonObject json) {
-            json.add("result", ModUtils.Json.serializeItemStack(output));
+            if(!output.isEmpty())
+                json.add("result", ModUtils.Json.serializeItemStack(output));
             json.add("action",new JsonPrimitive(action.getRegistryName().getPath()));
             if(this.time >0)
                 json.add("time", new JsonPrimitive(this.time));
@@ -295,7 +296,9 @@ public class RitualRecipe implements Recipe<SimpleContainer> {
 
         @Override
         public RitualRecipe fromJson(ResourceLocation id, JsonObject json) {
-            ItemStack result = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
+            ItemStack result = ItemStack.EMPTY;
+            if(json.has("result"))
+                result = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
             int cost = json.get("cost").getAsInt();
 
             ArrayList<Pair<Integer,Integer>> candles = null;

@@ -1,8 +1,5 @@
 {
   "type": "waw:rituals",
-  "result": {
-    "item": "minecraft:air"
-  },
   "action": "clear_weather_action",
   "cost": 120,
   "circles": {

@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 @SuppressWarnings("all")
@@ -25,6 +26,7 @@ public class MortarTE extends NetworkTileEntity {
 
         @Override
         public void setChanged() {
+            MortarTE.this.setChanged();
             MortarTE.this.updateNetwork();
             recipe = null;
         }
@@ -53,11 +55,12 @@ public class MortarTE extends NetworkTileEntity {
     public void craft(Player player) {
         if(level == null || level.isClientSide()) return;
         if(recipe == null) {
-            if(loadedID.isBlank()) {
+            if(loadedID.isEmpty()) {
                 this.level.getRecipeManager().getRecipeFor(RecipeTypes.Mortar.TYPE, inventory, level).ifPresent(mortarRecipe -> this.recipe = mortarRecipe);
                 if (recipe == null) return;
             }
             level.getRecipeManager().byKey(new ResourceLocation(loadedID)).ifPresent(recipe -> this.recipe = (MortarRecipe) recipe);
+            loadedID = "";
         }
 
         hits +=1;
@@ -67,6 +70,7 @@ public class MortarTE extends NetworkTileEntity {
                 inventory.addItem(result);
             hits=0;
         }
+        setChanged();
     }
 
     @Override
@@ -78,10 +82,10 @@ public class MortarTE extends NetworkTileEntity {
     }
 
     @Override
-    public CompoundTag save(CompoundTag nbt) {
+    protected void saveAdditional(CompoundTag nbt) {
         nbt.putByte("hits",hits);
         if(recipe != null)
             nbt.putString("recipe",recipe.getId().toString());
-        return super.save(nbt);
+        super.saveAdditional(nbt);
     }
 }

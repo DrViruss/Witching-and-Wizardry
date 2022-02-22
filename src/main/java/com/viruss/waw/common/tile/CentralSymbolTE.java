@@ -1,11 +1,13 @@
 package com.viruss.waw.common.tile;
 
 import com.viruss.waw.utils.recipes.RecipeTypes;
+import com.viruss.waw.utils.recipes.bases.MortarRecipe;
 import com.viruss.waw.utils.recipes.bases.RitualRecipe;
 import com.viruss.waw.utils.registries.ModRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Containers;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.EntityType;
@@ -17,7 +19,7 @@ import net.minecraft.world.phys.AABB;
 
 public class CentralSymbolTE extends NetworkTileEntity {
 
-private String load;
+private String load="";
 private RitualRecipe ritual;
 private int time =0;
 
@@ -25,7 +27,7 @@ private int time =0;
         @Override
         public void setChanged() {
             CentralSymbolTE.this.updateNetwork();
-//            ritual = null;
+            CentralSymbolTE.this.setChanged();
         }
     };
 
@@ -60,12 +62,19 @@ private int time =0;
                 inventory.addItem(item.getItem());
                 item.kill();
             });
+
+        if(!load.isEmpty()) {
+            level.getRecipeManager().byKey(new ResourceLocation(load)).ifPresent(recipe -> this.ritual = (RitualRecipe) recipe);
+            load = "";
+        }
+
         if(inventory.isEmpty()) return;
 
         ritual = level.getRecipeManager().getAllRecipesFor(RecipeTypes.Rituals.TYPE).stream().filter(ritualRecipe -> ritualRecipe.matches(inventory, level)).findFirst().orElse(null);
         if(ritual == null || !ritual.testAdditional(level,player,pos)) {
             player.displayClientMessage(new TranslatableComponent("waw.ritual.unknown"),true);
             Containers.dropContents(level,pos,inventory);
+            resetRitual();
             return;
         }
 
@@ -73,6 +82,8 @@ private int time =0;
             resetRitual();
         else
             this.time = ritual.getTime();
+
+        setChanged();
 
     }
 
@@ -102,10 +113,28 @@ private int time =0;
 
     public void passTick(){
         this.time = this.time-1;
+        setChanged();
     }
 
     public void resetRitual(){
         this.ritual = null;
         this.time =0;
+        setChanged();
+    }
+
+    @Override
+    public void load(CompoundTag nbt) {
+        super.load(nbt);
+        this.time = nbt.getInt("time");
+        if(nbt.contains("ritual"))
+            this.load=nbt.getString("ritual");
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag nbt) {
+        super.saveAdditional(nbt);
+        nbt.putInt("time",time);
+        if(ritual!=null)
+            nbt.putString("ritual",ritual.getId().toString());
     }
 }

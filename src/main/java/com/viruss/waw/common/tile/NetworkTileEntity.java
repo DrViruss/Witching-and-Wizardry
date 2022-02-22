@@ -6,6 +6,7 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
@@ -24,15 +25,14 @@ public abstract class NetworkTileEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag save(CompoundTag nbt) {
-        this.saveNetwork(nbt);
-        return super.save(nbt);
+    protected void saveAdditional(CompoundTag nbt) {
+        super.saveAdditional(this.saveNetwork(nbt));
     }
 
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return new ClientboundBlockEntityDataPacket(this.getBlockPos(), 1, this.saveNetwork(new CompoundTag()));
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override

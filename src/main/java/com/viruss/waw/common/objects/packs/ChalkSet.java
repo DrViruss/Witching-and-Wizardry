@@ -13,8 +13,8 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.awt.*;
 
@@ -22,7 +22,7 @@ import java.awt.*;
 public class ChalkSet {
     public static final int[] COLORS = new int[]{
             Color.WHITE.getRGB(),
-            Color.RED.getRGB(),     //TODO: think about strings
+            Color.RED.getRGB(),     //TODO: think about strings     15-29 ID MaterialColor
             Color.LIGHT_GRAY.getRGB()
     };
 

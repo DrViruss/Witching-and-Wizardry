@@ -13,12 +13,13 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '0.1'
+version = "${minecraft_ver}-0.1"
 group = 'com.viruss.waw' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'waw'
 
-// Mojang ships Java 16 to end users in 1.17+ instead of Java 8 in 1.16 or lower, so your mod should target Java 16.
-java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+// Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
 println('~~~~~~~~~~~~~~~~~~~~~~~\nJava version= ' + System.getProperty('java.version')+'\n~~~~~~~~~~~~~~~~~~~~~~~')
 println(System.getProperty("os.name").contains("Windows") ? "Windows SUCKS!\n" : "\n")
 minecraft {
@@ -146,11 +147,11 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
+
      runtimeOnly fg.deobf("curse.maven:Jade-324717:${JadeID}")
 
      compileOnly fg.deobf("mezz.jei:jei-${minecraft_ver}:${JEI_ver}:api") // Adds JEI API as a compile dependency
      runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_ver}:${JEI_ver}") // Adds the full JEI mod as a runtime dependency
-
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

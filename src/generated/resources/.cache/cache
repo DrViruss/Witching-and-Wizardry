@@ -277,11 +277,11 @@ c59e62ef0bdf7cbe4eeade43d3650f389d899ef3 data/waw/recipes/ash_trapdoor.json
 74a70e4da563f8e2500b188d5a640b4af6106d2e data/waw/recipes/brazier/rain.json
 6619eb666e076c0f5ceb9a9dd077be72ec6c5187 data/waw/recipes/mortar/bone_meal.json
 f5949020b81c479a6e418880fa03f11428365c74 data/waw/recipes/mortar/calcosvis.json
-f70636741fad8a498839050ce701d3c2b1eed40d data/waw/recipes/rituals/clear_weather.json
-44f2418225d6cada29d9b3e983185ed9a5d21001 data/waw/recipes/rituals/midnight.json
-9b4db17eb3af5a8eb50a29014380b42827d6eea5 data/waw/recipes/rituals/noon.json
-eb26f70529ed5b838d37c7c583ec020fe7593e55 data/waw/recipes/rituals/rain.json
-522c6b556c3def37cb33599b3cc1d5e3f1d9e8f4 data/waw/recipes/rituals/thunder.json
+e2bc8d863111753e5999381dfc1473af8104f744 data/waw/recipes/rituals/clear_weather.json
+d59fe8262c60395f74db2df48d19eb7fb2310afa data/waw/recipes/rituals/midnight.json
+f8c084d76b47c0dd0e0c23dd885464cd0a2f3aba data/waw/recipes/rituals/noon.json
+d6bd73c0ca56945a1fb798dd2abda852b17bfbbd data/waw/recipes/rituals/rain.json
+522ecf80559a3f2bcb000e26df8f1f55127863c7 data/waw/recipes/rituals/thunder.json
 d8131e174840595335afbb07ee94de1c53aae347 data/waw/recipes/sambucus_boat.json
 0e4a06fca2158205ac6a117c4f19adcad893491e data/waw/recipes/sambucus_button.json
 83de8ff05d855f8b77a9034956baeff3833505af data/waw/recipes/sambucus_door.json
